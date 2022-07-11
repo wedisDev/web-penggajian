@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GolonganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +22,17 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
+
+Route::group(
+    [
+        'middleware' => 'auth'
+    ],
+    function () {
+        Route::resource('/golongan', GolonganController::class);
+        Route::get('/golongan/delete/{id}', [GolonganController::class, 'destroy']);
+    }
+);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
