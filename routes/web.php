@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GolonganController;
+use App\Http\Controllers\JabatanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -32,6 +33,9 @@ Route::group(
     function () {
         Route::resource('/golongan', GolonganController::class);
         Route::get('/golongan/delete/{id}', [GolonganController::class, 'destroy']);
+
+        Route::resource('/jabatan', JabatanController::class);
+        Route::get('/jabatan/delete/{id}', [JabatanController::class, 'destroy']);
     }
 );
 
