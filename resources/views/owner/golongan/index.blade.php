@@ -55,7 +55,7 @@
                 <table class="table" id="tableGolongan">
                     <thead>
                         <tr>
-                            <th>Nama</th>
+                            <th>No</th>
                             <th>Tunjangan Menikah</th>
                             <th>Tunjangan Anak</th>
                             <th>Actions</th>

@@ -42,31 +42,33 @@ class JabatanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'name' => 'required',
+            'nama_jabatan' => 'required',
             'gapok' => 'required',
             'tunjangan_makmur' => 'required',
             'tunjangan_transportasi' => 'required',
-            'tunjangan_makanan' => 'required',
+            'tunjangan_makan' => 'required',
             'tunjangan_lembur' => 'required'
         ]);
 
         if ($validator->fails()) {
+            dd($validator->errors());
             return back()->withErrors($validator->errors());
         } else {
             Alert::success('Success', 'Jabatan berhasil ditambahkan');
 
             $jabatan = new Jabatan();
-
-            $jabatan->name = $request->get('name');
+            // dd($request);
+            
+            $jabatan->nama_jabatan = $request->get('nama_jabatan');
             $jabatan->gapok = $request->get('gapok');
             $jabatan->tunjangan_makmur = $request->get('tunjangan_makmur');
             $jabatan->tunjangan_transportasi = $request->get('tunjangan_transportasi');
-            $jabatan->tunjangan_makanan = $request->get('tunjangan_makanan');
+            $jabatan->tunjangan_makan = $request->get('tunjangan_makan');
             $jabatan->tunjangan_lembur = $request->get('tunjangan_lembur');
             
             $jabatan->save();
 
-            return redirect()->route('owner.jabatan.index');
+            return redirect()->route('jabatan.index');
         }
     }
 
@@ -105,31 +107,32 @@ class JabatanController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make(request()->all(), [
-            'name' => 'required',
+            'nama_jabatan' => 'required',
             'gapok' => 'required',
             'tunjangan_makmur' => 'required',
             'tunjangan_transportasi' => 'required',
-            'tunjangan_makanan' => 'required',
+            'tunjangan_makan' => 'required',
             'tunjangan_lembur' => 'required'
         ]);
 
         if ($validator->fails()) {
+            dd($validator->errors());
             return back()->withErrors($validator->errors());
         } else {
-            Alert::success('Success', 'Jabatan berhasil ditambahkan');
+            Alert::success('Success', 'Jabatan berhasil diubah');
 
             $jabatan = Jabatan::findOrFail($id);
 
-            $jabatan->name = $request->get('name');
+            $jabatan->nama_jabatan = $request->get('nama_jabatan');
             $jabatan->gapok = $request->get('gapok');
             $jabatan->tunjangan_makmur = $request->get('tunjangan_makmur');
             $jabatan->tunjangan_transportasi = $request->get('tunjangan_transportasi');
-            $jabatan->tunjangan_makanan = $request->get('tunjangan_makanan');
+            $jabatan->tunjangan_makan = $request->get('tunjangan_makan');
             $jabatan->tunjangan_lembur = $request->get('tunjangan_lembur');
 
             $jabatan->save();
 
-            return redirect()->route('owner.jabatan.index');
+            return redirect()->route('jabatan.index');
         }
     }
 

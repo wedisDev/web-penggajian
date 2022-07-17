@@ -18,7 +18,7 @@ class GolonganController extends Controller
     {
         $golongan = Golongan::all();
 
-        return view('admin.golongan.index', [
+        return view('owner.golongan.index', [
             'golongan' => $golongan 
         ]);
     }

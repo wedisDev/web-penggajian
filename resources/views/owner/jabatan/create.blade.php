@@ -17,7 +17,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Nama Jabatan</label>
-                            <input type="text" class="form-control" name="name" placeholder="Nama Jabatan">
+                            <input type="text" class="form-control" name="nama_jabatan" placeholder="Nama Jabatan">
                         </div>
                     </div>
                     <div class="col-md-6">

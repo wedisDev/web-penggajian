@@ -29,11 +29,6 @@
 
     @if (Auth::user()->role == 'admin')
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('golongan.index') }}">
-                <i class="fas fa-user-friends fa-chart-area"></i>
-                <span>Golongan</span></a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link" href="charts.html">
@@ -42,13 +37,19 @@
         </li>
     @elseif (Auth::user()->role == 'owner')
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('golongan.index') }}">
+                <i class="fas fa-user-friends fa-chart-area"></i>
+                <span>Golongan</span></a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ url('/jabatan') }}">
                 <i class="fas fa-handshake fa-chart-area"></i>
                 <span>Jabatan</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="{{ url('/pegawai') }}">
                 <i class="fas fa-users fa-chart-area"></i>
                 <span>Pegawai</span></a>
         </li>

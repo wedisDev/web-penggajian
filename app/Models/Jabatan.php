@@ -10,11 +10,12 @@ class Jabatan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'nama_jabatan',
         'gapok',
         'tunjangan_makmur',
         'tunjangan_makan',
         'tunjangan_transportasi',
         'tunjangan_lembur'
     ];
+
 }

@@ -18,13 +18,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Nama Jabatan</label>
-                            <input type="text" class="form-control" name="name" value="{{ $jabatan->name }}">
+                            <input type="text" class="form-control" name="nama_jabatan" value="{{ $jabatan->name }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Gaji Pokok</label>
-                            <input type="number" class="form-control" name="gapok" {{ $jabatan->gapok }}>
+                            <input type="number" class="form-control" name="gapok" value="{{ $jabatan->gapok }}">
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Tunjangan Makmur</label>
-                            <input type="number" class="form-control" name="tunjangan_makmur" {{ $jabatan->tunjangan_makmur }}>
+                            <input type="number" class="form-control" name="tunjangan_makmur" value="{{$jabatan->tunjangan_makmur }}">
                         </div>
                     </div>
                     <div class="col-md-6">
