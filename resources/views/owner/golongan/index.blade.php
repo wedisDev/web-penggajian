@@ -64,8 +64,8 @@
                     <tbody>
                         @foreach ($golongan as $item)
                             <!-- Modal -->
-                            <div class="modal fade" id="modalEdit{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
+                            <div class="modal fade" id="modalEdit{{ $item->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -103,8 +103,8 @@
                                 <td>{{ $item->tunjangan_menikah }}</td>
                                 <td>{{ $item->tunjangan_anak }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-warning"
-                                        data-toggle="modal" data-target="#modalEdit{{ $item->id }}">
+                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                        data-target="#modalEdit{{ $item->id }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
@@ -119,41 +119,42 @@
                 </table>
             </div>
         </div>
+    </div>
 
 
-    @endsection
+@endsection
 
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-        </script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#tableGolongan').DataTable();
-            });
-        </script>
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tableGolongan').DataTable();
+        });
+    </script>
 
-        <script>
-            $('.delete').click(function() {
-                var golonganId = $(this).attr('data-id');
-                swal({
-                        title: "Apakah kamu yakin ?",
-                        text: "Apa kamu yakin ingin menghapus data ini",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            window.location = "/golongan/delete/" + golonganId + ""
-                            swal("Data berhasil dihapus", {
-                                icon: "success",
-                            });
-                        } else {
-                            swal("Data tidak jadi dihapus");
-                        }
-                    });
-            });
-        </script>
-    @endpush
+    <script>
+        $('.delete').click(function() {
+            var golonganId = $(this).attr('data-id');
+            swal({
+                    title: "Apakah kamu yakin ?",
+                    text: "Apa kamu yakin ingin menghapus data ini",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location = "/golongan/delete/" + golonganId + ""
+                        swal("Data berhasil dihapus", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Data tidak jadi dihapus");
+                    }
+                });
+        });
+    </script>
+@endpush

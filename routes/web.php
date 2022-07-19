@@ -38,8 +38,10 @@ Route::group(
         Route::resource('/jabatan', JabatanController::class);
         Route::get('/jabatan/delete/{id}', [JabatanController::class, 'destroy']);
 
+        //Route Pegawai
         Route::resource('/pegawai', PegawaiController::class);
         Route::get('/pegawai/delete/{id}', [PegawaiController::class, 'destroy']);
+        Route::get('/pegwai/rincian-gaji', [PegawaiController::class, 'rincian']);
     }
 );
 

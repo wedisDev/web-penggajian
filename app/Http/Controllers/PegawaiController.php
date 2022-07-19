@@ -161,4 +161,14 @@ class PegawaiController extends Controller
 
         return redirect()->back();
     }
+
+    public function rincian()
+    {
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->get();
+
+        return view('pegawai.rincian.index', [
+            'pegawai' => $pegawai
+        ]);
+    }
 }

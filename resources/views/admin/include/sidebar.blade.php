@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ url('/dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -52,6 +52,27 @@
             <a class="nav-link" href="{{ url('/pegawai') }}">
                 <i class="fas fa-users fa-chart-area"></i>
                 <span>Pegawai</span></a>
+        </li>
+    @elseif(Auth::user()->role == 'pegawai')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/') }}">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Pelanggaran Pegawai</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/') }}">
+                <i class="fas fa-trophy"></i>
+                <span>Perestasi Pegawai</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/pegwai/rincian-gaji') }}">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Rincian gaji Pegawai</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/') }}">
+                <i class="fas fa-history"></i>
+                <span>History Rincian Pegawai</span></a>
         </li>
     @endif
 
