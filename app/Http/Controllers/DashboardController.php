@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Golongan;
+use App\Models\Jabatan;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +18,17 @@ class DashboardController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            return view('admin.index');
+
+            $jabatan = Jabatan::count();
+            $golongan = Golongan::count();
+            $pegawai = Pegawai::count();
+
+            return view('admin.index', [
+                'jabatan' => $jabatan,
+                'golongan' => $golongan,
+                'pegawai' => $pegawai
+            ]);
+            
         } elseif(Auth::user()->role == 'pegawai') {
             return view('pegawai.index');
         } elseif (Auth::user()->role == 'owner') {

@@ -29,11 +29,15 @@
 
     @if (Auth::user()->role == 'admin')
         <!-- Nav Item - Pages Collapse Menu -->
-
         <li class="nav-item">
             <a class="nav-link" href="charts.html">
                 <i class="fas fa-calculator fa-chart-area"></i>
                 <span>Perhitungan</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="charts.html">
+                <i class="fas fa-trophy fa-chart-area"></i>
+                <span>Prestasi Pegawai</span></a>
         </li>
     @elseif (Auth::user()->role == 'owner')
         <li class="nav-item">
