@@ -63,6 +63,13 @@
                 <i class="fas fa-users fa-chart-area"></i>
                 <span>Pegawai</span></a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/bonus-omzet') }}">
+                <i class="fas fa-money-bill-wave fa-chart-area"></i>
+                <span>Bonus Omzet</span></a>
+        </li>
+
     @elseif(Auth::user()->role == 'pegawai')
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/') }}">

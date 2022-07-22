@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cabang;
 use App\Models\Golongan;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
@@ -35,5 +36,12 @@ class DashboardController extends Controller
             return view('owner.index');
         }
         
+    }
+
+    public function pilihCabang()
+    {
+        return view('owner.pilih',  [
+            'cabang' => Cabang::all()
+        ]);
     }
 }

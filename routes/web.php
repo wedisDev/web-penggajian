@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BonusOmzetController;
 use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GolonganController;
@@ -33,6 +34,8 @@ Route::group(
         'middleware' => 'auth'
     ],
     function () {
+        // Route::get('/pilih-cabang', [DashboardController::class, 'pilihCabang']);
+
         //Route Golongan
         Route::resource('/golongan', GolonganController::class);
         Route::get('/golongan/delete/{id}', [GolonganController::class, 'destroy']);
@@ -49,6 +52,10 @@ Route::group(
         //Route Cabang
         Route::resource('/cabang', CabangController::class);
         Route::get('/cabang/delete/{id}', [CabangController::class, 'destroy']);
+
+        //Route Bonus Omzet
+        Route::resource('/bonus-omzet', BonusOmzetController::class);
+        Route::get('/bonus-omzet/delete/{id}', [BonusOmzetController::class, 'destroy']);
     }
 );
 

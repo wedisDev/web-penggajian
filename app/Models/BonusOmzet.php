@@ -14,4 +14,14 @@ class BonusOmzet extends Model
         'id_jabatan',
         'bonus',
     ];
+
+    public function jabatan(){
+
+        return $this->belongsTo(Jabatan::class);
+    }
+
+    public function cabang(){
+
+        return $this->belongsTo(Cabang::class);
+    }
 }
