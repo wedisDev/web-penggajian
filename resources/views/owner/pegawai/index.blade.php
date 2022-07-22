@@ -26,7 +26,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Jabatan</th>
-                            <th>Golongan</th>
+                            <th>Cabang</th>
                             <th>Status</th>
                             <th>Jumlah Anak</th>
                             <th>Actions</th>
@@ -38,7 +38,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
                                 <td>{{ $item->nama_jabatan }}</td>
-                                <td>{{ $item->tunjangan_menikah }}</td>
+                                <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>{{ $item->jumlah_anak }}</td>
                                 <td>

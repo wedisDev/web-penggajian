@@ -11,7 +11,7 @@ class Pegawai extends Model
 
     protected $fillable = [
         'id_jabatan',
-        'id_golongan',
+        'id_cabang',
         'nama_pegawai',
         'jenis_kelamin',
         'alamat',
@@ -25,8 +25,8 @@ class Pegawai extends Model
         return $this->belongsTo(Jabatan::class);
     }
 
-    public function golongan(){
+    public function cabang(){
 
-        return $this->belongsTo(Golongan::class);
+        return $this->belongsTo(Cabang::class);
     }
 }

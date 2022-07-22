@@ -37,13 +37,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="">Golongan</label>
-                    <select name="id_golongan" class="form-control" id="">
-                        <option value="">Pilih Golongan</option>
-                        @foreach ($golongan as $item)
-                            <option value="{{ $item->id }}">Rp
-                                {{ $item->tunjangan_menikah }} - Rp
-                                {{ $item->tunjangan_anak }}</option>
+                    <label for="">Cabang</label>
+                    <select name="id_cabang" class="form-control" id="">
+                        <option value="">Pilih Cabang</option>
+                        @foreach ($cabang as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama_cabang }}</option>
                         @endforeach
                     </select>
                 </div>
