@@ -1,18 +1,13 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Dashboard Data Pegawai')
+@section('title', 'Dashboard Tambah Data Pegawai')
 
 @section('content')
 
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Pegawai</h1>
-        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
-            data-target="#modalTambah">
-            <i class="fas fa-plus fa-sm text-white-50"></i>
-            Tambah Pegawai
-        </button>
+        <h1 class="h3 mb-0 text-gray-800">Tambah Data Pegawai</h1>
     </div>
 
     <div class="card">
@@ -22,6 +17,20 @@
                 <div class="form-group">
                     <label for="">Nama Lengkap</label>
                     <input type="text" class="form-control" name="nama_pegawai" placeholder="Nama lengkap ...">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Jenis Kelamin</label>
+                    <select class="form-control" name="jenis_kelamin">
+                        <option>Pilih Kelamin</option>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Alamat</label>
+                    <input type="text" class="form-control" name="alamat" placeholder="Jl.Royal ...">
                 </div>
 
                 <div class="form-group">
@@ -46,8 +55,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="">Status</label>
-                    <input type="text" class="form-control" name="status" placeholder="Status ...">
+                    <label for="exampleFormControlSelect1">Status</label>
+                    <select class="form-control" name="status">
+                        <option>Pilih Status</option>
+                        <option value="Menikah">Menikah</option>
+                        <option value="Cerai">Cerai</option>
+                        <option value="Single">Single</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Tahun Masuk</label>
+                    <input type="date" class="form-control" name="tahun_masuk">
                 </div>
 
                 <div class="form-group">

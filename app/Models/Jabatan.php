@@ -15,7 +15,8 @@ class Jabatan extends Model
         'tunjangan_makmur',
         'tunjangan_makan',
         'tunjangan_transportasi',
-        'tunjangan_lembur'
+        'tunjangan_lembur',
+        'bonus_tahunan',
     ];
 
 }

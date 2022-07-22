@@ -70,9 +70,11 @@ class PegawaiController extends Controller
             $pegawai = new Pegawai();
 
             $pegawai->nama_pegawai = $request->get('nama_pegawai'); 
+            $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
             $pegawai->id_jabatan = $request->get('id_jabatan');
             $pegawai->id_golongan = $request->get('id_golongan');
             $pegawai->status = $request->get('status');
+            $pegawai->tahun_masuk = $request->get('tahun_masuk');
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
 
             $pegawai->save();
@@ -137,9 +139,11 @@ class PegawaiController extends Controller
             $pegawai = Pegawai::findOrFail($id);
 
             $pegawai->nama_pegawai = $request->get('nama_pegawai'); 
+            $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
             $pegawai->id_jabatan = $request->get('id_jabatan');
             $pegawai->id_golongan = $request->get('id_golongan');
             $pegawai->status = $request->get('status');
+            $pegawai->tahun_masuk = $request->get('tahun_masuk');
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
 
             $pegawai->save();

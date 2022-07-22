@@ -1,12 +1,12 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Tambah Data Jabatan')
+@section('title', 'Edit Data Jabatan')
 
 @section('content')
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Tambah Data Jabatan</h1>
+        <h1 class="h3 mb-0 text-gray-800">Edit Data Jabatan</h1>
     </div>
 
     <div class="card shadow rounded" style="border: none;">
@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Nama Jabatan</label>
-                            <input type="text" class="form-control" name="nama_jabatan" value="{{ $jabatan->name }}">
+                            <input type="text" class="form-control" name="nama_jabatan" value="{{ $jabatan->nama_jabatan }}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -57,6 +57,11 @@
                             <input type="number" class="form-control" name="tunjangan_lembur" value="{{ $jabatan->tunjangan_lembur }}">
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Bonus Tahunan</label>
+                    <input type="number" class="form-control" name="bonus_tahunan" value="{{ $jabatan->bonus_tahunan }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-3 float-right">Update</button>
