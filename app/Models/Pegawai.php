@@ -10,10 +10,13 @@ class Pegawai extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_pegawai',
         'id_jabatan',
         'id_golongan',
+        'nama_pegawai',
+        'jenis_kelamin',
+        'alamat',
         'status',
+        'tahun_masuk',
         'jumlah_anak'
     ];
 

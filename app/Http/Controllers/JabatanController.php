@@ -57,7 +57,6 @@ class JabatanController extends Controller
             Alert::success('Success', 'Jabatan berhasil ditambahkan');
 
             $jabatan = new Jabatan();
-            // dd($request);
             
             $jabatan->nama_jabatan = $request->get('nama_jabatan');
             $jabatan->gapok = $request->get('gapok');

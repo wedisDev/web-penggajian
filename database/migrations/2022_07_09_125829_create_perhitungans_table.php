@@ -19,6 +19,7 @@ class CreatePerhitungansTable extends Migration
             $table->integer('lembur');
             $table->integer('pelanggaran');
             $table->string('bulan');
+            $table->string('tahun');
             $table->integer('omzet');
             $table->integer('bonus_omzet');
             $table->integer('total');

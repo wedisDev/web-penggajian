@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Perhitungan extends Model
+class BonusOmzet extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id_pegawai',
-        'lembur',
-        'pelanggaran',
-        'bulan',
-        'tahun',	
-        'omzet',
-        'bonus_omzet',
-        'total'
+        'id_cabang',
+        'id_jabatan',
+        'bonus',
     ];
 }

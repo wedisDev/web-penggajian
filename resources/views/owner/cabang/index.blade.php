@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Dashboard Data Golongan')
+@section('title', 'Dashboard Data Cabang')
 
 @section('content')
 
@@ -9,23 +9,23 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Golongan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Cabang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('golongan.store') }}" method="post">
+                    <form action="{{ route('cabang.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="">Tunjangan Menikah</label>
-                            <input type="text" class="form-control" name="tunjangan_menikah"
-                                placeholder="Rp 100.000....">
+                            <label for="">Nama Cabang</label>
+                            <input type="text" class="form-control" name="nama_cabang"
+                                placeholder="Royal ...">
                         </div>
 
                         <div class="form-group">
-                            <label for="">Tunjangan Anak</label>
-                            <input type="text" class="form-control" name="tunjangan_anak" placeholder="Rp 100.000....">
+                            <label for="">Alamat Cabang</label>
+                            <input type="text" class="form-control" name="alamat" placeholder="Jl.royal ...">
                         </div>
 
                         <button type="submit" class="btn btn-primary float-right mt-3">Tambah</button>
@@ -37,57 +37,57 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Golongan</h1>
+        <h1 class="h3 mb-0 text-gray-800">Data Cabang</h1>
         <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
             data-target="#modalTambah">
             <i class="fas fa-plus fa-sm text-white-50"></i>
-            Tambah Golongan
+            Tambah Cabang
         </button>
     </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Golongan</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Cabang</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table" id="tableGolongan">
+                <table class="table" id="tableCabang">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Tunjangan Menikah</th>
-                            <th>Tunjangan Anak</th>
+                            <th>Nama Cabang</th>
+                            <th>Alamat Cabang</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($golongan as $item)
+                        @foreach ($cabang as $item)
                             <!-- Modal -->
                             <div class="modal fade" id="modalEdit{{ $item->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Edit Golongan</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Cabang</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('golongan.update', $item->id) }}" method="post">
+                                            <form action="{{ route('cabang.update', $item->id) }}" method="post">
                                                 {{ method_field('PUT') }}
                                                 @csrf
                                                 <div class="form-group">
-                                                    <label for="">Tunjangan Menikah</label>
-                                                    <input type="text" class="form-control" name="tunjangan_menikah"
-                                                        value="{{ $item->tunjangan_menikah }}">
+                                                    <label for="">Nama Cabang</label>
+                                                    <input type="text" class="form-control" name="nama_cabang"
+                                                        value="{{ $item->nama_cabang }}">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="">Tunjangan Anak</label>
-                                                    <input type="text" class="form-control" name="tunjangan_anak"
-                                                        value="{{ $item->tunjangan_anak }}">
+                                                    <label for="">Alamat Cabang</label>
+                                                    <input type="text" class="form-control" name="alamat"
+                                                        value="{{ $item->alamat }}">
                                                 </div>
 
                                                 <button type="submit"
@@ -100,8 +100,8 @@
 
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->tunjangan_menikah }}</td>
-                                <td>{{ $item->tunjangan_anak }}</td>
+                                <td>{{ $item->nama_cabang }}</td>
+                                <td>{{ $item->alamat }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
                                         data-target="#modalEdit{{ $item->id }}">
@@ -128,13 +128,13 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#tableGolongan').DataTable();
+            $('#tableCabang').DataTable();
         });
     </script>
 
     <script>
         $('.delete').click(function() {
-            var golonganId = $(this).attr('data-id');
+            var cabangId = $(this).attr('data-id');
             swal({
                     title: "Apakah kamu yakin ?",
                     text: "Apa kamu yakin ingin menghapus data ini",
@@ -144,7 +144,7 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        window.location = "/golongan/delete/" + golonganId + ""
+                        window.location = "/cabang/delete/" + cabangId + ""
                         swal("Data berhasil dihapus", {
                             icon: "success",
                         });

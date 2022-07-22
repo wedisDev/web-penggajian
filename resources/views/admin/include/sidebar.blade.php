@@ -53,6 +53,12 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ url('/cabang') }}">
+                <i class="fas fa-store fa-chart-area"></i>
+                <span>Cabang</span></a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ url('/pegawai') }}">
                 <i class="fas fa-users fa-chart-area"></i>
                 <span>Pegawai</span></a>

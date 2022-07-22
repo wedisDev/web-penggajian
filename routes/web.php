@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GolonganController;
 use App\Http\Controllers\JabatanController;
@@ -32,9 +33,11 @@ Route::group(
         'middleware' => 'auth'
     ],
     function () {
+        //Route Golongan
         Route::resource('/golongan', GolonganController::class);
         Route::get('/golongan/delete/{id}', [GolonganController::class, 'destroy']);
 
+        //Route jabatan
         Route::resource('/jabatan', JabatanController::class);
         Route::get('/jabatan/delete/{id}', [JabatanController::class, 'destroy']);
 
@@ -42,6 +45,10 @@ Route::group(
         Route::resource('/pegawai', PegawaiController::class);
         Route::get('/pegawai/delete/{id}', [PegawaiController::class, 'destroy']);
         Route::get('/pegwai/rincian-gaji', [PegawaiController::class, 'rincian']);
+
+        //Route Cabang
+        Route::resource('/cabang', CabangController::class);
+        Route::get('/cabang/delete/{id}', [CabangController::class, 'destroy']);
     }
 );
 
