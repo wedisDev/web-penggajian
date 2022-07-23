@@ -56,6 +56,8 @@ Route::group(
         //Route Bonus Omzet
         Route::resource('/bonus-omzet', BonusOmzetController::class);
         Route::get('/bonus-omzet/delete/{id}', [BonusOmzetController::class, 'destroy']);
+
+        
     }
 );
 

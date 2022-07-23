@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GolonganSeeder::class);
         $this->call(JabatanSeeder::class);
         $this->call(CabangSeeder::class);
+        $this->call(BonusSeeder::class);
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class PegawaiController extends Controller
 {
@@ -75,11 +76,15 @@ class PegawaiController extends Controller
 
             $pegawai = new Pegawai();
 
+            $idCabang = $request->get('id_cabang');
+            
+            // $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y'), $idCabang]);
+            $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y').$idCabang]);	
             $pegawai->nama_pegawai = $request->get('nama_pegawai'); 
             $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
             $pegawai->alamat = $request->get('alamat');
             $pegawai->id_jabatan = $request->get('id_jabatan');
-            $pegawai->id_cabang = $request->get('id_cabang');
+            $pegawai->id_cabang = $idCabang;
             $pegawai->status = $request->get('status');
             $pegawai->tahun_masuk = $request->get('tahun_masuk');
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
