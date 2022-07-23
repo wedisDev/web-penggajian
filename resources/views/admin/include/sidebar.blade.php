@@ -70,6 +70,12 @@
                 <span>Bonus Omzet</span></a>
         </li>
 
+         <li class="nav-item">
+            <a class="nav-link" href="{{ url('/transaksi') }}">
+                <i class="fas fa-cash-register fa-chart-area"></i>
+                <span>transaksi</span></a>
+        </li>
+
     @elseif(Auth::user()->role == 'pegawai')
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/') }}">

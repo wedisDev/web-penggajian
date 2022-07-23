@@ -78,7 +78,6 @@ class PegawaiController extends Controller
 
             $idCabang = $request->get('id_cabang');
             
-            // $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y'), $idCabang]);
             $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y').$idCabang]);	
             $pegawai->nama_pegawai = $request->get('nama_pegawai'); 
             $pegawai->jenis_kelamin = $request->get('jenis_kelamin');

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GolonganController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PerhitunganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -57,7 +58,11 @@ Route::group(
         Route::resource('/bonus-omzet', BonusOmzetController::class);
         Route::get('/bonus-omzet/delete/{id}', [BonusOmzetController::class, 'destroy']);
 
-        
+        //Route Transaksi
+        Route::resource('/transaksi', PerhitunganController::class);
+        Route::get('/data-transaksi', [PerhitunganController::class, 'dataTransaksi']);
+        Route::get('/hitung-omzet', [PerhitunganController::class, 'hitungOmzet']);
+        Route::get('/transaksi/delete/{id}', [PerhitunganController::class, 'destroy']);
     }
 );
 
