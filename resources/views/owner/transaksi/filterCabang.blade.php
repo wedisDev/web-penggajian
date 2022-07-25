@@ -70,7 +70,6 @@
                         @else
                             <td>Data Kosong</td>
                         @endif
-
                     </tbody>
                 </table>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BonusOmzet;
+use App\Models\Cabang;
 use App\Models\Pegawai;
 use App\Models\Perhitungan;
 use Illuminate\Http\Request;
@@ -18,12 +19,30 @@ class PerhitunganController extends Controller
      */
     public function index()
     {
+        $cabang = Cabang::all();
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->get();
-
+        
         return view('owner.transaksi.index', [
             'pegawai' => $pegawai,
+            'cabang' => $cabang
+        ]);
+    }
+
+    public function filterCabangTransaksi($id)
+    {
+        $cabang = Cabang::all();
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->where('cb.id', $id)
+            ->get();
+        
+        return view('owner.transaksi.filterCabang', [
+            'pegawai' => $pegawai,
+            'cabang' => $cabang
         ]);
     }
 

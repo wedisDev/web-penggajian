@@ -64,6 +64,7 @@ Route::group(
         Route::get('/data-transaksi', [PerhitunganController::class, 'dataTransaksi']);
         Route::get('/hitung-omzet', [PerhitunganController::class, 'hitungOmzet']);
         Route::get('/transaksi/delete/{id}', [PerhitunganController::class, 'destroy']);
+        Route::get('/filter-cabang-transaksi/{id}', [PerhitunganController::class, 'filterCabangTransaksi']);
     }
 );
 
