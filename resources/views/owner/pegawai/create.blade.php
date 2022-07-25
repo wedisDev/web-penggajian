@@ -57,9 +57,9 @@
                     <label for="exampleFormControlSelect1">Status</label>
                     <select class="form-control" name="status">
                         <option>Pilih Status</option>
-                        <option value="Menikah">Menikah</option>
-                        <option value="Cerai">Cerai</option>
-                        <option value="Single">Single</option>
+                        @foreach ($golongan as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama_golongan }}</option>
+                        @endforeach
                     </select>
                 </div>
 

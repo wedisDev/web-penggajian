@@ -42,6 +42,7 @@ class GolonganController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make(request()->all(), [
+            'status' => 'required',
             'tunjangan_menikah' => 'required',
             'tunjangan_anak' => 'required'
         ]);
@@ -55,6 +56,7 @@ class GolonganController extends Controller
 
             $golongan = new Golongan();
 
+            $golongan->nama_golongan = $request->get('status');
             $golongan->tunjangan_menikah = $request->get('tunjangan_menikah');
             $golongan->tunjangan_anak = $request->get('tunjangan_anak');
             
@@ -96,6 +98,7 @@ class GolonganController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make(request()->all(), [
+            'status' => 'required',
             'tunjangan_menikah' => 'required',
             'tunjangan_anak' => 'required'
         ]);
@@ -109,6 +112,7 @@ class GolonganController extends Controller
 
             $golongan = Golongan::findOrFail($id);
 
+            $golongan->nama_golongan = $request->get('status');
             $golongan->tunjangan_menikah = $request->get('tunjangan_menikah');
             $golongan->tunjangan_anak = $request->get('tunjangan_anak');
             

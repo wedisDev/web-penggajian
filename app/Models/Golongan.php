@@ -10,7 +10,8 @@ class Golongan extends Model
     use HasFactory;
 
     protected $fillable = [
-       'tunjangan_menikah',
-       'tunjangan_anak'
+        'nama_golongan',
+        'tunjangan_menikah',
+        'tunjangan_anak'
     ];
 }

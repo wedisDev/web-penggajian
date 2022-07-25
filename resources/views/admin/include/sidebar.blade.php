@@ -93,6 +93,12 @@
                 <i class="fas fa-cash-register fa-chart-area"></i>
                 <span>transaksi</span></a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/gaji-pegawai') }}">
+                <i class="far fa-money-bill-alt fa-chart-area"></i>
+                <span>Gaji Pegawai</span></a>
+        </li>
     @elseif(Auth::user()->role == 'pegawai')
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/') }}">

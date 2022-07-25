@@ -47,9 +47,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="">Status</label>
-                    <input type="text" class="form-control" name="status"
-                        value="{{ $pegawai->status }}">
+                    <label for="exampleFormControlSelect1">Status</label>
+                    <select class="form-control" name="status">
+                        <option>Pilih Status</option>
+                        @foreach ($golongan as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama_golongan }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">

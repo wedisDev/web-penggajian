@@ -35,6 +35,26 @@ class PegawaiController extends Controller
         ]);
     }
 
+    public function gaji()
+    {
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->get();
+            // dd($pegawai);
+        $jabatan = Jabatan::all();
+        $golongan = Golongan::all();
+        $cabang = Cabang::all();
+
+        return view('owner.pegawai.gaji', [
+            'pegawai' => $pegawai,
+            'jabatan' => $jabatan,
+            'golongan' => $golongan,
+            'cabang' => $cabang
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

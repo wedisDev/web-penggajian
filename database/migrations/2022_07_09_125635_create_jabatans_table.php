@@ -21,6 +21,8 @@ class CreateJabatansTable extends Migration
             $table->integer('tunjangan_makan');
             $table->integer('tunjangan_transportasi');
             $table->integer('tunjangan_lembur');
+            $table->integer('tunjangan_menikah');
+            $table->integer('tunjangan_anak');
             $table->integer('bonus_tahunan');
             $table->timestamps();
         });

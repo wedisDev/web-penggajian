@@ -56,8 +56,8 @@
                                     <td>{{ $item->lembur }}</td>
                                     <td>{{ $item->pelanggaran }}</td>
                                     <td>{{ $item->bulan }}</td>
-                                    <td>{{ $item->omzet }}</td>
-                                    <td>{{ $item->total }}</td>
+                                    <td>{{ number_format($item->omzet) }}</td>
+                                    <td>{{ number_format($item->total) }}</td>
                                     <td>
                                         {{-- <a href="{{ route('jabatan.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit"></i>

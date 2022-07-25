@@ -1,22 +1,18 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Dashboard Data Pegawai')
+@section('title', 'Dashboard Data Gaji Pegawai')
 
 @section('content')
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Pegawai</h1>
-        <a href="{{ route('pegawai.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i>
-            Tambah Pegawai
-    </a>
+        <h1 class="h3 mb-0 text-gray-800">Data Gaji Pegawai</h1>
     </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Pegawai</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Gaji Pegawai</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -26,27 +22,33 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Jabatan</th>
-                            <th>Cabang</th>
+                            <th>Pelanggaran</th>
+                            <th>Lembur</th>
                             <th>Status</th>
                             <th>Jumlah Anak</th>
-                            <th>Actions</th>
+                            <th>Total gaji</th>
+                            <th>Slip Gaji</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pegawai as $item)
+                        @php
+                            $thr = 1 * $item->gapok;
+                            $tunjangan = $item->tunjangan_makan + $item->tunjangan_makmur + $item->tunjangan_transport + ($item->lembur * $item->tunjangan_lembur) + $item->tunjangan_menikah + ($item->jumlah_anak * $item->tunjangan_anak);
+
+                            $gaji = $item->gapok + $tunjangan + $item->bonus_omzet + $thr - $item->pelanggaran;
+                        @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
                                 <td>{{ $item->nama_jabatan }}</td>
-                                <td>{{ $item->nama_cabang }}</td>
-                                <td>{{ $item->status }}</td>
+                                <td>{{ $item->pelanggaran }}</td>
+                                <td>{{ $item->lembur }}</td>
+                                <td>{{ $item->nama_golongan }}</td>
                                 <td>{{ $item->jumlah_anak }}</td>
+                                <td>{{ number_format($gaji) }}</td>
                                 <td>
-                                    <a href="{{ route('pegawai.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-danger delete"
-                                        data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                    <button class="btn btn-success">Slip Gaji</button>
                                 </td>
                             </tr>
                         @endforeach

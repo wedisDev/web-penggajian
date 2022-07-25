@@ -18,6 +18,11 @@
                     <form action="{{ route('golongan.store') }}" method="post">
                         @csrf
                         <div class="form-group">
+                            <label for="">Status</label>
+                            <input type="text" name="status" class="form-control" placeholder="Menikah ....">
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="">Tunjangan Menikah</label>
                             <input type="text" class="form-control" name="tunjangan_menikah"
                                 placeholder="Rp 100.000....">
@@ -78,6 +83,11 @@
                                             <form action="{{ route('golongan.update', $item->id) }}" method="post">
                                                 {{ method_field('PUT') }}
                                                 @csrf
+                                                <div class="form-group">
+                                                    <label for="">Status</label>
+                                                    <input type="text" name="status" class="form-control" value="{{ $item->status }}">
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label for="">Tunjangan Menikah</label>
                                                     <input type="text" class="form-control" name="tunjangan_menikah"
