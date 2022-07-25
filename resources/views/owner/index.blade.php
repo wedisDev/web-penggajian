@@ -15,6 +15,24 @@
                 Owner
             @endif
         </h1>
+        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
+        <form action="{{ url('/year-filter') }}" method="post">
+            @csrf
+            <div class="row">
+                <div class="col-sm-8">
+                    <select name="tahun" class="form-control">
+                        <option value="">Pilih Tahun</option>
+                        @foreach ($tahun as $item)
+                            <option value="{{ $item->tahun }}">{{ $item->tahun }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div id="chartOmzet"></div>
@@ -62,7 +80,7 @@
                     pointFormat: '<span style="color:{point.color}">{point.date} <br>{point.name}</span>: <b>{point.y:.0f}</b><br/>'
                 },
                 series: [{
-                    name: "Bulan",
+                    name: "Omzet",
                     colorByPoint: true,
                     data: {!! json_encode($a) !!}
                 }],

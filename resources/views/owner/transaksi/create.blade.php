@@ -32,8 +32,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Jabatan</label>
-                            <input type="text" class="form-control" name="jabatan" id="data_jabatan" placeholder="Jabatan"
-                                readonly>
+                            <input type="text" class="form-control" name="jabatan" id="data_jabatan"
+                                placeholder="Jabatan" readonly>
                         </div>
                     </div>
                 </div>
@@ -118,6 +118,7 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     <script>
         $('#id_pegawai').on('change', function(e) {
             var pegawai_id = e.target.value;

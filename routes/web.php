@@ -36,6 +36,7 @@ Route::group(
     ],
     function () {
         // Route::get('/pilih-cabang', [DashboardController::class, 'pilihCabang']);
+        Route::post('/year-filter', [DashboardController::class, 'chartByYear']);
 
         //Route Golongan
         Route::resource('/golongan', GolonganController::class);
