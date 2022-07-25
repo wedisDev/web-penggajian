@@ -18,20 +18,19 @@
     </div>
 
     <div id="chartOmzet"></div>
+
+
 @endsection
 
 @push('scripts')
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-
     <script>
-        // Create the chart
         $(document).ready(function() {
             Highcharts.chart('chartOmzet', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Omzet'
+                    text: 'Data Barang Masuk'
                 },
                 accessibility: {
                     announceNewData: {
@@ -39,7 +38,7 @@
                     }
                 },
                 xAxis: {
-                    type: 'Bulan'
+                    categories: {!! json_encode($b) !!},
                 },
                 yAxis: {
                     title: {
@@ -63,8 +62,9 @@
                     pointFormat: '<span style="color:{point.color}">{point.date} <br>{point.name}</span>: <b>{point.y:.0f}</b><br/>'
                 },
                 series: [{
-                    name: "Jumlah Barang",
+                    name: "Bulan",
                     colorByPoint: true,
+                    data: {!! json_encode($a) !!}
                 }],
             });
         });
