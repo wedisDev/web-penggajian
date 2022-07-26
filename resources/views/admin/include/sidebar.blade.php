@@ -89,7 +89,7 @@
         </li> --}}
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('/transaksi') }}">
+            <a class="nav-link" href="{{ url('/pilih-cabang') }}">
                 <i class="fas fa-cash-register fa-chart-area"></i>
                 <span>transaksi</span></a>
         </li>

@@ -31,6 +31,14 @@ class PerhitunganController extends Controller
         ]);
     }
 
+    public function pilihCabang()
+    {
+        $cabang = Cabang::all();
+        return view('owner.transaksi.pilih', [
+            'cabang' => $cabang
+        ]);
+    }
+
     public function filterCabangTransaksi($id)
     {
         $cabang = Cabang::all();
@@ -51,11 +59,12 @@ class PerhitunganController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
+            ->where('pegawais.id_cabang', $id)
             ->get();
 
         return view('owner.transaksi.create', [
@@ -73,10 +82,10 @@ class PerhitunganController extends Controller
         return response()->json($pegawai);
     }
 
-    public function hitungOmzet(Request $request)
+    public function hitungOmzet(Request $request, $id)
     {
         $data = BonusOmzet::join('cabangs as cb', 'cb.id', '=', 'bonus_omzets.id_cabang')
-            ->where('bonus_omzets.id_cabang', 1)
+            ->where('bonus_omzets.id_cabang', $id)
             ->first();
 
         $omzet = $request->omzet;

@@ -7,24 +7,10 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Data Transaksi</h1>
-        <div class="row">
-            <div class="col-md-6" align="right">
-                <select name="" class="form-control text-dark" onchange="location = this.value;">
-                    <option value="">Pilih Cabang</option>
-                    @foreach ($cabang as $item)
-                        <option value="{{ url('/filter-cabang-transaksi', $item->id) }}">
-                            {{ $item->nama_cabang }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-6" align="right">
-                <a href="{{ route('transaksi.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                    <i class="fas fa-plus fa-sm text-white-50"></i>
-                    Tambah Transaksi
-                </a>
-            </div>
-        </div>
+        <a href="{{ url('/tambah-transaksi', $pegawai[0]->id_cabang) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i>
+            Tambah Transaksi
+        </a>
     </div>
 
     <!-- DataTales Example -->

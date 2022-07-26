@@ -88,6 +88,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Omzet</label>
+                            <input type="text" name="id_pegawai" value="{{ $pegawai[0]->id_pegawai }}" hidden>
                             <input type="text" class="form-control" name="omzet" id="jumlah_omzet" placeholder="Omzet">
                         </div>
                     </div>
@@ -141,7 +142,7 @@
         $('#jumlah_omzet').on('change', function(e) {
             var omzet = e.target.value;
             $.ajax({
-                url: '/hitung-omzet',
+                url: '/hitung-omzet/' + {{ $pegawai[0]->id_cabang }},
                 method: 'GET',
                 data: {
                     omzet: omzet

@@ -35,7 +35,6 @@ Route::group(
         'middleware' => 'auth'
     ],
     function () {
-        // Route::get('/pilih-cabang', [DashboardController::class, 'pilihCabang']);
         Route::post('/year-filter', [DashboardController::class, 'chartByYear']);
 
         //Route Golongan
@@ -64,8 +63,10 @@ Route::group(
 
         //Route Transaksi
         Route::resource('/transaksi', PerhitunganController::class);
+        Route::get('/tambah-transaksi/{id}', [PerhitunganController::class, 'create']);
         Route::get('/data-transaksi', [PerhitunganController::class, 'dataTransaksi']);
-        Route::get('/hitung-omzet', [PerhitunganController::class, 'hitungOmzet']);
+        Route::get('/hitung-omzet/{id}', [PerhitunganController::class, 'hitungOmzet']);
+        Route::get('/pilih-cabang', [PerhitunganController::class, 'pilihCabang']);
         Route::get('/transaksi/delete/{id}', [PerhitunganController::class, 'destroy']);
         Route::get('/filter-cabang-transaksi/{id}', [PerhitunganController::class, 'filterCabangTransaksi']);
     }
