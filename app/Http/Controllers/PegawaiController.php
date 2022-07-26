@@ -56,6 +56,27 @@ class PegawaiController extends Controller
         ]);
     }
 
+    public function filterGajiCabang($id)
+    {
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->where('cb.id', $id)
+            ->get();
+        // dd($pegawai);
+        $jabatan = Jabatan::all();
+        $golongan = Golongan::all();
+        $cabang = Cabang::all();
+
+        return view('owner.pegawai.gajiByCabang', [
+            'pegawai' => $pegawai,
+            'jabatan' => $jabatan,
+            'golongan' => $golongan,
+            'cabang' => $cabang
+        ]);
+    }
+
     public function slipGaji($id)
     {
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
@@ -74,7 +95,7 @@ class PegawaiController extends Controller
 
         ])->setpaper('a4', 'landscape');
 
-        return $pdf->download('slip-gaji'.'-'.$pegawai[0]->nama_pegawai.'.pdf');
+        return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
     }
 
     /**

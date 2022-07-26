@@ -39,28 +39,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pegawai as $item)
-                            @php
-                                $thr = 1 * $item->gapok;
-                                $tunjangan = $item->tunjangan_makan + $item->tunjangan_makmur + $item->tunjangan_transport + $item->lembur * $item->tunjangan_lembur + $item->tunjangan_menikah + $item->jumlah_anak * $item->tunjangan_anak;
-                                
-                                $gaji = $item->gapok + $tunjangan + $item->bonus_omzet + $thr - $item->pelanggaran;
-                            @endphp
+                        @if (!empty($pegawai))
+                            @foreach ($pegawai as $item)
+                                @php
+                                    $thr = 1 * $item->gapok;
+                                    $tunjangan = $item->tunjangan_makan + $item->tunjangan_makmur + $item->tunjangan_transport + $item->lembur * $item->tunjangan_lembur + $item->tunjangan_menikah + $item->jumlah_anak * $item->tunjangan_anak;
+                                    
+                                    $gaji = $item->gapok + $tunjangan + $item->bonus_omzet + $thr - $item->pelanggaran;
+                                @endphp
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->nama_pegawai }}</td>
+                                    <td>{{ $item->nama_jabatan }}</td>
+                                    <td>{{ $item->pelanggaran }}</td>
+                                    <td>{{ $item->lembur }}</td>
+                                    <td>{{ $item->nama_golongan }}</td>
+                                    <td>{{ $item->jumlah_anak }}</td>
+                                    <td>{{ number_format($gaji) }}</td>
+                                    <td>
+                                        <a href="{{ url('/slip-gaji', $item->id_pegawai) }}" class="btn btn-success">Slip
+                                            Gaji</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama_pegawai }}</td>
-                                <td>{{ $item->nama_jabatan }}</td>
-                                <td>{{ $item->pelanggaran }}</td>
-                                <td>{{ $item->lembur }}</td>
-                                <td>{{ $item->nama_golongan }}</td>
-                                <td>{{ $item->jumlah_anak }}</td>
-                                <td>{{ number_format($gaji) }}</td>
-                                <td>
-                                    <a href="{{ url('/slip-gaji', $item->id_pegawai) }}" class="btn btn-success">Slip
-                                        Gaji</a>
-                                </td>
+                                <td colspan="8" class="text-center">Tidak ada data</td>
                             </tr>
-                        @endforeach
+                        @endif
+
 
                     </tbody>
                 </table>
