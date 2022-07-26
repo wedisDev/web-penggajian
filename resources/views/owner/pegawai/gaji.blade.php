@@ -48,7 +48,7 @@
                                 <td>{{ $item->jumlah_anak }}</td>
                                 <td>{{ number_format($gaji) }}</td>
                                 <td>
-                                    <button class="btn btn-success">Slip Gaji</button>
+                                    <a href="{{ url('/slip-gaji', $item->id_pegawai) }}" class="btn btn-success">Slip Gaji</a>
                                 </td>
                             </tr>
                         @endforeach

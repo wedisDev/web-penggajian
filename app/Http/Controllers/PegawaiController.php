@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PegawaiController extends Controller
 {
@@ -42,7 +43,7 @@ class PegawaiController extends Controller
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
             ->get();
-            // dd($pegawai);
+        // dd($pegawai);
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
@@ -53,6 +54,27 @@ class PegawaiController extends Controller
             'golongan' => $golongan,
             'cabang' => $cabang
         ]);
+    }
+
+    public function slipGaji($id)
+    {
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->where('id_pegawai', $id)
+            ->get();
+
+        // dd($pegawai);
+        // return view('owner.pegawai.slip-gaji', [
+        //     'pegawai' => $pegawai
+        // ]);
+        $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
+            'pegawai' => $pegawai
+
+        ])->setpaper('a4', 'landscape');
+
+        return $pdf->download('slip-gaji'.'-'.$pegawai[0]->nama_pegawai.'.pdf');
     }
 
     /**
@@ -91,15 +113,15 @@ class PegawaiController extends Controller
             dd($validator->errors());
             return back()->withErrors($validator->errors());
         } else {
-            
+
             Alert::success('Success', 'Pegawai berhasil ditambahkan');
 
             $pegawai = new Pegawai();
 
             $idCabang = $request->get('id_cabang');
-            
-            $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y').$idCabang]);	
-            $pegawai->nama_pegawai = $request->get('nama_pegawai'); 
+
+            $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang]);
+            $pegawai->nama_pegawai = $request->get('nama_pegawai');
             $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
             $pegawai->alamat = $request->get('alamat');
             $pegawai->id_jabatan = $request->get('id_jabatan');
@@ -112,7 +134,6 @@ class PegawaiController extends Controller
 
             return redirect()->route('pegawai.index');
         }
-        
     }
 
     /**
@@ -166,12 +187,12 @@ class PegawaiController extends Controller
             dd($validator->errors());
             return back()->withErrors($validator->errors());
         } else {
-            
+
             Alert::success('Success', 'Pegawai berhasil diUbah');
 
             $pegawai = Pegawai::findOrFail($id);
 
-            $pegawai->nama_pegawai = $request->get('nama_pegawai'); 
+            $pegawai->nama_pegawai = $request->get('nama_pegawai');
             $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
             $pegawai->alamat = $request->get('alamat');
             $pegawai->id_jabatan = $request->get('id_jabatan');

@@ -51,8 +51,7 @@ Route::group(
         Route::get('/pegawai/delete/{id}', [PegawaiController::class, 'destroy']);
         Route::get('/pegwai/rincian-gaji', [PegawaiController::class, 'rincian']);
         Route::get('/gaji-pegawai',  [PegawaiController::class, 'gaji']);
-        Route::get('/gaji-pegawai/tambah',  [PegawaiController::class, 'createGaji']);
-        Route::post('/gaji-pegawai/tambah',  [PegawaiController::class, 'storeGaji']);
+        Route::get('/slip-gaji/{id}',  [PegawaiController::class, 'slipGaji']);
 
         //Route Cabang
         Route::resource('/cabang', CabangController::class);
