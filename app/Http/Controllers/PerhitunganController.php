@@ -66,6 +66,7 @@ class PerhitunganController extends Controller
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
             ->where('pegawais.id_cabang', $id)
             ->get();
 

@@ -48,7 +48,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Barang Masuk'
+                    text: 'Data Omzet'
                 },
                 accessibility: {
                     announceNewData: {

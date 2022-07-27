@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BonusOmzetController;
 use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DashboardController;
@@ -35,6 +36,8 @@ Route::group(
         'middleware' => 'auth'
     ],
     function () {
+        Route::get('/ubah-password/{id}', [DashboardController::class, 'changePassword']);
+        Route::post('/ubah-password-store/{id}', [DashboardController::class, 'storePassword']);
         Route::post('/year-filter', [DashboardController::class, 'chartByYear']);
 
         //Route Golongan

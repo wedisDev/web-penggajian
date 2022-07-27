@@ -7,8 +7,10 @@ use App\Models\Golongan;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
 use App\Models\Perhitungan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 use Svg\Tag\Rect;
 
 class DashboardController extends Controller
@@ -95,5 +97,23 @@ class DashboardController extends Controller
         return view('owner.pilih',  [
             'cabang' => Cabang::all()
         ]);
+    }
+
+    public function changePassword($id)
+    {
+        $data = User::findOrFail($id);
+
+        return view('owner.ubahPassword.changePassword', compact('data'));
+    }
+
+    public function storePassword(Request $request, $id)
+    {
+        Alert::success('Success', 'Berhasil mengubah password');
+        $password = $request->password;
+        User::where('id', $id)->update(['password' => bcrypt($password)]);
+        // $data->password = bcrypt($password);
+
+
+        return redirect()->back();
     }
 }

@@ -133,7 +133,7 @@
                     console.log(data);
                     $('#data_nama').val(data.nama_pegawai);
                     $('#data_jabatan').val(data.nama_jabatan);
-                    $('#data_status').val(data.status);
+                    $('#data_status').val(data.nama_golongan);
                     $('#data_jumlah_anak').val(data.jumlah_anak);
                 }
             })
@@ -153,7 +153,7 @@
                         $('#bonus_omzet').val(0);
                         $('#total').val(data.hitung);
                     } else {
-                        $('#bonus_omzet').val(data.data.bonus);
+                        $('#bonus_omzet').val(data.bonus.bonus);
                         $('#total').val(data.hitung);
                     }
                 }
