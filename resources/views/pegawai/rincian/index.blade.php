@@ -16,7 +16,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table" id="tablePegawai">
+                <table class="table" id="tableRincian">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -31,13 +31,21 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
                                 <td>{{ $item->nama_jabatan }}</td>
-                                <td>{{ $item->gapok }}</td>
+                                <td>{{ $item->total }}</td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tableRincian').DataTable();
+        });
+    </script>
+@endpush

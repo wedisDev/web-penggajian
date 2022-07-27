@@ -185,7 +185,7 @@ class PerhitunganController extends Controller
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
             ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
-            ->where('pegawais.id_cabang', $id)
+            ->where('pegawais.id', $id)
             ->get();
         // dd($pegawai);
         return view('owner.transaksi.edit', [

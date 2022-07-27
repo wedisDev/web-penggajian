@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PegawaiController extends Controller
@@ -154,6 +155,7 @@ class PegawaiController extends Controller
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
 
             User::create([
+                'id_pegawai' => IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang]),
                 'name' => $request->get('nama_pegawai'),
                 'role' => 'pegawai',
                 'email' => Str::lower(str_replace(' ', '', $request->get('nama_pegawai'))) . '@gmail.com',
@@ -161,7 +163,7 @@ class PegawaiController extends Controller
             ]);
 
             $pegawai->save();
-            
+
 
             return redirect()->route('pegawai.index');
         }
@@ -255,10 +257,49 @@ class PegawaiController extends Controller
     public function rincian()
     {
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->where('pegawais.id', Auth::user()->id_pegawai)
             ->get();
 
         return view('pegawai.rincian.index', [
             'pegawai' => $pegawai
+        ]);
+    }
+
+    public function pelanggaran()
+    {
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->where('pegawais.id', Auth::user()->id_pegawai)
+            ->get();
+
+        return view('pegawai.pelanggaran.index', [
+            'pegawai' => $pegawai
+        ]);
+    }
+
+    public function history()
+    {
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->where('pegawais.id', Auth::user()->id_pegawai)
+            ->get();
+        // dd($pegawai);
+        $jabatan = Jabatan::all();
+        $golongan = Golongan::all();
+        $cabang = Cabang::all();
+
+        return view('pegawai.history.index', [
+            'pegawai' => $pegawai,
+            'jabatan' => $jabatan,
+            'golongan' => $golongan,
+            'cabang' => $cabang
         ]);
     }
 }

@@ -91,14 +91,9 @@
         </li>
     @elseif(Auth::user()->role == 'pegawai')
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('/') }}">
+            <a class="nav-link" href="{{ url('/pelanggaran') }}">
                 <i class="fas fa-exclamation-circle"></i>
                 <span>Pelanggaran Pegawai</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('/') }}">
-                <i class="fas fa-trophy"></i>
-                <span>Perestasi Pegawai</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/pegwai/rincian-gaji') }}">
@@ -106,7 +101,7 @@
                 <span>Rincian gaji Pegawai</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('/') }}">
+            <a class="nav-link" href="{{ url('/history') }}">
                 <i class="fas fa-history"></i>
                 <span>History Rincian Pegawai</span></a>
         </li>

@@ -55,7 +55,17 @@ class DashboardController extends Controller
                 'b' => $b
             ]);
         } elseif (Auth::user()->role == 'pegawai') {
-            return view('pegawai.index');
+            
+            $data = User::join('pegawais as pg', 'pg.id', '=', 'users.id_pegawai')
+                ->join('jabatans as jb', 'jb.id', '=', 'pg.id_jabatan')
+                ->join('cabangs as cb', 'cb.id', '=', 'pg.id_cabang')
+                ->join('golongans as gl', 'gl.id', '=', 'pg.status')
+                ->where('users.id', Auth::user()->id)
+                ->get();
+            // dd($data);
+            return view('pegawai.index', [
+                'data' => $data
+            ]);
         } elseif (Auth::user()->role == 'owner') {
 
             $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();

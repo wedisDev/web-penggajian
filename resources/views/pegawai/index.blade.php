@@ -6,25 +6,61 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
-            Dashboard
-            @if (Auth::user()->role == 'admin')
-                Admin
-            @elseif(Auth::user()->role == 'pegawai')
-                Pegawai
-            @elseif(Auth::user()->role == 'owner')
-                Owner
-            @endif
+            Dashboard {{ Auth::user()->name }}
         </h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     <!-- Content Row -->
-
-    <div class="card shadow rounded" style="width: 20rem;">
+    <div class="card shadow rounded" >
         <div class="card-body">
-            Nama : {{ Auth::user()->name }} <br>
-            Email : {{ Auth::user()->email }} <br>
+            <div class="row">
+                <div class="col-md-2">
+                    ID Pegawai 
+                </div>
+                <div class="col-md-4">
+                    : &nbsp; {{ $data[0]->id_pegawai }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    Nama 
+                </div>
+                <div class="col-md-4">
+                    : &nbsp; {{ $data[0]->nama_pegawai }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    Alamat 
+                </div>
+                <div class="col-md-4">
+                    : &nbsp; {{ $data[0]->alamat }}
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-2">
+                    Jabatan 
+                </div>
+                <div class="col-md-4">
+                    : &nbsp; {{ $data[0]->nama_jabatan }}
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-2">
+                    Cabang 
+                </div>
+                <div class="col-md-4">
+                    : &nbsp; {{ $data[0]->nama_cabang }}
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-2">
+                    Tahun Masuk 
+                </div>
+                <div class="col-md-4">
+                    : &nbsp; {{ $data[0]->tahun_masuk }}
+                </div>
+            </div> 
         </div>
     </div>
 
