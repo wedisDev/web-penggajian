@@ -60,11 +60,11 @@
                                     <td>{{ number_format($item->omzet) }}</td>
                                     <td>{{ number_format($item->total) }}</td>
                                     <td>
-                                        {{-- <a href="{{ route('jabatan.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('transaksi.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a href="#" class="btn btn-sm btn-danger delete"
-                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a> --}}
+                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -6,11 +6,13 @@ use App\Models\Cabang;
 use App\Models\Golongan;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
 
 class PegawaiController extends Controller
 {
@@ -151,7 +153,15 @@ class PegawaiController extends Controller
             $pegawai->tahun_masuk = $request->get('tahun_masuk');
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
 
+            User::create([
+                'name' => $request->get('nama_pegawai'),
+                'role' => 'pegawai',
+                'email' => Str::lower(str_replace(' ', '', $request->get('nama_pegawai'))) . '@gmail.com',
+                'password' => bcrypt(IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang])),
+            ]);
+
             $pegawai->save();
+            
 
             return redirect()->route('pegawai.index');
         }

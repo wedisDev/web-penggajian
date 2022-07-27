@@ -71,7 +71,6 @@
                         <tr>
                             <th>No</th>
                             <th>Cabang</th>
-                            <th>Jabatan</th>
                             <th>Bonus Omzet</th>
                             <th>Actions</th>
                         </tr>
@@ -135,7 +134,6 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_cabang }}</td>
-                                <td>{{ $item->nama_jabatan }}</td>
                                 <td>{{ $item->bonus }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"

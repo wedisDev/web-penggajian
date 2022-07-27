@@ -111,7 +111,6 @@ class DashboardController extends Controller
         Alert::success('Success', 'Berhasil mengubah password');
         $password = $request->password;
         User::where('id', $id)->update(['password' => bcrypt($password)]);
-        // $data->password = bcrypt($password);
 
 
         return redirect()->back();

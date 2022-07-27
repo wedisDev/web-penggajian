@@ -24,7 +24,7 @@ class PerhitunganController extends Controller
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->get();
-        
+
         return view('owner.transaksi.index', [
             'pegawai' => $pegawai,
             'cabang' => $cabang
@@ -91,10 +91,10 @@ class PerhitunganController extends Controller
         //     ->where('bonus_omzets.id_cabang', $id)
         //     ->first();
         $data =  Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
-                ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
-                ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
-                ->where('bo.id_cabang', $id)
-                ->first();
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
+            ->where('bo.id_cabang', $id)
+            ->first();
 
         $omzet = $request->omzet;
 
@@ -102,7 +102,7 @@ class PerhitunganController extends Controller
             $thr = 1 * $data->gapok;
             $tunjangan = $data->tunjangan_makan + $data->tunjangan_makmur + $data->tunjangan_transport + $data->lembur * $data->tunjangan_lembur + $data->tunjangan_menikah + $data->jumlah_anak * $data->tunjangan_anak;
             $gaji = $data->gapok + $tunjangan + $data->bonus_omzet + $thr - $data->pelanggaran;
-            
+
             $hasil = 0;
             return response()->json([
                 'bonus' => $hasil,
@@ -180,7 +180,17 @@ class PerhitunganController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
+            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->where('pegawais.id_cabang', $id)
+            ->get();
+        // dd($pegawai);
+        return view('owner.transaksi.edit', [
+            'pegawai' => $pegawai,
+        ]);
     }
 
     /**
@@ -192,7 +202,37 @@ class PerhitunganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make(request()->all(), [
+            'pegawai_id' => 'required',
+            'bulan' => 'required',
+            'lembur' => 'required',
+            'pelanggaran' => 'required',
+            'omzet' => 'required',
+            'bonus_omzet' => 'required',
+            'total' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            dd($validator->errors());
+            return back()->withErrors($validator->errors());
+        } else {
+            Alert::success('Berhasil', 'Data Berhasil Diubah');
+
+            $data = Perhitungan::findOrFail($id);
+
+            $data->id_pegawai = $request->pegawai_id;
+            $data->bulan = $request->bulan;
+            $data->lembur = $request->lembur;
+            $data->pelanggaran = $request->pelanggaran;
+            $data->omzet = $request->omzet;
+            $data->tahun = $request->tahun;
+            $data->bonus_omzet = $request->bonus_omzet;
+            $data->total = $request->total;
+            // dd($data);
+            $data->save();
+
+            return redirect()->route('transaksi.index');
+        }
     }
 
     /**
@@ -203,6 +243,9 @@ class PerhitunganController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pegawai = Perhitungan::findOrFail($id);
+        $pegawai->delete();
+
+        return redirect()->back();
     }
 }
