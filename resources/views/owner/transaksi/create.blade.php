@@ -18,7 +18,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="">ID Pegawai</label>
-                    <input type="text" class="form-control" name="id_pegawai" id="id_pegawai" placeholder="ID Pegawai">
+                    <input type="text" class="form-control" name="pegawai_id" id="id_pegawai" placeholder="ID Pegawai">
                 </div>
 
                 <div class="row">
@@ -149,8 +149,13 @@
                 },
                 success: function(data) {
                     console.log(data);
-                    $('#bonus_omzet').val(data.data.bonus);
-                    $('#total').val(data.hitung);
+                    if (data.bonus == 0) {
+                        $('#bonus_omzet').val(0);
+                        $('#total').val(data.hitung);
+                    } else {
+                        $('#bonus_omzet').val(data.data.bonus);
+                        $('#total').val(data.hitung);
+                    }
                 }
             })
         });

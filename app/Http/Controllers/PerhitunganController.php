@@ -41,16 +41,18 @@ class PerhitunganController extends Controller
 
     public function filterCabangTransaksi($id)
     {
-        $cabang = Cabang::all();
+        $cabang = Cabang::findOrFail($id);
+        $cabangs = Cabang::all();
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->where('cb.id', $id)
             ->get();
-        
+        // dd($cabang);
         return view('owner.transaksi.filterCabang', [
             'pegawai' => $pegawai,
-            'cabang' => $cabang
+            'cabang' => $cabang,
+            'cabangs' => $cabangs
         ]);
     }
 
@@ -84,22 +86,35 @@ class PerhitunganController extends Controller
 
     public function hitungOmzet(Request $request, $id)
     {
-        $data = BonusOmzet::join('cabangs as cb', 'cb.id', '=', 'bonus_omzets.id_cabang')
-            ->where('bonus_omzets.id_cabang', $id)
-            ->first();
+        // $data = BonusOmzet::join('cabangs as cb', 'cb.id', '=', 'bonus_omzets.id_cabang')
+        //     ->where('bonus_omzets.id_cabang', $id)
+        //     ->first();
+        $data =  Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+                ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+                ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
+                ->where('bo.id_cabang', $id)
+                ->first();
 
         $omzet = $request->omzet;
 
         if ($omzet <= $data->bonus) {
+            $thr = 1 * $data->gapok;
+            $tunjangan = $data->tunjangan_makan + $data->tunjangan_makmur + $data->tunjangan_transport + $data->lembur * $data->tunjangan_lembur + $data->tunjangan_menikah + $data->jumlah_anak * $data->tunjangan_anak;
+            $gaji = $data->gapok + $tunjangan + $data->bonus_omzet + $thr - $data->pelanggaran;
+            
+            $hasil = 0;
             return response()->json([
-                'data' => $data,
-                'hitung' => 0
+                'bonus' => $hasil,
+                'hitung' => $gaji
             ]);
         } else {
-            $hitung = $omzet + $data->bonus;
+            $thr = 1 * $data->gapok;
+            $tunjangan = $data->tunjangan_makan + $data->tunjangan_makmur + $data->tunjangan_transport + $data->lembur * $data->tunjangan_lembur + $data->tunjangan_menikah + $data->jumlah_anak * $data->tunjangan_anak;
+            $gaji = $data->gapok + $tunjangan + $data->bonus_omzet + $thr - $data->pelanggaran;
+
             return response()->json([
-                'data' => $data,
-                'hitung' => $hitung
+                'bonus' => $data,
+                'hitung' => $gaji
             ]);
         }
     }
@@ -113,7 +128,7 @@ class PerhitunganController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'id_pegawai' => 'required',
+            'pegawai_id' => 'required',
             'bulan' => 'required',
             'lembur' => 'required',
             'pelanggaran' => 'required',
@@ -130,7 +145,7 @@ class PerhitunganController extends Controller
 
             $data = new Perhitungan();
 
-            $data->id_pegawai = $request->id_pegawai;
+            $data->id_pegawai = $request->pegawai_id;
             $data->bulan = $request->bulan;
             $data->lembur = $request->lembur;
             $data->pelanggaran = $request->pelanggaran;
@@ -138,7 +153,7 @@ class PerhitunganController extends Controller
             $data->tahun = $request->tahun;
             $data->bonus_omzet = $request->bonus_omzet;
             $data->total = $request->total;
-
+            // dd($data);
             $data->save();
 
             return redirect()->route('transaksi.index');
