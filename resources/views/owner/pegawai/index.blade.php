@@ -10,7 +10,7 @@
         <a href="{{ route('pegawai.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus fa-sm text-white-50"></i>
             Tambah Pegawai
-    </a>
+        </a>
     </div>
 
     <!-- DataTales Example -->
@@ -29,7 +29,9 @@
                             <th>Cabang</th>
                             <th>Status</th>
                             <th>Jumlah Anak</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role == 'owner')
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -41,13 +43,15 @@
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>{{ $item->jumlah_anak }}</td>
-                                <td>
-                                    <a href="{{ route('pegawai.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-danger delete"
-                                        data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
-                                </td>
+                                @if (Auth::user()->role == 'owner')
+                                    <td>
+                                        <a href="{{ route('pegawai.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-danger delete"
+                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
 

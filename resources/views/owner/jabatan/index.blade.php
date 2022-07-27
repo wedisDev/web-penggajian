@@ -31,7 +31,9 @@
                             <th>Tunjangan Transportasi</th>
                             <th>Tunjangan Lembur</th>
                             <th>Bonus Tahunan</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role == 'owner')
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -46,16 +48,15 @@
                                     <td>{{ $item->tunjangan_transportasi }}</td>
                                     <td>{{ $item->tunjangan_lembur }}</td>
                                     <td>{{ $item->bonus_tahunan }}</td>
-                                    <td>
-                                        <a href="{{ route('jabatan.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger delete"
-                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
-                                        {{-- <a href="{{ route('golongan.delete', $item->id) }}"
-                                            class="btn btn-danger">Delete</a> --}}
-
-                                    </td>
+                                    @if (Auth::user()->role == 'owner')
+                                        <td>
+                                            <a href="{{ route('jabatan.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-sm btn-danger delete"
+                                                data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else

@@ -44,7 +44,9 @@
                             <th>Bulan</th>
                             <th>Omzet</th>
                             <th>Bonus</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role == 'owner')
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -58,13 +60,16 @@
                                     <td>{{ $item->bulan }}</td>
                                     <td>{{ number_format($item->omzet) }}</td>
                                     <td>{{ number_format($item->total) }}</td>
-                                    <td>
-                                        <a href="{{ route('transaksi.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger delete"
-                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
+                                    @if (Auth::user()->role == 'owner')
+                                        <td>
+                                            <a href="{{ route('transaksi.edit', $item->id) }}"
+                                                class="btn btn-sm btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-sm btn-danger delete"
+                                                data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else

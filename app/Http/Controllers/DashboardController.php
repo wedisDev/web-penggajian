@@ -27,11 +27,32 @@ class DashboardController extends Controller
             $jabatan = Jabatan::count();
             $golongan = Golongan::count();
             $pegawai = Pegawai::count();
+            
+            $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
+            $data = Perhitungan::orderBy('omzet', 'desc')->get();
+            
+            $a = [];
+            foreach ($data  as $item) {
+                $x['omzet'] = $item->omzet;
+
+                array_push($a, $item->omzet);
+            }
+
+            $b = [];
+            foreach ($data as $item) {
+                $x['bulan'] = $item->bulan;
+
+                array_push($b, $item->bulan);
+            }
+
 
             return view('admin.index', [
                 'jabatan' => $jabatan,
                 'golongan' => $golongan,
-                'pegawai' => $pegawai
+                'pegawai' => $pegawai,
+                'tahun' => $tahun,
+                'a' => $a,
+                'b' => $b
             ]);
         } elseif (Auth::user()->role == 'pegawai') {
             return view('pegawai.index');

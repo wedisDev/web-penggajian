@@ -72,7 +72,9 @@
                             <th>No</th>
                             <th>Cabang</th>
                             <th>Bonus Omzet</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role == 'owner')
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -92,7 +94,7 @@
                                             <form action="{{ route('bonus-omzet.update', $item->id) }}" method="post">
                                                 {{ method_field('PUT') }}
                                                 @csrf
-                                               
+
                                                 <div class="form-group">
                                                     <label for="">Cabang</label>
                                                     <select name="id_cabang" class="form-control" id="">
@@ -135,16 +137,16 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->bonus }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
-                                        data-target="#modalEdit{{ $item->id }}">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <a href="#" class="btn btn-sm btn-danger delete"
-                                        data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
-                                    {{-- <a href="{{ route('golongan.delete', $item->id) }}" class="btn btn-danger">Delete</a> --}}
-
-                                </td>
+                                @if (Auth::user()->role == 'owner')
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                            data-target="#modalEdit{{ $item->id }}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <a href="#" class="btn btn-sm btn-danger delete"
+                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
 

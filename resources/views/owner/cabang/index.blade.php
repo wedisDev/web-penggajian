@@ -19,8 +19,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="">Nama Cabang</label>
-                            <input type="text" class="form-control" name="nama_cabang"
-                                placeholder="Royal ...">
+                            <input type="text" class="form-control" name="nama_cabang" placeholder="Royal ...">
                         </div>
 
                         <div class="form-group">
@@ -58,7 +57,9 @@
                             <th>No</th>
                             <th>Nama Cabang</th>
                             <th>Alamat Cabang</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role == 'owner')
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -102,16 +103,16 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->alamat }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
-                                        data-target="#modalEdit{{ $item->id }}">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
-                                            class="fas fa-trash-alt"></i></a>
-                                    {{-- <a href="{{ route('golongan.delete', $item->id) }}" class="btn btn-danger">Delete</a> --}}
-
-                                </td>
+                                @if (Auth::user()->role == 'owner')
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                            data-target="#modalEdit{{ $item->id }}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <a href="#" class="btn btn-sm btn-danger delete"
+                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
 

@@ -21,7 +21,7 @@
                             <label for="">Status</label>
                             <input type="text" name="status" class="form-control" placeholder="Menikah ....">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="">Tunjangan Menikah</label>
                             <input type="text" class="form-control" name="tunjangan_menikah"
@@ -63,7 +63,9 @@
                             <th>No</th>
                             <th>Tunjangan Menikah</th>
                             <th>Tunjangan Anak</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role == 'owner')
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -85,7 +87,8 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     <label for="">Status</label>
-                                                    <input type="text" name="status" class="form-control" value="{{ $item->status }}">
+                                                    <input type="text" name="status" class="form-control"
+                                                        value="{{ $item->status }}">
                                                 </div>
 
                                                 <div class="form-group">
@@ -112,16 +115,16 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->tunjangan_menikah }}</td>
                                 <td>{{ $item->tunjangan_anak }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
-                                        data-target="#modalEdit{{ $item->id }}">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
-                                            class="fas fa-trash-alt"></i></a>
-                                    {{-- <a href="{{ route('golongan.delete', $item->id) }}" class="btn btn-danger">Delete</a> --}}
-
-                                </td>
+                                @if (Auth::user()->role == 'owner')
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                            data-target="#modalEdit{{ $item->id }}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <a href="#" class="btn btn-sm btn-danger delete"
+                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
 
