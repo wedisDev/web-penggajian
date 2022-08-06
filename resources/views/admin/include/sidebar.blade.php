@@ -4,9 +4,9 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" class="img-fluid" width="40px" alt="">
         </div>
-        <div class="sidebar-brand-text mx-3">Penggajian</div>
+        <div class="sidebar-brand-text mx-3">Kantin Tante</div>
     </a>
 
     <!-- Divider -->
