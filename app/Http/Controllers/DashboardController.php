@@ -169,6 +169,10 @@ class DashboardController extends Controller
             $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
             $datas = [null, null, null, null, null, null, null, null, null, null, null, null];
 
+            foreach ($tahun as $item) {
+                $tahun_baru = $item->tahun;
+            }
+
             for ($i = 0; $i < count($datas); $i++) {
                 if ($datas[$i] === null) {
                     $datas[$i] = 0;
@@ -232,13 +236,15 @@ class DashboardController extends Controller
                 array_push($d, $v);
             }
 
-
-
+            foreach ($tahun as $item) {
+                $tahun_baru = $item->tahun;
+            }
 
 
             return view('owner.index', [
                 'jabatan' => $jabatan,
                 'golongan' => $golongan,
+                'tahun_baru' => $tahun_baru,
                 'pegawai' => $pegawai,
                 'tahun' => $tahun,
                 'bulan' => $bulan,
