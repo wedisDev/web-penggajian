@@ -99,14 +99,21 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Pelanggaran</label>
                             <input type="text" class="form-control" name="pelanggaran" id="pelanggaran"
                                 placeholder="Pelanggaran">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Alpha</label>
+                            <input type="text" class="form-control" name="alpha" id="alpha"
+                                placeholder="Alpha">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Omzet</label>
 
@@ -120,7 +127,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Bonus Omzet</label>
-                            <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet" value="{{ $pegawai[0]->bonus_tahunan }}"
+                            <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet" value="{{ number_format($pegawai[0]->bonus_tahunan) }}"
                                 placeholder="Bonus Omzet" readonly>
                         </div>
                     </div>
@@ -128,7 +135,7 @@
                         <div class="form-group">
                             <label for="">Total</label>
                             <input type="text" class="form-control" name="total" id="total"
-                                placeholder="Total" value="{{ $pegawai[0]->bonus }}" readonly>
+                                placeholder="Total" value="{{ number_format($pegawai[0]->bonus) }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -172,9 +179,11 @@
                 success: function(data) {
                     console.log(data);
                     if (data.bonus == 0) {
+                        console.log(data)
                         $('#bonus_omzet').val(0);
                         $('#total').val(data.hitung);
                     } else {
+                        console.log(data)
                         $('#bonus_omzet').val(data.bonus.bonus);
                         $('#total').val(data.hitung);
                     }

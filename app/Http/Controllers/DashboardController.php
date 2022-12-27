@@ -38,6 +38,7 @@ class DashboardController extends Controller
             foreach ($tahun as $item) {
                 $tahun_baru = $item->tahun;
             }
+            // dd($tahun);
             // dd($tahun_baru);
             $data = DB::select("SELECT
                             bulan,
