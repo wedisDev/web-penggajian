@@ -39,7 +39,7 @@ Route::group(
         Route::get('/ubah-password/{id}', [DashboardController::class, 'changePassword']);
         Route::post('/ubah-password-store/{id}', [DashboardController::class, 'storePassword']);
         Route::post('/year-filter', [DashboardController::class, 'chartByYear']);
-        
+
         //Route Golongan
         Route::resource('/golongan', GolonganController::class);
         Route::get('/golongan/delete/{id}', [GolonganController::class, 'destroy']);
@@ -78,4 +78,4 @@ Route::group(
     }
 );
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

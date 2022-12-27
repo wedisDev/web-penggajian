@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -44,7 +45,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
-            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->get();
         // dd($pegawai);
         $jabatan = Jabatan::all();
@@ -82,23 +83,33 @@ class PegawaiController extends Controller
 
     public function slipGaji($id)
     {
+        $date = Carbon::now();
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
-            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('id_pegawai', $id)
             ->get();
-
+        $date_new = $date->toFormattedDateString();
+        $tahun = $pegawai[0]->created_at->year();
+        // dd($pegawai[0]->created_at);
+        // dd($tahun);
+        // $randomNumber = random_int(1, 999);
+        // dd($randomNumber);
         // dd($pegawai);
-        // return view('owner.pegawai.slip-gaji', [
-        //     'pegawai' => $pegawai
-        // ]);
+        return view('owner.pegawai.slip-gaji', [
+            'pegawai' => $pegawai,
+            'tanggal' => $date_new,
+            'tahun' => $tahun,
+        ]);
         $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'tanggal' => $date_new,
+            'tahun' => $tahun,
 
         ])->setpaper('a4', 'landscape');
 
-        return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
+        // return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
     }
 
     /**
@@ -259,9 +270,11 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
-            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('pegawais.id', Auth::user()->id_pegawai)
             ->get();
+        // dd(Auth::user()->id_pegawai, $pegawai[0]->total);
+
 
         return view('pegawai.rincian.index', [
             'pegawai' => $pegawai

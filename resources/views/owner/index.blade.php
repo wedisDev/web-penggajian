@@ -36,6 +36,7 @@
     </div>
 
     <div id="chartOmzet"></div>
+    <div  id="chartTahun"></div>
 
 
 @endsection
@@ -48,7 +49,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Omzet'
+                    text: 'Data Omzet Tahun <?= $tahun_pilih ?>'
                 },
                 accessibility: {
                     announceNewData: {
@@ -56,7 +57,7 @@
                     }
                 },
                 xAxis: {
-                    categories: {!! json_encode($b) !!},
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                 },
                 yAxis: {
                     title: {
@@ -82,7 +83,53 @@
                 series: [{
                     name: "Omzet",
                     colorByPoint: true,
-                    data: {!! json_encode($a) !!}
+                    data: {!! json_encode($datas) !!}
+                }],
+            });
+        });
+
+
+        $(document).ready(function() {
+            Highcharts.chart('chartTahun', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Data Omzet Pertahun'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    categories: {!! json_encode($c) !!},
+                },
+                yAxis: {
+                    title: {
+                        text: 'Omzet'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.0f}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.date} <br>{point.name}</span>: <b>{point.y:.0f}</b><br/>'
+                },
+                series: [{
+                    name: "Omzet",
+                    colorByPoint: true,
+                    data: {!! json_encode($d) !!},
                 }],
             });
         });

@@ -15,15 +15,18 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-2">
-                    ID Pegawai 
+                    ID Pegawai
                 </div>
                 <div class="col-md-4">
+                    @php
+                        // dd($data);
+                    @endphp
                     : &nbsp; {{ $data[0]->id_pegawai }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
-                    Nama 
+                    Nama
                 </div>
                 <div class="col-md-4">
                     : &nbsp; {{ $data[0]->nama_pegawai }}
@@ -31,36 +34,36 @@
             </div>
             <div class="row">
                 <div class="col-md-2">
-                    Alamat 
+                    Alamat
                 </div>
                 <div class="col-md-4">
                     : &nbsp; {{ $data[0]->alamat }}
                 </div>
-            </div> 
+            </div>
             <div class="row">
                 <div class="col-md-2">
-                    Jabatan 
+                    Jabatan
                 </div>
                 <div class="col-md-4">
                     : &nbsp; {{ $data[0]->nama_jabatan }}
                 </div>
-            </div> 
+            </div>
             <div class="row">
                 <div class="col-md-2">
-                    Cabang 
+                    Cabang
                 </div>
                 <div class="col-md-4">
                     : &nbsp; {{ $data[0]->nama_cabang }}
                 </div>
-            </div> 
+            </div>
             <div class="row">
                 <div class="col-md-2">
-                    Tahun Masuk 
+                    Tahun Masuk
                 </div>
                 <div class="col-md-4">
                     : &nbsp; {{ $data[0]->tahun_masuk }}
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 
