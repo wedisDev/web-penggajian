@@ -58,7 +58,7 @@
                     <select class="form-control" name="status">
                         <option>Pilih Status</option>
                         @foreach ($golongan as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_golongan }}</option>
+                            <option value="{{ $item->nama_golongan }}">{{ $item->nama_golongan }}</option>
                         @endforeach
                     </select>
                 </div>

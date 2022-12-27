@@ -23,6 +23,7 @@
                             <th>Nama</th>
                             <th>Jabatan</th>
                             <th>Gaji Pokok</th>
+                            <th>Slip Gaji</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,7 +32,11 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
                                 <td>{{ $item->nama_jabatan }}</td>
-                                <td>{{ $item->total }}</td>
+                                <td>{{ number_format($item->total) }}</td>
+                                <td>
+                                    <a href="{{ url('/slip-gaji', $item->id_pegawai) }}" class="btn btn-success">Slip
+                                        Gaji</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

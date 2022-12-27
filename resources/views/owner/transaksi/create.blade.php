@@ -3,6 +3,13 @@
 @section('title', 'Dashboard Tambah Transaksi')
 
 @section('content')
+{{-- @php
+                            foreach ($pegawai as $item) {
+                            //     # code...
+                                dd($pegawai);
+                            //     dd($pegawai[0]->id);
+                            }
+                            @endphp --}}
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -17,7 +24,7 @@
             <form action="{{ route('transaksi.store') }}" method="post">
                 @csrf
                 <div class="form-group">
-                    <label for="">ID Pegawai</label>
+                    <label for="">ID Pegawai </label>
                     <input type="text" class="form-control" name="pegawai_id" id="id_pegawai" placeholder="ID Pegawai">
                 </div>
 
@@ -25,14 +32,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Nama</label>
-                            <input type="text" class="form-control" name="nama" id="data_nama" placeholder="Nama"
+                            <input type="text" class="form-control" name="nama" id="data_nama" placeholder="Nama" value="{{ $pegawai[0]->nama_pegawai }}"
                                 readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Jabatan</label>
-                            <input type="text" class="form-control" name="jabatan" id="data_jabatan"
+                            <input type="text" class="form-control" name="jabatan" id="data_jabatan" value="{{ $pegawai[0]->nama_jabatan }}"
                                 placeholder="Jabatan" readonly>
                         </div>
                     </div>
@@ -42,14 +49,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Status</label>
-                            <input type="text" class="form-control" name="status" id="data_status" placeholder="Status"
+                            <input type="text" class="form-control" name="status" id="data_status" placeholder="Status" value="{{ $pegawai[0]->status }}"
                                 readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Jumlah Anak</label>
-                            <input type="text" class="form-control" name="jumlah_anak" id="data_jumlah_anak"
+                            <input type="text" class="form-control" name="jumlah_anak" id="data_jumlah_anak" value="{{ $pegawai[0]->jumlah_anak }}"
                                 placeholder="Jumlah Anak" readonly>
                         </div>
                     </div>
@@ -59,7 +66,21 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Bulan</label>
-                            <input type="text" class="form-control" name="bulan" id="bulan" placeholder="Bulan">
+                            {{-- <input type="text" class="form-control" name="bulan" id="bulan" placeholder="Bulan"> --}}
+                            <select class="form-control" name="bulan" id="bulan" placeholder="Bulan">
+                                <option selected value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -88,7 +109,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Omzet</label>
-                            <input type="text" name="id_pegawai" value="{{ $pegawai[0]->id_pegawai }}" hidden>
+
+                            <input type="text" name="id_pegawai" value="{{ $pegawai[0]->id }}" hidden>
                             <input type="text" class="form-control" name="omzet" id="jumlah_omzet" placeholder="Omzet">
                         </div>
                     </div>
@@ -98,7 +120,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Bonus Omzet</label>
-                            <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
+                            <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet" value="{{ $pegawai[0]->bonus_tahunan }}"
                                 placeholder="Bonus Omzet" readonly>
                         </div>
                     </div>
@@ -106,7 +128,7 @@
                         <div class="form-group">
                             <label for="">Total</label>
                             <input type="text" class="form-control" name="total" id="total"
-                                placeholder="Total" readonly>
+                                placeholder="Total" value="{{ $pegawai[0]->bonus }}" readonly>
                         </div>
                     </div>
                 </div>
