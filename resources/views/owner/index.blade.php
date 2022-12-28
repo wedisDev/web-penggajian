@@ -49,7 +49,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Omzet Tahun <?= $tahun_baru ?>'
+                    text: 'Data Omzet Tahun <?= $tahun_pilih ?>'
                 },
                 accessibility: {
                     announceNewData: {

@@ -43,7 +43,7 @@
                             <th>Pelanggaran</th>
                             <th>Bulan</th>
                             <th>Omzet</th>
-                            <th>Bonus</th>
+                            <th>Total Gaji</th>
                             @if (Auth::user()->role == 'owner')
                                 <th>Actions</th>
                             @endif

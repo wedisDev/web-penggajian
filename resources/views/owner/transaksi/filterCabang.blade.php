@@ -41,8 +41,10 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Pegawai</th>
+                            <th>Status</th>
                             <th>Lembur</th>
                             <th>Pelanggaran</th>
+                            <th>Alpha</th>
                             <th>Bulan</th>
                             <th>Omzet</th>
                             <th>Bonus</th>
@@ -57,8 +59,10 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nama_pegawai }}</td>
+                                    <td>{{ $item->status }}</td>
                                     <td>{{ $item->lembur }}</td>
                                     <td>{{ $item->pelanggaran }}</td>
+                                    <td>{{ $item->alpha }}</td>
                                     <td>{{ $item->bulan }}</td>
                                     <td>{{ number_format($item->omzet) }}</td>
                                     <td>{{ number_format($item->total) }}</td>
