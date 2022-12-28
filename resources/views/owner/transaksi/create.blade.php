@@ -124,20 +124,20 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Bonus Omzet</label>
                             <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet" value="{{ number_format($pegawai[0]->bonus_tahunan) }}"
                                 placeholder="Bonus Omzet" readonly>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Total</label>
                             <input type="text" class="form-control" name="total" id="total"
                                 placeholder="Total" value="{{ number_format($pegawai[0]->bonus) }}" readonly>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <button type="submit" class="btn btn-primary float-right mt-3">Tambah</button>

@@ -66,6 +66,7 @@ class DashboardController extends Controller
 
             foreach ($data as $item) {
 
+
                 if ($item->bulan == 1) {
                     $datas[0] = (int) $item->bulan;
                 } else if ($item->bulan == 2) {
@@ -123,7 +124,7 @@ class DashboardController extends Controller
 
 
             return view('admin.index', [
-                'tahun_baru' => $tahun_baru,
+                'tahun_pilih' => $tahun_baru,
                 'jabatan' => $jabatan,
                 'golongan' => $golongan,
                 'pegawai' => $pegawai,
@@ -160,10 +161,13 @@ class DashboardController extends Controller
 
             $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
             $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
+            foreach ($tahun as $item) {
+                $tahun_baru = $item->tahun;
+            }
             $data = Perhitungan::orderBy('omzet', 'desc')
                 ->where(
                     'tahun',
-                    2021
+                    $tahun_baru
                 )
                 ->get();
 
@@ -245,7 +249,7 @@ class DashboardController extends Controller
             return view('owner.index', [
                 'jabatan' => $jabatan,
                 'golongan' => $golongan,
-                'tahun_baru' => $tahun_baru,
+                'tahun_pilih' => $tahun_baru,
                 'pegawai' => $pegawai,
                 'tahun' => $tahun,
                 'bulan' => $bulan,

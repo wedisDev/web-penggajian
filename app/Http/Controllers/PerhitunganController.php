@@ -263,8 +263,9 @@ class PerhitunganController extends Controller
         ]);
 
 
-        $tunjangan_makan = 10000 * (26 - $request->alpha);
-        $tunjangan_lembur = 15000 * (26 - $request->alpha);
+        // $tunjangan_makan = 10000 * (26 - $request->alpha);
+        // $tunjangan_lembur = 15000 * (26 - $request->alpha);
+
 
         if ($validator->fails()) {
             dd($validator->errors());
@@ -272,9 +273,10 @@ class PerhitunganController extends Controller
         } else {
             Alert::success('Berhasil', 'Data Berhasil Disimpan');
 
+            $tunjangan_makan = (26 - $request->alpha) * 10000;
+            $tunjangan_lembur = (26 - $request->alpha) * 15000;
             $data = new Perhitungan();
-
-
+            // dd($request->all());
             $tunjangan = $data->tunjangan_makmur
                 + $data->tunjangan_menikah
                 + $data->tunjangan_anak
@@ -287,7 +289,7 @@ class PerhitunganController extends Controller
                 + $request->bonus_omzet
                 + ($tunjangan_lembur * $request->lembur)
                 - $request->pelanggaran;
-            dd($gaji, $request->all());
+            // dd($gaji, 624900, $request->all());
 
             $data->id_pegawai = $request->pegawai_id;
             $data->bulan = $request->bulan;
@@ -296,12 +298,13 @@ class PerhitunganController extends Controller
             $data->omzet = $request->omzet;
             $data->tahun = $request->tahun;
             $data->bonus_omzet = $request->bonus_omzet;
-            $data->total = $request->total;
+            // $data->total = $request->total;
+            $data->total = $gaji;
             $data->alpha = $request->alpha;
             // $data->total = $total_gaji - $request->pelanggaran;
             // dd($data);
             // dd();
-            // $data->save();
+            $data->save();
 
             return redirect()->route('transaksi.index');
         }
