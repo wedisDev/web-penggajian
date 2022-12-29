@@ -220,6 +220,7 @@ class PerhitunganController extends Controller
     public function store(Request $request)
     {
         $id = $request->pegawai_id;
+        // dd($request->all());
 
 
         // $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
@@ -259,7 +260,7 @@ class PerhitunganController extends Controller
             'pelanggaran' => 'required',
             'omzet' => 'required',
             'bonus_omzet' => 'required',
-            'total' => 'required',
+            // 'total' => 'required',
         ]);
 
 
@@ -268,10 +269,11 @@ class PerhitunganController extends Controller
 
 
         if ($validator->fails()) {
-            dd($validator->errors());
+            // dd($validator->messages());
+            Alert::error('Error Input', $validator->messages()->all());
             return back()->withErrors($validator->errors());
         } else {
-            Alert::success('Berhasil', 'Data Berhasil Disimpan');
+            // dd($request->all());
 
             $tunjangan_makan = (26 - $request->alpha) * 10000;
             $tunjangan_lembur = (26 - $request->alpha) * 15000;
