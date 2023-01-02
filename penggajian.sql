@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2022 at 12:01 PM
+-- Generation Time: Jan 02, 2023 at 06:23 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -169,7 +169,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2022_07_09_125829_create_perhitungans_table', 1),
 (8, '2022_07_09_125841_create_golongans_table', 1),
 (9, '2022_07_22_151816_create_cabangs_table', 1),
-(10, '2022_07_22_152718_create_bonus_omzets_table', 1);
+(10, '2022_07_22_152718_create_bonus_omzets_table', 1),
+(11, '2022_12_27_154827_add_alpha_perhitungan', 2);
 
 -- --------------------------------------------------------
 
@@ -203,6 +204,15 @@ CREATE TABLE `pegawais` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `pegawais`
+--
+
+INSERT INTO `pegawais` (`id`, `nama_pegawai`, `id_jabatan`, `id_cabang`, `jenis_kelamin`, `alamat`, `status`, `tahun_masuk`, `jumlah_anak`, `created_at`, `updated_at`) VALUES
+(221001, 'Rendy', 1, 1, 'Laki-laki', 'Surabaya', 'Single', '2022-12-04', '0', '2022-12-24 13:11:03', '2022-12-24 13:11:03'),
+(222002, 'April', 2, 2, 'Laki-laki', 'Dekat ambengan', 'Single', '2022-12-07', '0', '2022-12-24 13:11:44', '2022-12-24 13:11:44'),
+(223003, 'Faris', 3, 3, 'Laki-laki', 'Surabaya', 'Single', '2019-02-12', '0', '2022-12-24 13:12:44', '2022-12-24 13:12:44');
+
 -- --------------------------------------------------------
 
 --
@@ -220,8 +230,20 @@ CREATE TABLE `perhitungans` (
   `bonus_omzet` int(11) NOT NULL,
   `total` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `alpha` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `perhitungans`
+--
+
+INSERT INTO `perhitungans` (`id`, `id_pegawai`, `lembur`, `pelanggaran`, `bulan`, `tahun`, `omzet`, `bonus_omzet`, `total`, `created_at`, `updated_at`, `alpha`) VALUES
+(20, 221001, 1, 100, '2', '2022', 12000000, 0, 624900, '2022-12-28 02:13:38', '2022-12-28 02:13:38', '1'),
+(21, 222002, 10, 100000, '4', '2022', 1000000, 0, 3900000, '2022-12-28 02:15:19', '2022-12-28 02:15:19', '1'),
+(22, 223003, 20, 1000000, '7', '2022', 5000000, 0, 5820000, '2022-12-28 02:16:47', '2022-12-28 02:16:47', '4'),
+(24, 224004, 30, 100000, '9', '2022', 10000000, 0, 11400000, '2022-12-28 02:19:02', '2022-12-28 02:19:02', '1'),
+(25, 221001, 20, 1000, '5', '2022', 5000000, 0, 7749000, '2022-12-28 23:10:54', '2022-12-28 23:10:54', '1');
 
 -- --------------------------------------------------------
 
@@ -265,9 +287,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `id_pegawai`, `name`, `role`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'admin', 'admin', 'admin@gmail.com', NULL, '$2y$10$Wbuu8fKBcKgIcQrDum.0d.ieNNjIC5JD4aE1N2xOB/ZiBFU7FhI.e', NULL, NULL, NULL),
-(2, NULL, 'pegawai', 'pegawai', 'pegawai@gmail.com', NULL, '$2y$10$SWD1XBml7/5HhJkrjX.8VOKL6S0Aw1t1q8EiM.Rr0tiSNWtl6YH2C', NULL, NULL, NULL),
-(3, NULL, 'owner', 'owner', 'owner@gmail.com', NULL, '$2y$10$F48IjYMTjGz7VJYpxXRWweItVN/OGHOhA2C7nj/cj/b0h4XWTqjQG', NULL, NULL, NULL);
+(1, 1, 'admin', 'admin', 'admin@gmail.com', NULL, '$2a$12$iLjOX9zIafYo3/Wnfe.Ahe..WDReuyXgN45uUEhRaPacjGASgcHmy', NULL, '2021-12-09 15:45:38', NULL),
+(2, 1, 'pegawai', 'pegawai', 'pegawai@gmail.com', NULL, '$2y$10$SWD1XBml7/5HhJkrjX.8VOKL6S0Aw1t1q8EiM.Rr0tiSNWtl6YH2C', NULL, '2018-12-11 15:45:53', NULL),
+(3, 1, 'owner', 'owner', 'owner@gmail.com', NULL, '$2y$10$F48IjYMTjGz7VJYpxXRWweItVN/OGHOhA2C7nj/cj/b0h4XWTqjQG', NULL, NULL, NULL),
+(7, 221001, 'Rendy', 'pegawai', 'rendy@gmail.com', NULL, '$2y$10$Uocl.NDzuP7XicLyZAEgBexNZ/hWN/gGxJoKg94xMB/SdIhAmAV.e', NULL, '2022-12-24 13:11:03', '2022-12-24 13:11:03'),
+(8, 222002, 'April', 'pegawai', 'april@gmail.com', NULL, '$2y$10$z1LILDIWzgnFVuiA9.k.vetCf9.t.y8OcFJ7v4LjdGEUxncM9JDcS', NULL, '2022-12-24 13:11:44', '2022-12-24 13:11:44'),
+(10, 223003, 'Faris', 'pegawai', 'faris@gmail.com', NULL, '$2y$10$nfdzl6ZovcU51Jxza0cSKOvZNivTxsDumRZZhZ181kiYuwBjO9D3O', NULL, '2022-12-24 13:12:44', '2022-12-24 13:12:44'),
+(11, 224004, 'Andreas', 'pegawai', 'andreas@gmail.com', NULL, '$2y$10$JF88HFhad5mmTrKyWvvVTOs/5sQx0Tm83qx6MsUxpm8J78R7NLl0e', NULL, '2022-12-24 13:13:11', '2022-12-24 13:13:11'),
+(12, 221005, 'Yusuf', 'pegawai', 'yusuf@gmail.com', NULL, '$2y$10$nZYwXdBCpWM52MrD6umMUemXeum6CqK0Q64HTjrEcMklNLlsWlUEu', NULL, '2022-12-24 13:40:22', '2022-12-24 13:40:22');
 
 --
 -- Indexes for dumped tables
@@ -381,19 +408,19 @@ ALTER TABLE `jabatans`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `pegawais`
 --
 ALTER TABLE `pegawais`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224005;
 
 --
 -- AUTO_INCREMENT for table `perhitungans`
 --
 ALTER TABLE `perhitungans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -405,7 +432,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
