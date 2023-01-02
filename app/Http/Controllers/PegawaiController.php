@@ -14,7 +14,6 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PegawaiController extends Controller
@@ -26,14 +25,13 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = DB::select("SELECT pegawais.nama_pegawai, jabatans.nama_jabatan, cabangs.nama_cabang, pegawais.status, pegawais.id, pegawais.jumlah_anak
-                            FROM pegawais JOIN cabangs ON cabangs.id = pegawais.id_cabang
-                            JOIN jabatans ON jabatans.id = pegawais.id_jabatan
-                            WHERE pegawais.id");
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->get();
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
-        // dd($pegawai);
+
         return view('owner.pegawai.index', [
             'pegawai' => $pegawai,
             'jabatan' => $jabatan,
@@ -201,14 +199,10 @@ class PegawaiController extends Controller
      */
     public function edit($id)
     {
-
         $pegawai = Pegawai::findOrFail($id);
-        // dd($pegawai);
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
-
-        // dd($pegawai, $jabatan, $golongan, $cabang);
 
         return view('owner.pegawai.edit', [
             'pegawai' => $pegawai,
