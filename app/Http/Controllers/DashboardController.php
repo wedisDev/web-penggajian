@@ -36,10 +36,6 @@ class DashboardController extends Controller
             //     ->get();
             // $tahun_baru = $tahun->
             foreach ($tahun as $item) {
-                if (!$item->tahun) {
-                    $tahun_baru = 'Data Kosong';
-                    break;
-                }
                 $tahun_baru = $item->tahun;
             }
             // dd($tahun);
