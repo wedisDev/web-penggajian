@@ -28,10 +28,20 @@ class PerhitunganController extends Controller
         // $perhitungan = Perhitungan::selec;
         // dd($perhitungan[0]);
         // dd($perhitungan);
-        return view('owner.transaksi.index', [
-            'pegawai' => $pegawai,
-            'cabang' => $cabang
-        ]);
+        foreach ($pegawai as $item) {
+            if (!$item->id) {
+                $pegawai = 'Data Kosong';
+                // dd($pegawai);
+                break;
+            }
+            // dd($pegawai);
+            return view('owner.transaksi.index', [
+                'pegawai' => $pegawai,
+                'cabang' => $cabang
+            ]);
+        }
+        Alert::error('Error', 'Pegawai tidak didaftarkan');
+        return back();
     }
 
     public function pilihCabang()
@@ -82,11 +92,24 @@ class PerhitunganController extends Controller
         //         'message' => 'Pegawai dalam cabang ini tidak ada',
         //     ]);
         // }
+        foreach ($pegawai as $item) {
+            if (!$item->id) {
+                $pegawai = 'Data Kosong';
+                // dd($pegawai);
+                break;
+            }
+            // dd($pegawai);
+            return view('owner.transaksi.create', [
+                'pegawai' => $pegawai
+            ]);
+        }
+        Alert::error('Error', 'Pegawai tidak didaftarkan');
+        return back();
+        // return response()->json([
+        //     'type' => 'error',
+        //     'message' => 'Pegawai tidak didaftarkan'
+        // ]);
         // dd($pegawai);
-        return view('owner.transaksi.create', [
-            'pegawai' => $pegawai,
-            // 'bonus' => $bonus
-        ]);
         // dd($pegawai != $pegawai);
         // if (!$pegawai) {
         //     $data = 'no';
