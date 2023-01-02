@@ -57,6 +57,7 @@ Route::group(
         Route::get('/slip-gaji/{id}',  [PegawaiController::class, 'slipGaji']);
         Route::get('/pelanggaran', [PegawaiController::class, 'pelanggaran']);
         Route::get('/history', [PegawaiController::class, 'history']);
+        // Route::get('pegawai/{id}/edit', [PegawaiController::class, 'edit'])->name('pegawai.edit');
 
         //Route Cabang
         Route::resource('/cabang', CabangController::class);

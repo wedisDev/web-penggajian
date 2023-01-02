@@ -50,7 +50,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Omzet Perbulan tahun <?= $tahun_baru ?>'
+                    text: 'Data Omzet Perbulan tahun <?= $tahun_pilih ?>'
                 },
                 accessibility: {
                     announceNewData: {

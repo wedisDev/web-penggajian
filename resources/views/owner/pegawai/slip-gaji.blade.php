@@ -93,7 +93,7 @@
 <body>
     <div class="container-fluid">
         <h1 align="center">Kantin Tante</h1>
-        <p align="center">{{ $pegawai[0]->nama_cabang . " " . $pegawai[0]->alamat }}</p>
+        <p align="center">{{ $pegawai[0]->nama_cabang . ' ' . $pegawai[0]->alamat }}</p>
         {{-- <p align="center">Jl. Raya Cikarang No.1, Cikarang Barat, Cikarang, Bekasi, Jawa Barat, Indonesia</p> --}}
         <p align="center">Telp. 021-89898989815</p>
 
@@ -104,11 +104,13 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <span style="font-size: 20px;">ID PEGAWAI : {{ $pegawai[0]->id_pegawai . $pegawai[0]->id_cabang . $pegawai[0]->tahun . $pegawai[0]->id_jabatan}}</span><br>
+                <span style="font-size: 20px;">ID PEGAWAI :
+                    {{ $pegawai[0]->id_pegawai . $pegawai[0]->id_cabang . $pegawai[0]->tahun . $pegawai[0]->id_jabatan }}</span><br>
                 <span style="font-size: 20px;">Nama : {{ $pegawai[0]->nama_pegawai }}</span><br>
                 <span style="font-size: 20px;">Jabatan : {{ $pegawai[0]->nama_jabatan }}</span><br>
-                <span style="font-size: 20px;">Status : {{ $pegawai[0]->nama_golongan }}</span>
+                <span style="font-size: 20px;">Status : {{ $pegawai[0]->nama_golongan }}</span><br>
                 <span style="font-size: 20px;">Jumlah Anak : {{ $pegawai[0]->jumlah_anak }}</span>
+
                 <br>
                 <span style="font-size: 20px;">Tanggal : {{ $tanggal }}</span>
             </div>
@@ -123,11 +125,29 @@
             $tunjangan = $pegawai[0]->tunjangan_makan + $pegawai[0]->tunjangan_makmur + $pegawai[0]->tunjangan_transport + $pegawai[0]->lembur * $pegawai[0]->tunjangan_lembur + $pegawai[0]->tunjangan_menikah + $pegawai[0]->jumlah_anak * $pegawai[0]->tunjangan_anak;
         @endphp
 
-        <span style="font-size: 20px;">Gaji Pokok : Rp {{ number_format($pegawai[0]->gapok) }}</span><br>
-        <span style="font-size: 20px;">Tunjangan : Rp {{ number_format($tunjangan) }}</span><br>
-        <span style="font-size: 20px;">Lembur : {{ $pegawai[0]->lembur }}</span><br>
-        <span style="font-size: 20px;">Tunjangan Transportasi : Rp {{ number_format($pegawai[0]->tunjangan_transportasi) }}</span><br>
-        <span style="font-size: 20px;">Tunjangan Makan : Rp {{ number_format($pegawai[0]->tunjangan_makan) }}</span><br>
+        <div class="container" style="margin-left: 10px">
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size: 20px;">Gaji Pokok : Rp {{ number_format($pegawai[0]->gapok) }}</span><br>
+                    <span style="font-size: 20px;">Lembur : {{ $pegawai[0]->lembur }}</span><br>
+                    <span style="font-size: 20px;">tunjangan makmur : Rp
+                        {{ number_format($pegawai[0]->tunjangan_makmur) }}</span><br>
+                    <span style="font-size: 20px;">Tunjangan Makan : Rp
+                        {{ number_format($pegawai[0]->tunjangan_makan) }}</span><br>
+
+                </div>
+                <div class="col-6">
+                    <span style="font-size: 20px;">Tunjangan Transportasi : Rp
+                        {{ number_format($pegawai[0]->tunjangan_transportasi) }}</span><br>
+                    <span style="font-size: 20px;">tunjangan lembur : Rp
+                        {{ number_format($pegawai[0]->tunjangan_lembur) }}</span><br>
+                    <span style="font-size: 20px;">tunjangan menikah : Rp
+                        {{ number_format($pegawai[0]->tunjangan_menikah) }}</span><br>
+                    <span style="font-size: 20px;">tunjangan anak : Rp
+                        {{ number_format($pegawai[0]->tunjangan_anak) }}</span><br>
+                </div>
+            </div>
+        </div>
 
         <br><br>
         <h4>Total Penerimaan : Rp {{ number_format($pegawai[0]->total) }}</h4>

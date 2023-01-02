@@ -28,10 +28,20 @@ class PerhitunganController extends Controller
         // $perhitungan = Perhitungan::selec;
         // dd($perhitungan[0]);
         // dd($perhitungan);
-        return view('owner.transaksi.index', [
-            'pegawai' => $pegawai,
-            'cabang' => $cabang
-        ]);
+        foreach ($pegawai as $item) {
+            if (!$item->id) {
+                $pegawai = 'Data Kosong';
+                // dd($pegawai);
+                break;
+            }
+            // dd($pegawai);
+            return view('owner.transaksi.index', [
+                'pegawai' => $pegawai,
+                'cabang' => $cabang
+            ]);
+        }
+        Alert::error('Error', 'Pegawai tidak didaftarkan');
+        return back();
     }
 
     public function pilihCabang()
@@ -82,11 +92,24 @@ class PerhitunganController extends Controller
         //         'message' => 'Pegawai dalam cabang ini tidak ada',
         //     ]);
         // }
+        foreach ($pegawai as $item) {
+            if (!$item->id) {
+                $pegawai = 'Data Kosong';
+                // dd($pegawai);
+                break;
+            }
+            // dd($pegawai);
+            return view('owner.transaksi.create', [
+                'pegawai' => $pegawai
+            ]);
+        }
+        Alert::error('Error', 'Pegawai tidak didaftarkan');
+        return back();
+        // return response()->json([
+        //     'type' => 'error',
+        //     'message' => 'Pegawai tidak didaftarkan'
+        // ]);
         // dd($pegawai);
-        return view('owner.transaksi.create', [
-            'pegawai' => $pegawai,
-            // 'bonus' => $bonus
-        ]);
         // dd($pegawai != $pegawai);
         // if (!$pegawai) {
         //     $data = 'no';
@@ -220,6 +243,7 @@ class PerhitunganController extends Controller
     public function store(Request $request)
     {
         $id = $request->pegawai_id;
+        // dd($request->all());
 
 
         // $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
@@ -259,7 +283,7 @@ class PerhitunganController extends Controller
             'pelanggaran' => 'required',
             'omzet' => 'required',
             'bonus_omzet' => 'required',
-            'total' => 'required',
+            // 'total' => 'required',
         ]);
 
 
@@ -268,10 +292,11 @@ class PerhitunganController extends Controller
 
 
         if ($validator->fails()) {
-            dd($validator->errors());
+            // dd($validator->messages());
+            Alert::error('Error Input', $validator->messages()->all());
             return back()->withErrors($validator->errors());
         } else {
-            Alert::success('Berhasil', 'Data Berhasil Disimpan');
+            // dd($request->all());
 
             $tunjangan_makan = (26 - $request->alpha) * 10000;
             $tunjangan_lembur = (26 - $request->alpha) * 15000;
