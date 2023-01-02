@@ -93,7 +93,7 @@
 <body>
     <div class="container-fluid">
         <h1 align="center">Kantin Tante</h1>
-        <p align="center">{{ $pegawai[0]->nama_cabang . " " . $pegawai[0]->alamat }}</p>
+        <p align="center">{{ $pegawai[0]->nama_cabang . ' ' . $pegawai[0]->alamat }}</p>
         {{-- <p align="center">Jl. Raya Cikarang No.1, Cikarang Barat, Cikarang, Bekasi, Jawa Barat, Indonesia</p> --}}
         <p align="center">Telp. 021-89898989815</p>
 
@@ -104,7 +104,8 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <span style="font-size: 20px;">ID PEGAWAI : {{ $pegawai[0]->id_pegawai . $pegawai[0]->id_cabang . $pegawai[0]->tahun . $pegawai[0]->id_jabatan}}</span><br>
+                <span style="font-size: 20px;">ID PEGAWAI :
+                    {{ $pegawai[0]->id_pegawai . $pegawai[0]->id_cabang . $pegawai[0]->tahun . $pegawai[0]->id_jabatan }}</span><br>
                 <span style="font-size: 20px;">Nama : {{ $pegawai[0]->nama_pegawai }}</span><br>
                 <span style="font-size: 20px;">Jabatan : {{ $pegawai[0]->nama_jabatan }}</span><br>
                 <span style="font-size: 20px;">Status : {{ $pegawai[0]->nama_golongan }}</span>
@@ -126,14 +127,15 @@
         <span style="font-size: 20px;">Gaji Pokok : Rp {{ number_format($pegawai[0]->gapok) }}</span><br>
         <span style="font-size: 20px;">Tunjangan : Rp {{ number_format($tunjangan) }}</span><br>
         <span style="font-size: 20px;">Lembur : {{ $pegawai[0]->lembur }}</span><br>
-        <span style="font-size: 20px;">Tunjangan Transportasi : Rp {{ number_format($pegawai[0]->tunjangan_transportasi) }}</span><br>
-        <span style="font-size: 20px;">Tunjangan Makan : Rp {{ number_format($pegawai[0]->tunjangan_makan) }}</span><br>
+        <span style="font-size: 20px;">Tunjangan Transportasi : Rp
+            {{ number_format($pegawai[0]->tunjangan_transportasi) }}</span><br>
+        <span style="font-size: 20px;">Tunjangan Makan : Rp
+            {{ number_format($pegawai[0]->tunjangan_makan) }}</span><br>
 
         <br><br>
         <h4>Total Penerimaan : Rp {{ number_format($pegawai[0]->total) }}</h4>
 
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
