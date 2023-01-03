@@ -31,10 +31,7 @@ class DashboardController extends Controller
 
             $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
             $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
-            // $data = Perhitungan::orderBy('omzet', 'desc')
-            //     ->where('tahun', 2022)
-            //     ->get();
-            // $tahun_baru = $tahun->
+
             foreach ($tahun as $item) {
                 if ($item->tahun == false) {
                     $tahun_baru = 'Tidak ada data';
@@ -42,7 +39,6 @@ class DashboardController extends Controller
                     $tahun_baru = $item->tahun;
                 }
             }
-            // dd($tahun_baru);
             $data = DB::select("SELECT
                             bulan,
                             (CASE
@@ -53,10 +49,8 @@ class DashboardController extends Controller
                             WHERE tahun = '$tahun_baru'
                             GROUP BY bulan
                             ORDER BY bulan DESC");
-            // dd($data);
             $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
             $datas = [null, null, null, null, null, null, null, null, null, null, null, null];
-            // dd($data_tahun);
 
             for ($i = 0; $i < count($datas); $i++) {
                 if ($datas[$i] === null) {
@@ -106,7 +100,6 @@ class DashboardController extends Controller
 
                 array_push($b, $item->bulan);
             }
-            // dd($b);
 
             $c = [];
             foreach ($data_tahun as $item) {
@@ -122,7 +115,6 @@ class DashboardController extends Controller
                 array_push($d, $v);
             }
 
-            // dd($tahun_baru);
 
 
             return view('admin.index', [
@@ -140,19 +132,12 @@ class DashboardController extends Controller
         } elseif (Auth::user()->role == 'pegawai') {
             $id = Auth::user()->id;
 
-            // $data = User::join('pegawais as pg', 'pg.id', '=', 'users.id_pegawai')
-            //     ->join('jabatans as jb', 'jb.id', '=', 'pg.id_jabatan')
-            //     ->join('cabangs as cb', 'cb.id', '=', 'pg.id_cabang')
-            //     ->join('golongans as gl', 'gl.id', '=', 'pg.status')
-            //     ->where('users.id', $id)
-            //     ->get();
             $data = DB::select("SELECT * FROM `users`
                 JOIN pegawais ON pegawais.id = users.id_pegawai
                 JOIN jabatans ON jabatans.id  = pegawais.id_jabatan
                 JOIN cabangs ON cabangs.id = pegawais.id_cabang
                 JOIN golongans ON pegawais.status = pegawais.status
                 WHERE users.id = '$id'");
-            // dd($data);
             return view('pegawai.index', [
                 'data' => $data
             ]);
@@ -169,14 +154,8 @@ class DashboardController extends Controller
                 } else {
                     $tahun_baru = $item->tahun;
                 }
-                // dd($tahun_baru);
             }
-            // $data = Perhitungan::orderBy('omzet', 'desc')
-            //     ->where(
-            //         'tahun',
-            //         $tahun_baru
-            //     )
-            //     ->get();
+
             $data = Perhitungan::orderBy('omzet', 'desc')
                 ->where(
                     'tahun',
@@ -193,9 +172,6 @@ class DashboardController extends Controller
                     $datas[$i] = 0;
                 }
             }
-
-
-
 
             foreach ($data as $item) {
 
@@ -226,16 +202,12 @@ class DashboardController extends Controller
                 }
             }
 
-
-
-
             $b = [];
             foreach ($data as $item) {
                 $x['bulan'] = $item->bulan;
 
                 array_push($b, $item->bulan);
             }
-            // dd($b);
 
             $c = [];
             foreach ($data_tahun as $item) {
@@ -251,7 +223,6 @@ class DashboardController extends Controller
                 array_push($d, $v);
             }
 
-            // dd($tahun_baru);
             return view('owner.index', [
                 'jabatan' => $jabatan,
                 'golongan' => $golongan,
@@ -281,14 +252,10 @@ class DashboardController extends Controller
                             GROUP BY bulan
                             ORDER BY bulan DESC");
 
-        // $data = Perhitungan::orderBy('omzet', 'desc')
-        //     ->where('tahun', $request->tahun)
-        //     ->get();
         $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun
                     FROM `perhitungans`
                     GROUP BY tahun
                     ORDER BY bulan DESC");
-        // dd($data);
 
         $a = [null, null, null, null, null, null, null, null, null, null, null, null];
 
@@ -349,7 +316,6 @@ class DashboardController extends Controller
             array_push($d, $v);
         }
 
-        // dd($request->tahun);
         return view('owner.index', [
             'datas' => $a,
             'b' => $b,

@@ -120,6 +120,7 @@
         <br>
         <h2 align="center">Penerimaan</h2>
         <br>
+
         @php
             $tunjangan = $pegawai[0]->tunjangan_makan + $pegawai[0]->tunjangan_makmur + $pegawai[0]->tunjangan_transport + $pegawai[0]->lembur * $pegawai[0]->tunjangan_lembur + $pegawai[0]->tunjangan_menikah + $pegawai[0]->jumlah_anak * $pegawai[0]->tunjangan_anak;
         @endphp

@@ -47,7 +47,7 @@ class PegawaiController extends Controller
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->get();
-        // dd($pegawai);
+
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
@@ -68,7 +68,7 @@ class PegawaiController extends Controller
             ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
             ->where('cb.id', $id)
             ->get();
-        // dd($pegawai);
+
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
@@ -92,16 +92,12 @@ class PegawaiController extends Controller
             ->get();
         $date_new = $date->toFormattedDateString();
         $tahun = $pegawai[0]->created_at->year();
-        // dd($pegawai[0]->created_at);
-        // dd($tahun);
-        // $randomNumber = random_int(1, 999);
-        // dd($randomNumber);
-        // dd($pegawai);
-        return view('owner.pegawai.slip-gaji', [
-            'pegawai' => $pegawai,
-            'tanggal' => $date_new,
-            'tahun' => $tahun,
-        ]);
+
+        // return view('owner.pegawai.slip-gaji', [
+        //     'pegawai' => $pegawai,
+        //     'tanggal' => $date_new,
+        //     'tahun' => $tahun,
+        // ]);
         $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
             'pegawai' => $pegawai,
             'tanggal' => $date_new,
@@ -109,7 +105,7 @@ class PegawaiController extends Controller
 
         ])->setpaper('a4', 'landscape');
 
-        // return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
+        return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
     }
 
     /**
@@ -273,7 +269,6 @@ class PegawaiController extends Controller
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('pegawais.id', Auth::user()->id_pegawai)
             ->get();
-        // dd(Auth::user()->id_pegawai, $pegawai[0]->total);
 
 
         return view('pegawai.rincian.index', [
@@ -303,7 +298,6 @@ class PegawaiController extends Controller
             ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
             ->where('pegawais.id', Auth::user()->id_pegawai)
             ->get();
-        // dd($pegawai);
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
