@@ -32,7 +32,7 @@
     </div>
 
     <div id="test"></div>
-    <div  id="chartOmzet"></div>
+    <div id="chartOmzet"></div>
     <div class="mt-5" id="chartTahun"></div>
 
 
@@ -40,17 +40,13 @@
 
 @push('scripts')
     <script>
-
-
-
-
         $(document).ready(function() {
             Highcharts.chart('chartOmzet', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Omzet Perbulan tahun <?= $tahun_baru ?>'
+                    text: 'Data Omzet Perbulan tahun <?= $tahun_pilih ?>'
                 },
                 accessibility: {
                     announceNewData: {
@@ -58,7 +54,9 @@
                     }
                 },
                 xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                        'Nov', 'Dec'
+                    ]
                 },
                 yAxis: {
                     title: {

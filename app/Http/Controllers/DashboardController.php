@@ -36,9 +36,12 @@ class DashboardController extends Controller
             //     ->get();
             // $tahun_baru = $tahun->
             foreach ($tahun as $item) {
-                $tahun_baru = $item->tahun;
+                if ($item->tahun == false) {
+                    $tahun_baru = 'Tidak ada data';
+                } else {
+                    $tahun_baru = $item->tahun;
+                }
             }
-            // dd($tahun);
             // dd($tahun_baru);
             $data = DB::select("SELECT
                             bulan,
@@ -119,8 +122,7 @@ class DashboardController extends Controller
                 array_push($d, $v);
             }
 
-            // dd($c, $d, $datas);
-
+            // dd($tahun_baru);
 
 
             return view('admin.index', [
@@ -162,8 +164,19 @@ class DashboardController extends Controller
             $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
             $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
             foreach ($tahun as $item) {
-                $tahun_baru = $item->tahun;
+                if ($item->tahun == false) {
+                    $tahun_baru = 'Tidak ada data';
+                } else {
+                    $tahun_baru = $item->tahun;
+                }
+                // dd($tahun_baru);
             }
+            // $data = Perhitungan::orderBy('omzet', 'desc')
+            //     ->where(
+            //         'tahun',
+            //         $tahun_baru
+            //     )
+            //     ->get();
             $data = Perhitungan::orderBy('omzet', 'desc')
                 ->where(
                     'tahun',
@@ -174,9 +187,6 @@ class DashboardController extends Controller
             $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
             $datas = [null, null, null, null, null, null, null, null, null, null, null, null];
 
-            foreach ($tahun as $item) {
-                $tahun_baru = $item->tahun;
-            }
 
             for ($i = 0; $i < count($datas); $i++) {
                 if ($datas[$i] === null) {
@@ -241,11 +251,7 @@ class DashboardController extends Controller
                 array_push($d, $v);
             }
 
-            foreach ($tahun as $item) {
-                $tahun_baru = $item->tahun;
-            }
-
-
+            // dd($tahun_baru);
             return view('owner.index', [
                 'jabatan' => $jabatan,
                 'golongan' => $golongan,

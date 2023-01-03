@@ -83,10 +83,22 @@ class PerhitunganController extends Controller
         //     ]);
         // }
         // dd($pegawai);
-        return view('owner.transaksi.create', [
-            'pegawai' => $pegawai,
-            // 'bonus' => $bonus
-        ]);
+        // dd($pegawai);
+        foreach ($pegawai as $item) {
+            if (!$item->id) {
+                $pegawai = 'Data Kosong';
+                // dd($pegawai);
+                break;
+            }
+            // dd($pegawai);
+            return view('owner.transaksi.index', [
+                'pegawai' => $pegawai,
+                // 'cabang' => $cabang
+            ]);
+        }
+        Alert::error('Error', 'Pegawai tidak didaftarkan');
+        return back();
+
         // dd($pegawai != $pegawai);
         // if (!$pegawai) {
         //     $data = 'no';

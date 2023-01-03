@@ -36,7 +36,7 @@
     </div>
 
     <div id="chartOmzet"></div>
-    <div  id="chartTahun"></div>
+    <div id="chartTahun"></div>
 
 
 @endsection
@@ -57,7 +57,9 @@
                     }
                 },
                 xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                        'Nov', 'Dec'
+                    ]
                 },
                 yAxis: {
                     title: {
