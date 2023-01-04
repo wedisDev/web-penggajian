@@ -46,18 +46,21 @@ class JabatanController extends Controller
             'gapok' => 'required',
             'tunjangan_makmur' => 'required',
             'tunjangan_transportasi' => 'required',
-            'tunjangan_makan' => 'required',
-            'tunjangan_lembur' => 'required'
+            // 'tunjangan_makan' => 'required',
+            // 'tunjangan_lembur' => 'required'
         ]);
 
+        // dd($request->all());
+
         if ($validator->fails()) {
-            dd($validator->errors());
+            // dd($validator->errors());
+            Alert::error('error', 'data kurang lengkap');
             return back()->withErrors($validator->errors());
         } else {
             Alert::success('Success', 'Jabatan berhasil ditambahkan');
 
             $jabatan = new Jabatan();
-            
+
             $jabatan->nama_jabatan = $request->get('nama_jabatan');
             $jabatan->gapok = $request->get('gapok');
             $jabatan->tunjangan_makmur = $request->get('tunjangan_makmur');
@@ -65,7 +68,7 @@ class JabatanController extends Controller
             $jabatan->tunjangan_makan = $request->get('tunjangan_makan');
             $jabatan->tunjangan_lembur = $request->get('tunjangan_lembur');
             $jabatan->bonus_tahunan = $request->get('bonus_tahunan');
-            
+
             $jabatan->save();
 
             return redirect()->route('jabatan.index');

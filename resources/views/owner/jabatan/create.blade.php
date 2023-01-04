@@ -38,7 +38,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Tunjangan Makan</label>
-                            <input type="number" class="form-control" name="tunjangan_makan" placeholder="Rp 100.000...">
+                            <input type="number" class="form-control" name="tunjangan_makan" value="10000"
+                                placeholder="Rp 10.000..." disabled>
                         </div>
                     </div>
                 </div>
@@ -47,13 +48,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Tunjangan Transportasi</label>
-                            <input type="number" class="form-control" name="tunjangan_transportasi" placeholder="Rp 100.000...">
+                            <input type="number" class="form-control" name="tunjangan_transportasi"
+                                placeholder="Rp 100.000...">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Tunjangan Lembur</label>
-                            <input type="number" class="form-control" name="tunjangan_lembur" placeholder="Rp 100.000...">
+                            <input type="number" class="form-control" name="tunjangan_lembur" value="15000"
+                                placeholder="Rp 15.000..." disabled>
                         </div>
                     </div>
                 </div>
