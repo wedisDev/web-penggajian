@@ -58,15 +58,16 @@ class JabatanController extends Controller
             return back()->withErrors($validator->errors());
         } else {
             Alert::success('Success', 'Jabatan berhasil ditambahkan');
-
+            $makan = 10000;
+            $lembur = 15000;
             $jabatan = new Jabatan();
 
             $jabatan->nama_jabatan = $request->get('nama_jabatan');
             $jabatan->gapok = $request->get('gapok');
             $jabatan->tunjangan_makmur = $request->get('tunjangan_makmur');
             $jabatan->tunjangan_transportasi = $request->get('tunjangan_transportasi');
-            $jabatan->tunjangan_makan = $request->get('tunjangan_makan');
-            $jabatan->tunjangan_lembur = $request->get('tunjangan_lembur');
+            $jabatan->tunjangan_makan = $makan;
+            $jabatan->tunjangan_lembur = $lembur;
             $jabatan->bonus_tahunan = $request->get('bonus_tahunan');
 
             $jabatan->save();
