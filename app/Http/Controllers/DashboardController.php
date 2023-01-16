@@ -39,7 +39,19 @@ class DashboardController extends Controller
                     $tahun_baru = $item->tahun;
                 }
             }
-            $data = DB::select("SELECT
+
+            if ($tahun_baru == false) {
+                $data = DB::select("SELECT
+                            bulan,
+                            (CASE
+                                WHEN COUNT(*) > 1 THEN sum(omzet)
+                                ELSE omzet
+                            END) AS omzet
+                            FROM perhitungans
+                            GROUP BY bulan
+                            ORDER BY bulan DESC");
+            } else {
+                $data = DB::select("SELECT
                             bulan,
                             (CASE
                                 WHEN COUNT(*) > 1 THEN sum(omzet)
@@ -49,6 +61,7 @@ class DashboardController extends Controller
                             WHERE tahun = '$tahun_baru'
                             GROUP BY bulan
                             ORDER BY bulan DESC");
+            }
             $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
             $datas = [null, null, null, null, null, null, null, null, null, null, null, null];
 
