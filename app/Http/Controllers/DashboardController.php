@@ -32,10 +32,12 @@ class DashboardController extends Controller
             $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
             $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
 
+            if (empty($tahun)) {
+                $tahun_baru = 'Tidak ada data';
+            }
+
             foreach ($tahun as $item) {
-                if ($item->tahun == false) {
-                    $tahun_baru = 'Tidak ada data';
-                } else {
+                if ($item->tahun) {
                     $tahun_baru = $item->tahun;
                 }
             }

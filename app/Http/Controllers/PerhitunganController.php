@@ -127,7 +127,7 @@ class PerhitunganController extends Controller
             ->where('pegawais.id_cabang', $cabang)
             ->where('pegawais.id', $id)
             ->get();
-        // dd($pegawai);
+        // dd($pegawai2);
 
         foreach ($pegawai as $item) {
             if (!$item->id) {
@@ -152,6 +152,7 @@ class PerhitunganController extends Controller
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
             ->where('pegawais.id', $request->pegawai_id)
             ->first();
+        // dd($pegawai);
         return response()->json($pegawai);
     }
 
@@ -179,19 +180,24 @@ class PerhitunganController extends Controller
             + $tunjangan_lembur
             - $request->pelanggaran;
 
+        // $readonly1 = true;
+        // $readonly2 = false;
+
         if ($omzet <= $data->bonus) {
             $thr = 1 * $data->gapok;
             $hasil = 0;
             return response()->json([
                 'bonus' => $hasil,
-                'hitung' => $gaji
+                'hitung' => $gaji,
+                // 'readonly' => $readonly1
             ]);
         } else {
             $thr = 1 * $data->gapok;
 
             return response()->json([
                 'bonus' => $data,
-                'hitung' => $gaji
+                'hitung' => $gaji,
+                // 'readonly' => $readonly2
             ]);
         }
     }
@@ -215,8 +221,8 @@ class PerhitunganController extends Controller
         $validator = Validator::make(request()->all(), [
             'pegawai_id' => 'required',
             'bulan' => 'required',
-            'lembur' => 'required',
-            'pelanggaran' => 'required',
+            // 'lembur' => 'required',
+            // 'pelanggaran' => 'required',
             'omzet' => 'required',
             'bonus_omzet' => 'required',
             // 'total' => 'required',
@@ -267,13 +273,13 @@ class PerhitunganController extends Controller
             // dd($gaji);
             $data->id_pegawai = $request->pegawai_id;
             $data->bulan = $request->bulan;
-            $data->lembur = $request->lembur;
-            $data->pelanggaran = $request->pelanggaran;
+            $data->lembur = $request->lembur == null ? 0 : $request->lembur;
+            $data->pelanggaran = $request->pelanggaran == null ? 0 : $request->pelanggaran;
             $data->omzet = $request->omzet;
             $data->tahun = $request->tahun;
             $data->bonus_omzet = $request->bonus_omzet;
             $data->total = $gaji;
-            $data->alpha = $request->alpha;
+            $data->alpha = $request->alpha == null ? 0 : $request->alpha;
             $data->save();
 
             return redirect()->route('transaksi.index');
