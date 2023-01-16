@@ -22,8 +22,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="">Nama Lengkap</label>
-                    <input type="text" class="form-control" name="nama_pegawai"
-                        value="{{ $pegawai->nama_pegawai }}">
+                    <input type="text" class="form-control" name="nama_pegawai" value="{{ $pegawai->nama_pegawai }}">
                 </div>
 
                 <div class="form-group">
@@ -31,7 +30,8 @@
                     <select name="id_jabatan" class="form-control" id="">
                         <option value="">Pilih jabatan</option>
                         @foreach ($jabatan as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_jabatan }}</option>
+                            <option value="{{ $item->id }}" {{ $item->id == $pegawai->id_jabatan ? 'selected' : '' }}>
+                                {{ $item->nama_jabatan }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -41,7 +41,8 @@
                     <select name="id_cabang" class="form-control" id="">
                         <option value="">Pilih Cabang</option>
                         @foreach ($cabang as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_cabang }}</option>
+                            <option value="{{ $item->id }}" {{ $item->id == $pegawai->id_cabang ? 'selected' : '' }}>
+                                {{ $item->nama_cabang }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -51,19 +52,19 @@
                     <select class="form-control" name="status">
                         <option>Pilih Status</option>
                         @foreach ($golongan as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_golongan }}</option>
+                            <option value="{{ $item->id }}"
+                                {{ $item->nama_golongan == $pegawai->status ? 'selected' : '' }}>
+                                {{ $item->nama_golongan }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="">Jumlah Anak</label>
-                    <input type="number" class="form-control" name="jumlah_anak"
-                        value="{{ $pegawai->jumlah_anak }}">
+                    <input type="number" class="form-control" name="jumlah_anak" value="{{ $pegawai->jumlah_anak }}">
                 </div>
 
-                <button type="submit"
-                    class="btn btn-primary float-right mt-3">Edit</button>
+                <button type="submit" class="btn btn-primary float-right mt-3">Edit</button>
             </form>
         </div>
     </div>

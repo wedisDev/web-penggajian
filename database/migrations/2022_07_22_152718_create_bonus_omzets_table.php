@@ -16,7 +16,7 @@ class CreateBonusOmzetsTable extends Migration
         Schema::create('bonus_omzets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_cabang');
-            $table->unsignedBigInteger('id_jabatan');
+            $table->unsignedBigInteger('id_jabatan')->nullable();
             $table->integer('bonus');
             $table->timestamps();
         });

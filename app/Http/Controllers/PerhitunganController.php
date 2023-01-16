@@ -49,8 +49,14 @@ class PerhitunganController extends Controller
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->where('cb.id', $id)
             ->get();
+
+        $pilih_pegawai = DB::select("SELECT pegawais.id as 'pegawai_id', cabangs.id as 'cabang_id', pegawais.nama_pegawai FROM `pegawais`
+            JOIN cabangs ON pegawais.id_cabang = cabangs.id
+            WHERE cabangs.id = '$id'");
+        // dd($pilih_pegawai);
         return view('owner.transaksi.filterCabang', [
             'pegawai' => $pegawai,
+            'pilih_pegawai' => $pilih_pegawai,
             'cabang' => $cabang,
             'cabangs' => $cabangs
         ]);
@@ -61,26 +67,81 @@ class PerhitunganController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id, $cabang)
     {
-        // dd($id);
-        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+        $pegawai = Pegawai::select(
+            'pegawais.id',
+            'pegawais.nama_pegawai',
+            'pegawais.id_jabatan',
+            'pegawais.id_cabang',
+            'pegawais.jenis_kelamin',
+            'pegawais.alamat',
+            'pegawais.tahun_masuk',
+            'pegawais.jumlah_anak',
+            'jb.nama_jabatan',
+            'jb.gapok',
+            'jb.tunjangan_makmur',
+            'jb.tunjangan_makan',
+            'jb.tunjangan_transportasi',
+            'jb.tunjangan_lembur',
+            'jb.tunjangan_menikah',
+            'jb.tunjangan_anak',
+            'jb.bonus_tahunan',
+            'cb.nama_cabang',
+            'bo.bonus',
+            'gl.nama_golongan'
+        )
+            ->join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
-            ->where('pegawais.id_cabang', $id)
+            ->where('pegawais.id_cabang', $cabang)
+            ->where('pegawais.id', $id)
             ->get();
+        $pegawai2 = Pegawai::select(
+            'pegawais.id',
+            'pegawais.nama_pegawai',
+            'pegawais.id_jabatan',
+            'pegawais.id_cabang',
+            'pegawais.jenis_kelamin',
+            'pegawais.alamat',
+            'pegawais.tahun_masuk',
+            'pegawais.jumlah_anak',
+            'jb.nama_jabatan',
+            'jb.gapok',
+            'jb.tunjangan_makmur',
+            'jb.tunjangan_makan',
+            'jb.tunjangan_transportasi',
+            'jb.tunjangan_lembur',
+            'jb.tunjangan_menikah',
+            'jb.tunjangan_anak',
+            'jb.bonus_tahunan',
+            'cb.nama_cabang',
+            'bo.bonus',
+            'gl.nama_golongan'
+        )
+            ->join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'pegawais.id_cabang')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
+            ->where('pegawais.id_cabang', $cabang)
+            ->where('pegawais.id', $id)
+            ->get();
+        // dd($pegawai);
 
         foreach ($pegawai as $item) {
             if (!$item->id) {
-                $pegawai = 'Data Kosong';
-                break;
+                // $pegawai = 'Data Kosong';
+                // break;
+                return view('owner.transaksi.create', [
+                    'pegawai' => $pegawai2,
+                ]);
             }
-            return view('owner.transaksi.index', [
+            return view('owner.transaksi.create', [
                 'pegawai' => $pegawai,
             ]);
         }
-        Alert::error('Error', 'Pegawai tidak didaftarkan');
+        Alert::error('Error', 'Bonus Omzet cabang didaftarkan');
         return back();
     }
 
@@ -115,7 +176,7 @@ class PerhitunganController extends Controller
             + $tunjangan
             + $data->bonus_tahunan
             + $request->bonus_omzet
-            + ($tunjangan_lembur * $request->lembur)
+            + $tunjangan_lembur
             - $request->pelanggaran;
 
         if ($omzet <= $data->bonus) {
@@ -158,8 +219,10 @@ class PerhitunganController extends Controller
             'pelanggaran' => 'required',
             'omzet' => 'required',
             'bonus_omzet' => 'required',
-            'total' => 'required',
+            // 'total' => 'required',
         ]);
+
+
 
         if ($validator->fails()) {
             dd($validator->errors());
@@ -168,21 +231,40 @@ class PerhitunganController extends Controller
             Alert::success('Berhasil', 'Data Berhasil Disimpan');
 
             $tunjangan_makan = (26 - $request->alpha) * 10000;
-            $tunjangan_lembur = (26 - $request->alpha) * 15000;
+            $tunjangan_anak = ($pegawai[0]->tunjangan_anak * $pegawai[0]->jumlah_anak);
+            // $tunjangan_lembur = (26 - $request->alpha) * 15000;
+            $tunjangan_lembur = $request->lembur * 15000;
             $data = new Perhitungan();
-            $tunjangan = $data->tunjangan_makmur
-                + $data->tunjangan_menikah
-                + $data->tunjangan_anak
+            $tunjangan = $pegawai[0]->tunjangan_makmur
+                + $pegawai[0]->tunjangan_menikah
+                + $tunjangan_anak
                 + $tunjangan_makan
-                + $data->tunjangan_transportasi;
+                + $pegawai[0]->tunjangan_transportasi;
 
-            $gaji = $data->gapok
+            // dd((int) $request->bonus_omzet);
+
+            $gaji = $pegawai[0]->gapok
                 + $tunjangan
-                + $data->bonus_tahunan
-                + $request->bonus_omzet
-                + ($tunjangan_lembur * $request->lembur)
+                + (int) $data->bonus_tahunan
+                + (int) $request->bonus_omzet
+                // + ($tunjangan_lembur * $request->lembur)
+                + $tunjangan_lembur
                 - $request->pelanggaran;
-
+            // dd(
+            //     $pegawai[0],
+            //     $request->all(),
+            //     'Gaji pokok' . $pegawai[0]->gapok,
+            //     'tunjangan makmur ' . (int) $pegawai[0]->tunjangan_makmur,
+            //     'tunjangan menikah ' . (int) $pegawai[0]->tunjangan_menikah,
+            //     'Tunjangan anak ' . $tunjangan_anak,
+            //     'tunjangan makan ' . $tunjangan_makan,
+            //     'tunjangan transpotasi ' . (int) $pegawai[0]->tunjangan_transportasi,
+            //     'tunjangan lembur ' . $tunjangan_lembur,
+            //     'Pelanggaran ' . $request->pelanggaran,
+            //     'Bonus tahunan ' . $request->bonus_omzet,
+            //     $gaji
+            // );
+            // dd($gaji);
             $data->id_pegawai = $request->pegawai_id;
             $data->bulan = $request->bulan;
             $data->lembur = $request->lembur;
@@ -220,7 +302,7 @@ class PerhitunganController extends Controller
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
-            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->where('ph.id', $id)
             ->get();

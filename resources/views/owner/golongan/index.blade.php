@@ -19,7 +19,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="">Status</label>
-                            <input type="text" name="status" class="form-control" placeholder="Menikah ....">
+                            <select class="form-control" name="status">
+                                <option>Pilih Status</option>
+                                <option value="Menikah">Menikah</option>
+                                <option value="Single">Single</option>
+                            </select>
                         </div>
 
                         <div class="form-group">

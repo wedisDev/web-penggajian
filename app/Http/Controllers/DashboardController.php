@@ -130,14 +130,23 @@ class DashboardController extends Controller
                 'datas' => $datas
             ]);
         } elseif (Auth::user()->role == 'pegawai') {
-            $id = Auth::user()->id;
+            // $id = Auth::user()->id;
+            $id = Auth::user()->id_pegawai;
+            // $id = 221001;
 
+            // $data = DB::select("SELECT * FROM `users`
+            //     JOIN pegawais ON pegawais.id = users.id_pegawai
+            //     JOIN jabatans ON jabatans.id  = pegawais.id_jabatan
+            //     JOIN cabangs ON cabangs.id = pegawais.id_cabang
+            //     JOIN golongans ON pegawais.status = pegawais.status");
             $data = DB::select("SELECT * FROM `users`
                 JOIN pegawais ON pegawais.id = users.id_pegawai
                 JOIN jabatans ON jabatans.id  = pegawais.id_jabatan
                 JOIN cabangs ON cabangs.id = pegawais.id_cabang
                 JOIN golongans ON pegawais.status = pegawais.status
-                WHERE users.id = '$id'");
+                WHERE users.id_pegawai = '$id'");
+            // dd($data);
+            // dd(Auth::user());
             return view('pegawai.index', [
                 'data' => $data
             ]);

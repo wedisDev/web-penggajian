@@ -36,9 +36,9 @@
                     </thead>
                     <tbody>
                         @foreach ($pegawai as $item)
-                        @php
-                            // dd($pegawai);
-                        @endphp
+                            @php
+                                // dd($pegawai);
+                            @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
@@ -46,15 +46,15 @@
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>{{ $item->jumlah_anak }}</td>
-                                @if (Auth::user()->role == 'owner')
-                                    <td>
-                                        <a href="{{ route('pegawai.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger delete"
-                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
-                                @endif
+                                {{-- @if (Auth::user()->role == 'owner') --}}
+                                <td>
+                                    <a href="{{ route('pegawai.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                                </td>
+                                {{-- @endif --}}
                             </tr>
                         @endforeach
 

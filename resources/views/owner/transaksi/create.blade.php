@@ -3,13 +3,9 @@
 @section('title', 'Dashboard Tambah Transaksi')
 
 @section('content')
-{{-- @php
-                            foreach ($pegawai as $item) {
-                            //     # code...
-                                dd($pegawai);
-                            //     dd($pegawai[0]->id);
-                            }
-                            @endphp --}}
+    {{-- @php
+        dd($pegawai);
+    @endphp --}}
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -25,22 +21,23 @@
                 @csrf
                 <div class="form-group">
                     <label for="">ID Pegawai </label>
-                    <input type="text" class="form-control" name="pegawai_id" id="id_pegawai" placeholder="ID Pegawai">
+                    <input type="text" class="form-control" name="pegawai_id" value="{{ $pegawai[0]->id }}"
+                        id="id_pegawai" placeholder="ID Pegawai" readonly>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Nama</label>
-                            <input type="text" class="form-control" name="nama" id="data_nama" placeholder="Nama" value="{{ $pegawai[0]->nama_pegawai }}"
-                                readonly>
+                            <input type="text" class="form-control" name="nama" id="data_nama" placeholder="Nama"
+                                value="{{ $pegawai[0]->nama_pegawai }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Jabatan</label>
-                            <input type="text" class="form-control" name="jabatan" id="data_jabatan" value="{{ $pegawai[0]->nama_jabatan }}"
-                                placeholder="Jabatan" readonly>
+                            <input type="text" class="form-control" name="jabatan" id="data_jabatan"
+                                value="{{ $pegawai[0]->nama_jabatan }}" placeholder="Jabatan" readonly>
                         </div>
                     </div>
                 </div>
@@ -49,15 +46,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Status</label>
-                            <input type="text" class="form-control" name="status" id="data_status" placeholder="Status" value="{{ $pegawai[0]->status }}"
-                                readonly>
+                            <input type="text" class="form-control" name="status" id="data_status" placeholder="Status"
+                                value="{{ $pegawai[0]->nama_golongan }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Jumlah Anak</label>
-                            <input type="text" class="form-control" name="jumlah_anak" id="data_jumlah_anak" value="{{ $pegawai[0]->jumlah_anak }}"
-                                placeholder="Jumlah Anak" readonly>
+                            <input type="text" class="form-control" name="jumlah_anak" id="data_jumlah_anak"
+                                value="{{ $pegawai[0]->jumlah_anak }}" placeholder="Jumlah Anak" readonly>
                         </div>
                     </div>
                 </div>
@@ -118,7 +115,8 @@
                             <label for="">Omzet</label>
 
                             <input type="text" name="id_pegawai" value="{{ $pegawai[0]->id }}" hidden>
-                            <input type="text" class="form-control" name="omzet" id="jumlah_omzet" placeholder="Omzet">
+                            <input type="text" class="form-control" name="omzet" id="jumlah_omzet"
+                                placeholder="Omzet">
                         </div>
                     </div>
                 </div>
@@ -127,17 +125,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Bonus Omzet</label>
-                            <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet" value="{{ number_format($pegawai[0]->bonus_tahunan) }}"
-                                placeholder="Bonus Omzet" readonly>
+                            <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
+                                value="{{ $pegawai[0]->bonus_tahunan }}" placeholder="Bonus Omzet" readonly>
                         </div>
                     </div>
-                    {{-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Total</label>
-                            <input type="text" class="form-control" name="total" id="total"
-                                placeholder="Total" value="{{ number_format($pegawai[0]->bonus) }}" readonly>
-                        </div>
-                    </div> --}}
                 </div>
 
                 <button type="submit" class="btn btn-primary float-right mt-3">Tambah</button>

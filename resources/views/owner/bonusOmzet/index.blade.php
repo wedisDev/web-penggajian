@@ -27,7 +27,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="">Jabatan</label>
                             <select name="id_jabatan" class="form-control" id="">
                                 <option value="">Pilih Jabatan</option>
@@ -35,10 +35,10 @@
                                     <option value="{{ $item->id }}">{{ $item->nama_jabatan }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
-                            <label for="">Bonus Omzet</label>
+                            <label for="">Total Omzet</label>
                             <input type="number" class="form-control" name="bonus" placeholder="Rp 100.000....">
                         </div>
 
@@ -71,10 +71,10 @@
                         <tr>
                             <th>No</th>
                             <th>Cabang</th>
-                            <th>Bonus Omzet</th>
-                            @if (Auth::user()->role == 'owner')
-                                <th>Actions</th>
-                            @endif
+                            <th>Target Omzet</th>
+                            {{-- @if (Auth::user()->role == 'owner') --}}
+                            <th>Actions</th>
+                            {{-- @endif --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -107,7 +107,7 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group">
+                                                {{-- <div class="form-group">
                                                     <label for="">Jabatan</label>
                                                     <select name="id_jabatan" class="form-control" id="">
                                                         <option value="">Pilih Jabatan</option>
@@ -117,7 +117,7 @@
                                                                 {{ $item2->nama_jabatan }}</option>
                                                         @endforeach
                                                     </select>
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="form-group">
                                                     <label for="">Bonus Omzet</label>
@@ -137,16 +137,16 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->bonus }}</td>
-                                @if (Auth::user()->role == 'owner')
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
-                                            data-target="#modalEdit{{ $item->id }}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <a href="#" class="btn btn-sm btn-danger delete"
-                                            data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
-                                @endif
+                                {{-- @if (Auth::user()->role == 'owner') --}}
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                        data-target="#modalEdit{{ $item->id }}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
+                                            class="fas fa-trash-alt"></i></a>
+                                </td>
+                                {{-- @endif --}}
                             </tr>
                         @endforeach
 
@@ -184,7 +184,7 @@
                             icon: "success",
                         });
                     } else {
-                        swal("Data tidak jadi dihapus");
+                        swal("Data tidak terhapus");
                     }
                 });
         });

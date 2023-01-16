@@ -14,6 +14,7 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PegawaiController extends Controller
@@ -25,12 +26,28 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
-            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
-            ->get();
+        // $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+        //     ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+        //     ->get();
+        $pegawai = DB::select("SELECT
+            pegawais.id as 'id',
+            pegawais.nama_pegawai as 'nama_pegawai',
+            pegawais.jenis_kelamin as 'jenis_kelamin',
+            pegawais.alamat as 'alamat',
+            pegawais.tahun_masuk as 'tahun_masuk',
+            pegawais.jumlah_anak as 'jumlah_anak',
+            pegawais.status as 'status',
+            jabatans.bonus_tahunan as 'bonus_tahunan',
+            jabatans.nama_jabatan as 'nama_jabatan',
+            cabangs.nama_cabang as 'nama_cabang'
+                FROM Pegawais
+                JOIN jabatans ON jabatans.id = pegawais.id_jabatan
+                JOIN cabangs ON cabangs.id = pegawais.id_cabang");
+        // dd($pegawai);
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
+
 
         return view('owner.pegawai.index', [
             'pegawai' => $pegawai,
@@ -65,7 +82,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
-            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('cb.id', $id)
             ->get();
 
@@ -92,7 +109,8 @@ class PegawaiController extends Controller
             ->get();
         $date_new = $date->toFormattedDateString();
         $tahun = $pegawai[0]->created_at->year();
-
+        // $tahun = $date->year();
+        // dd($date->year());
         // return view('owner.pegawai.slip-gaji', [
         //     'pegawai' => $pegawai,
         //     'tanggal' => $date_new,
@@ -194,18 +212,14 @@ class PegawaiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
+
     {
         $pegawai = Pegawai::findOrFail($id);
+        $cabang = Cabang::all();
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
-        $cabang = Cabang::all();
-
-        return view('owner.pegawai.edit', [
-            'pegawai' => $pegawai,
-            'jabatan' => $jabatan,
-            'golongan' => $golongan,
-            'cabang' => $cabang
-        ]);
+        // dd($pegawai, $golongan);
+        return view('owner.pegawai.edit', compact('pegawai', 'cabang', 'jabatan', 'golongan'));
     }
 
     /**
@@ -279,12 +293,9 @@ class PegawaiController extends Controller
     public function pelanggaran()
     {
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
-            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
-            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
             ->where('pegawais.id', Auth::user()->id_pegawai)
             ->get();
-
         return view('pegawai.pelanggaran.index', [
             'pegawai' => $pegawai
         ]);
@@ -295,7 +306,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
-            ->join('golongans as gl', 'gl.id', '=', 'pegawais.status')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('pegawais.id', Auth::user()->id_pegawai)
             ->get();
         $jabatan = Jabatan::all();

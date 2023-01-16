@@ -6,6 +6,7 @@ use App\Models\BonusOmzet;
 use App\Models\Cabang;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -18,16 +19,18 @@ class BonusOmzetController extends Controller
      */
     public function index()
     {
-        $bonus = BonusOmzet::join('jabatans as jb', 'jb.id', '=', 'bonus_omzets.id_jabatan')
-            ->join('cabangs as cb', 'cb.id', '=', 'bonus_omzets.id_cabang')
-            ->get();
-            // dd($bonus);
-        $jabatan = Jabatan::all();
+        // $bonus = BonusOmzet::join('cabangs as cb', 'cb.id', '=', 'bonus_omzets.id_cabang')
+        //     ->get();
+        $bonus = DB::select("SELECT bonus_omzets.id as 'id', bonus_omzets.id_cabang as 'id_cabang', bonus_omzets.bonus, cabangs.nama_cabang as 'nama_cabang', cabangs.alamat
+            FROM bonus_omzets
+            JOIN cabangs ON cabangs.id = bonus_omzets.id_cabang");
+        // dd($bonus);
+        // $jabatan = Jabatan::all();
         $cabang = Cabang::all();
-
+        // dd($bonus);
         return view('owner.bonusOmzet.index', [
             'bonus' => $bonus,
-            'jabatan' => $jabatan,
+            // 'jabatan' => $jabatan,
             'cabang' => $cabang
         ]);
     }
@@ -51,7 +54,7 @@ class BonusOmzetController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'id_jabatan' => 'required',
+            // 'id_jabatan' => 'required',
             'id_cabang' => 'required',
             'bonus' => 'required',
         ]);
@@ -105,8 +108,9 @@ class BonusOmzetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $validator = Validator::make(request()->all(), [
-            'id_jabatan' => 'required',
+            // 'id_jabatan' => 'required',
             'id_cabang' => 'required',
             'bonus' => 'required',
         ]);
@@ -116,14 +120,16 @@ class BonusOmzetController extends Controller
             return back()->withErrors($validator->errors());
         } else {
 
-            Alert::success('Success', 'Bonus Omzet berhasil diubah');
 
             $bonus = BonusOmzet::findOrFail($id);
 
-            $bonus->id_jabatan = $request->get('id_jabatan');
+            // dd($bonus);
+            // $bonus->id_jabatan = $request->get('id_jabatan');
             $bonus->id_cabang = $request->get('id_cabang');
             $bonus->bonus = $request->get('bonus');
             $bonus->save();
+            Alert::success('Success', 'Bonus Omzet berhasil diubah');
+            // dd($bonus->save());
 
             return redirect()->back();
         }
