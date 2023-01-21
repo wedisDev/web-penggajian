@@ -37,7 +37,7 @@
             <!-- Main Content -->
             <div id="content">
 
-               @include('admin.include.navbar')
+                @include('admin.include.navbar')
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">

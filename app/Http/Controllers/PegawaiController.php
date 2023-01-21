@@ -111,19 +111,19 @@ class PegawaiController extends Controller
         $tahun = $pegawai[0]->created_at->year();
         // $tahun = $date->year();
         // dd($date->year());
-        // return view('owner.pegawai.slip-gaji', [
-        //     'pegawai' => $pegawai,
-        //     'tanggal' => $date_new,
-        //     'tahun' => $tahun,
-        // ]);
-        $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
+        return view('owner.pegawai.slip-gaji', [
             'pegawai' => $pegawai,
             'tanggal' => $date_new,
             'tahun' => $tahun,
+        ]);
+        // $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
+        //     'pegawai' => $pegawai,
+        //     'tanggal' => $date_new,
+        //     'tahun' => $tahun,
 
-        ])->setpaper('a4', 'landscape');
+        // ])->setpaper('a4', 'landscape');
 
-        return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
+        // return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
     }
 
     /**
