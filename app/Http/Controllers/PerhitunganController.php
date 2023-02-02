@@ -166,8 +166,8 @@ class PerhitunganController extends Controller
             ->first();
 
         $omzet = $request->omzet;
-        $tunjangan_makan = 10000 * (26 - $request->alpha);
-        $tunjangan_lembur = 15000 * (26 - $request->alpha);
+        $tunjangan_makan = 10000 * (27 - $request->alpha);
+        $tunjangan_lembur = 15000 * (27 - $request->alpha);
         $tunjangan = $data->tunjangan_makmur
             + $data->tunjangan_menikah
             + $data->tunjangan_anak

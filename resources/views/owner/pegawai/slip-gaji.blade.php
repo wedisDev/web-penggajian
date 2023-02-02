@@ -132,8 +132,8 @@
                     <span style="font-size: 20px;">Lembur : {{ $pegawai[0]->lembur }}</span><br>
                     <span style="font-size: 20px;">tunjangan makmur : Rp
                         {{ number_format($pegawai[0]->tunjangan_makmur) }}</span><br>
-                    <span style="font-size: 20px;">Tunjangan Makan : Rp
-                        {{ number_format($pegawai[0]->tunjangan_makan) }}</span><br>
+                    <span style="font-size: 20px;">Tunjangan Makan 15 x 27 : Rp
+                        {{ number_format($tunjangan_makan) }}</span><br>
 
                 </div>
                 <div class="col-6">

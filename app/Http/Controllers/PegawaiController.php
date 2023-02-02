@@ -111,10 +111,14 @@ class PegawaiController extends Controller
         $tahun = $pegawai[0]->created_at->year();
         // $tahun = $date->year();
         // dd($date->year());
+        // dd($pegawai[0]->tunjangan_makan * 27);
+        $tunjangan_makan  = $pegawai[0]->tunjangan_makan * 27;
+        // dd($tunjangan_makan);
         return view('owner.pegawai.slip-gaji', [
             'pegawai' => $pegawai,
             'tanggal' => $date_new,
             'tahun' => $tahun,
+            'tunjangan_makan' => $tunjangan_makan
         ]);
         // $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
         //     'pegawai' => $pegawai,
