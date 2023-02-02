@@ -109,25 +109,26 @@ class PegawaiController extends Controller
             ->get();
         $date_new = $date->toFormattedDateString();
         $tahun = $pegawai[0]->created_at->year();
-        // $tahun = $date->year();
-        // dd($date->year());
-        // dd($pegawai[0]->tunjangan_makan * 27);
-        $tunjangan_makan  = $pegawai[0]->tunjangan_makan * 27;
-        // dd($tunjangan_makan);
-        return view('owner.pegawai.slip-gaji', [
-            'pegawai' => $pegawai,
-            'tanggal' => $date_new,
-            'tahun' => $tahun,
-            'tunjangan_makan' => $tunjangan_makan
-        ]);
-        // $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
+        $masuk =  27 - $pegawai[0]->alpha;
+        $tunjangan_makan  = $pegawai[0]->tunjangan_makan * $masuk;
+
+        // return view('owner.pegawai.slip-gaji', [
         //     'pegawai' => $pegawai,
         //     'tanggal' => $date_new,
         //     'tahun' => $tahun,
+        //     'tunjangan_makan' => $tunjangan_makan,
+        //     'masuk' => $masuk
+        // ]);
 
-        // ])->setpaper('a4', 'landscape');
+        $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
+            'pegawai' => $pegawai,
+            'tanggal' => $date_new,
+            'tahun' => $tahun,
+            'tunjangan_makan' => $tunjangan_makan,
+            'masuk' => $masuk
+        ])->setpaper('a4', 'landscape');
 
-        // return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
+        return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
     }
 
     /**
