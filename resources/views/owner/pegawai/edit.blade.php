@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="">Jabatan</label>
                     <select name="id_jabatan" class="form-control" id="">
-                        <option value="">Pilih jabatan</option>
+                        <option disabled>Pilih jabatan</option>
                         @foreach ($jabatan as $item)
                             <option value="{{ $item->id }}" {{ $item->id == $pegawai->id_jabatan ? 'selected' : '' }}>
                                 {{ $item->nama_jabatan }}</option>
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="">Cabang</label>
                     <select name="id_cabang" class="form-control" id="">
-                        <option value="">Pilih Cabang</option>
+                        <option disabled>Pilih Cabang</option>
                         @foreach ($cabang as $item)
                             <option value="{{ $item->id }}" {{ $item->id == $pegawai->id_cabang ? 'selected' : '' }}>
                                 {{ $item->nama_cabang }}</option>
@@ -50,9 +50,9 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Status</label>
                     <select class="form-control" name="status">
-                        <option>Pilih Status</option>
+                        <option disabled>Pilih Status</option>
                         @foreach ($golongan as $item)
-                            <option value="{{ $item->id }}"
+                            <option value="{{ $item->nama_golongan }}"
                                 {{ $item->nama_golongan == $pegawai->status ? 'selected' : '' }}>
                                 {{ $item->nama_golongan }}</option>
                         @endforeach

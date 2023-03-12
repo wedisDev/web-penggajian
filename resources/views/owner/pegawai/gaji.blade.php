@@ -35,11 +35,16 @@
                             <th>Status</th>
                             <th>Jumlah Anak</th>
                             <th>Total gaji</th>
+                            <th>Bulan</th>
+                            <th>Tahun</th>
                             <th>Slip Gaji</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pegawai as $item)
+                            @php
+                                // dd($item);
+                            @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
@@ -49,8 +54,11 @@
                                 <td>{{ $item->nama_golongan }}</td>
                                 <td>{{ $item->jumlah_anak }}</td>
                                 <td>{{ number_format($item->total) }}</td>
+                                <td>{{ $item->bulan }}</td>
+                                <td>{{ $item->tahun }}</td>
                                 <td>
-                                    <a href="{{ url('/slip-gaji', $item->id_pegawai) }}" class="btn btn-success">Slip
+                                    <a href="{{ url('/slip-gaji/' . $item->bulan . '/' . $item->tahun . '/' . $item->id_pegawai) }}"
+                                        class="btn btn-success">Slip
                                         Gaji</a>
                                 </td>
                             </tr>

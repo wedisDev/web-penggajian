@@ -17,9 +17,10 @@ class GolonganController extends Controller
     public function index()
     {
         $golongan = Golongan::all();
+        // dd($golongan);
 
         return view('owner.golongan.index', [
-            'golongan' => $golongan 
+            'golongan' => $golongan
         ]);
     }
 
@@ -59,7 +60,7 @@ class GolonganController extends Controller
             $golongan->nama_golongan = $request->get('status');
             $golongan->tunjangan_menikah = $request->get('tunjangan_menikah');
             $golongan->tunjangan_anak = $request->get('tunjangan_anak');
-            
+
             $golongan->save();
 
             return redirect()->back();
@@ -115,7 +116,7 @@ class GolonganController extends Controller
             $golongan->nama_golongan = $request->get('status');
             $golongan->tunjangan_menikah = $request->get('tunjangan_menikah');
             $golongan->tunjangan_anak = $request->get('tunjangan_anak');
-            
+
             $golongan->save();
 
             return redirect()->back();

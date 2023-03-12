@@ -65,6 +65,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Status</th>
                             <th>Tunjangan Menikah</th>
                             <th>Tunjangan Anak</th>
                             @if (Auth::user()->role == 'owner')
@@ -117,6 +118,7 @@
 
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama_golongan }}</td>
                                 <td>{{ $item->tunjangan_menikah }}</td>
                                 <td>{{ $item->tunjangan_anak }}</td>
                                 @if (Auth::user()->role == 'owner')

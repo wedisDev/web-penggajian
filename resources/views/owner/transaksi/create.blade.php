@@ -126,7 +126,7 @@
                         <div class="form-group">
                             <label for="">Bonus Omzet</label>
                             <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
-                                value="{{ $pegawai[0]->bonus_tahunan }}" placeholder="Bonus Omzet" {{-- {{ $readonly }}> --}}>
+                                value="{{ $pegawai[0]->bonus_tahunan }}" placeholder="Bonus Omzet" readonly>
                         </div>
                     </div>
                 </div>

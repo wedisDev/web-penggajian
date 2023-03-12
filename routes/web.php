@@ -54,7 +54,7 @@ Route::group(
         Route::get('/pegwai/rincian-gaji', [PegawaiController::class, 'rincian']);
         Route::get('/gaji-pegawai',  [PegawaiController::class, 'gaji']);
         Route::get('/filter-gaji-cabang/{id}', [PegawaiController::class, 'filterGajiCabang']);
-        Route::get('/slip-gaji/{id}',  [PegawaiController::class, 'slipGaji']);
+        Route::get('/slip-gaji/{bulan}/{tahun}/{id}',  [PegawaiController::class, 'slipGaji']);
         Route::get('/pelanggaran', [PegawaiController::class, 'pelanggaran']);
         Route::get('/history', [PegawaiController::class, 'history']);
 

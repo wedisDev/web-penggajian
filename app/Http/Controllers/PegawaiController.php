@@ -63,7 +63,14 @@ class PegawaiController extends Controller
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
+            ->orderBy('ph.tahun')
             ->get();
+        // select * fron pegawai join jabatans ON jabatans.id = pegawais.id_jabatan
+        // JOIN cabangs ON cabangs.id = pegawais.id_cabang
+        // JOIN golongans ON golongans.nama_golongan = pegawais.status
+        // JOIN perhitungans ON perhitungans.id_pegawai = pegawais.id
+
+        // dd($pegawai);
 
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
@@ -98,7 +105,7 @@ class PegawaiController extends Controller
         ]);
     }
 
-    public function slipGaji($id)
+    public function slipGaji($bulan, $tahun, $id)
     {
         $date = Carbon::now();
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
@@ -106,19 +113,22 @@ class PegawaiController extends Controller
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('id_pegawai', $id)
+            ->where('ph.bulan', $bulan)
+            ->where('ph.tahun', $tahun)
             ->get();
+
         $date_new = $date->toFormattedDateString();
         $tahun = $pegawai[0]->created_at->year();
         $masuk =  27 - $pegawai[0]->alpha;
         $tunjangan_makan  = $pegawai[0]->tunjangan_makan * $masuk;
 
-        // return view('owner.pegawai.slip-gaji', [
-        //     'pegawai' => $pegawai,
-        //     'tanggal' => $date_new,
-        //     'tahun' => $tahun,
-        //     'tunjangan_makan' => $tunjangan_makan,
-        //     'masuk' => $masuk
-        // ]);
+        return view('owner.pegawai.slip-gaji', [
+            'pegawai' => $pegawai,
+            'tanggal' => $date_new,
+            'tahun' => $tahun,
+            'tunjangan_makan' => $tunjangan_makan,
+            'masuk' => $masuk
+        ]);
 
         $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
             'pegawai' => $pegawai,
@@ -128,7 +138,7 @@ class PegawaiController extends Controller
             'masuk' => $masuk
         ])->setpaper('a4', 'landscape');
 
-        return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
+        // return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
     }
 
     /**
@@ -162,6 +172,7 @@ class PegawaiController extends Controller
             'status' => 'required',
             'jumlah_anak' => 'required',
         ]);
+        // dd($request->all());
 
         if ($validator->fails()) {
             dd($validator->errors());
@@ -174,6 +185,7 @@ class PegawaiController extends Controller
 
             $idCabang = $request->get('id_cabang');
 
+
             $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang]);
             $pegawai->nama_pegawai = $request->get('nama_pegawai');
             $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
@@ -183,6 +195,9 @@ class PegawaiController extends Controller
             $pegawai->status = $request->get('status');
             $pegawai->tahun_masuk = $request->get('tahun_masuk');
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
+
+
+
 
             User::create([
                 'id_pegawai' => IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang]),
