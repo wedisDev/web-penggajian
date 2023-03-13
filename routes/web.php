@@ -6,6 +6,7 @@ use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GolonganController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\OmzetController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PerhitunganController;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +66,7 @@ Route::group(
         //Route Bonus Omzet
         Route::resource('/bonus-omzet', BonusOmzetController::class);
         Route::get('/bonus-omzet/delete/{id}', [BonusOmzetController::class, 'destroy']);
+        Route::resource('/omzet', OmzetController::class);
 
         //Route Transaksi
         Route::resource('/transaksi', PerhitunganController::class);

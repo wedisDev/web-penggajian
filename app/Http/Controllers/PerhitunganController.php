@@ -88,6 +88,7 @@ class PerhitunganController extends Controller
             'jb.tunjangan_anak',
             'jb.bonus_tahunan',
             'cb.nama_cabang',
+            'cb.omzet',
             'bo.bonus',
             'gl.nama_golongan'
         )
@@ -117,6 +118,7 @@ class PerhitunganController extends Controller
             'jb.tunjangan_anak',
             'jb.bonus_tahunan',
             'cb.nama_cabang',
+            'cb.omzet',
             'bo.bonus',
             'gl.nama_golongan'
         )
@@ -127,18 +129,25 @@ class PerhitunganController extends Controller
             ->where('pegawais.id_cabang', $cabang)
             ->where('pegawais.id', $id)
             ->get();
-        // dd($pegawai2);
+        // dd($pegawai2[0]);
 
+        $bonus = 0;
         foreach ($pegawai as $item) {
+            if ($item->omzet >= $item->bonus) {
+                $bonus = $item->omzet - ($item->omzet * 0.99);
+                // dd($bonus);
+            }
             if (!$item->id) {
                 // $pegawai = 'Data Kosong';
                 // break;
                 return view('owner.transaksi.create', [
                     'pegawai' => $pegawai2,
+                    'bonus' => $bonus
                 ]);
             }
             return view('owner.transaksi.create', [
                 'pegawai' => $pegawai,
+                'bonus' => $bonus
             ]);
         }
         Alert::error('Error', 'Bonus Omzet cabang didaftarkan');

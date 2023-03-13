@@ -64,7 +64,34 @@
                                     <td>{{ $item->lembur }}</td>
                                     <td>{{ $item->pelanggaran }}</td>
                                     <td>{{ $item->alpha }}</td>
-                                    <td>{{ $item->bulan }}</td>
+                                    <td>
+                                        @if ($item->bulan == 1)
+                                            Januari
+                                        @elseif($item->bulan == 2)
+                                            Februari
+                                        @elseif($item->bulan == 3)
+                                            Maret
+                                        @elseif($item->bulan == 4)
+                                            April
+                                        @elseif($item->bulan == 5)
+                                            Mei
+                                        @elseif($item->bulan == 6)
+                                            Juni
+                                        @elseif($item->bulan == 7)
+                                            Juli
+                                        @elseif($item->bulan == 8)
+                                            Agustus
+                                        @elseif($item->bulan == 9)
+                                            September
+                                        @elseif($item->bulan == 10)
+                                            Oktober
+                                        @elseif($item->bulan == 11)
+                                            November
+                                        @elseif($item->bulan == 12)
+                                            Desember
+                                        @endif
+
+                                    </td>
                                     <td>{{ number_format($item->omzet) }}</td>
                                     <td>{{ number_format($item->total) }}</td>
                                     @if (Auth::user()->role == 'owner')

@@ -115,8 +115,8 @@
                             <label for="">Omzet</label>
 
                             <input type="text" name="id_pegawai" value="{{ $pegawai[0]->id }}" hidden>
-                            <input type="text" class="form-control" name="omzet" id="jumlah_omzet"
-                                placeholder="Omzet">
+                            <input type="text" class="form-control" name="omzet" value="{{ $pegawai[0]->omzet }}"
+                                readonly id="jumlah_omzet" placeholder="Omzet">
                         </div>
                     </div>
                 </div>
@@ -125,8 +125,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Bonus Omzet</label>
-                            <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
-                                value="{{ $pegawai[0]->bonus_tahunan }}" placeholder="Bonus Omzet" readonly>
+                            {{-- <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
+                                value="{{ $pegawai[0]->bonus_tahunan }}" placeholder="Bonus Omzet" readonly> --}}
+                            <input type="text" class="form-control" name="bonus_omzet" value="{{ $bonus }}"
+                                placeholder="Bonus Omzet" {{ $bonus != 0 ? 'readonly' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -170,12 +172,12 @@
                 success: function(data) {
                     console.log(data);
                     if (data.bonus == 0) {
-                        console.log(data)
+                        console.log(e.target.value)
                         $('#bonus_omzet').val(0);
                         $('#bonus_omzet').prop('readonly', true);
                         $('#total').val(data.hitung);
                     } else {
-                        console.log(data)
+                        console.log(e.target.value)
                         $('#bonus_omzet').prop('readonly', false);
                         $('#bonus_omzet').val(data.bonus.bonus);
                         $('#total').val(data.hitung);
