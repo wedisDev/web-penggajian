@@ -182,11 +182,22 @@ class PegawaiController extends Controller
             Alert::success('Success', 'Pegawai berhasil ditambahkan');
 
             $pegawai = new Pegawai();
-
             $idCabang = $request->get('id_cabang');
 
+            $cekId = Pegawai::latest()->first()->id;
+            // dd($cekId);
+            $buatID =
+                IdGenerator::generate(['table' => 'pegawais', 'length' => 7, 'prefix' => date('y') . $idCabang]);
 
-            $pegawai->id = IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang]);
+            $email = Str::lower(str_replace(' ', '', $request->get('nama_pegawai'))) . '@gmail.com';
+            $cekEmail = User::where('email', $email)->get();
+            // dd($cekEmail, $email);
+            if ($cekEmail == $email) {
+                Alert::error('Email sudah ada', 'Harap masukan email yang lain');
+                return back()->withInput();
+            }
+
+            $pegawai->id = $buatID;
             $pegawai->nama_pegawai = $request->get('nama_pegawai');
             $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
             $pegawai->alamat = $request->get('alamat');
@@ -196,15 +207,12 @@ class PegawaiController extends Controller
             $pegawai->tahun_masuk = $request->get('tahun_masuk');
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
 
-
-
-
             User::create([
-                'id_pegawai' => IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang]),
+                'id_pegawai' => $buatID,
                 'name' => $request->get('nama_pegawai'),
                 'role' => 'pegawai',
-                'email' => Str::lower(str_replace(' ', '', $request->get('nama_pegawai'))) . '@gmail.com',
-                'password' => bcrypt(IdGenerator::generate(['table' => 'pegawais', 'length' => 6, 'prefix' => date('y') . $idCabang])),
+                'email' => $email,
+                'password' => bcrypt($buatID),
             ]);
 
             $pegawai->save();

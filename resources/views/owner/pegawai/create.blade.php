@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                     <select class="form-control" name="jenis_kelamin">
-                        <option disabled>Pilih Kelamin</option>
+                        <option disabled selected>Pilih Kelamin</option>
                         <option value="Laki-laki">Laki-laki</option>
                         <option value="Perempuan">Perempuan</option>
                     </select>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label for="">Jabatan</label>
                     <select name="id_jabatan" class="form-control" id="">
-                        <option disabled>Pilih jabatan</option>
+                        <option disabled selected>Pilih jabatan</option>
                         @foreach ($jabatan as $item)
                             <option value="{{ $item->id }}">{{ $item->nama_jabatan }}</option>
                         @endforeach
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <label for="">Cabang</label>
                     <select name="id_cabang" class="form-control" id="">
-                        <option disabled>Pilih Cabang</option>
+                        <option disabled selected>Pilih Cabang</option>
                         @foreach ($cabang as $item)
                             <option value="{{ $item->id }}">{{ $item->nama_cabang }}</option>
                         @endforeach
