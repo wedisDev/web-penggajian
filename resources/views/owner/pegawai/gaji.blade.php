@@ -18,9 +18,17 @@
     </div>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+    <div class="card shadow ">
+        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between mb-4">
             <h6 class="m-0 font-weight-bold text-primary">Data Gaji Pegawai</h6>
+            <select name="" class="form-control text-dark" style="width: 20%;" onchange="location = this.value;">
+                <option selected disabled>Pilih Tahun</option>
+                @foreach ($tahun as $item)
+                    <option value="{{ url('/gaji-pegawai', $item->tahun) }}">
+                        {{ $item->tahun }}
+                    </option>
+                @endforeach
+            </select>
         </div>
         <div class="card-body">
             <div class="table-responsive">

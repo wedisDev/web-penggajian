@@ -9,6 +9,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\OmzetController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PerhitunganController;
+use App\Models\Pegawai;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -54,6 +55,7 @@ Route::group(
         Route::get('/pegawai/delete/{id}', [PegawaiController::class, 'destroy']);
         Route::get('/pegwai/rincian-gaji', [PegawaiController::class, 'rincian']);
         Route::get('/gaji-pegawai',  [PegawaiController::class, 'gaji']);
+        Route::get('/gaji-pegawai/{tahun}', [PegawaiController::class, 'filterGajiPertahun']);
         Route::get('/filter-gaji-cabang/{id}', [PegawaiController::class, 'filterGajiCabang']);
         Route::get('/slip-gaji/{bulan}/{tahun}/{id}',  [PegawaiController::class, 'slipGaji']);
         Route::get('/pelanggaran', [PegawaiController::class, 'pelanggaran']);

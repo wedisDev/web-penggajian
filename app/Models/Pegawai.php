@@ -17,15 +17,17 @@ class Pegawai extends Model
         'alamat',
         'status',
         'tahun_masuk',
-        'jumlah_anak'
+        'jumlah_anak',
     ];
 
-    public function jabatan(){
+    public function jabatan()
+    {
 
         return $this->belongsTo(Jabatan::class);
     }
 
-    public function cabang(){
+    public function cabang()
+    {
 
         return $this->belongsTo(Cabang::class);
     }

@@ -6,6 +6,7 @@ use App\Models\Cabang;
 use App\Models\Golongan;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
+use App\Models\Perhitungan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -63,7 +64,6 @@ class PegawaiController extends Controller
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
-            ->orderBy('ph.tahun')
             ->get();
         // select * fron pegawai join jabatans ON jabatans.id = pegawais.id_jabatan
         // JOIN cabangs ON cabangs.id = pegawais.id_cabang
@@ -76,11 +76,41 @@ class PegawaiController extends Controller
         $golongan = Golongan::all();
         $cabang = Cabang::all();
 
+        $tahun = Perhitungan::select('tahun')->distinct()->get();
+        // dd($tahun);
+
         return view('owner.pegawai.gaji', [
             'pegawai' => $pegawai,
             'jabatan' => $jabatan,
             'golongan' => $golongan,
-            'cabang' => $cabang
+            'cabang' => $cabang,
+            'tahun' => $tahun
+        ]);
+    }
+
+    public function filterGajiPertahun($tahun)
+    {
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
+            ->orderBy('ph.bulan')
+            ->where('ph.tahun', $tahun)
+            ->get();
+
+        $jabatan = Jabatan::all();
+        $golongan = Golongan::all();
+        $cabang = Cabang::all();
+
+        $tahun = Perhitungan::select('tahun')->distinct()->get();
+        // dd($tahun);
+
+        return view('owner.pegawai.gaji', [
+            'pegawai' => $pegawai,
+            'jabatan' => $jabatan,
+            'golongan' => $golongan,
+            'cabang' => $cabang,
+            'tahun' => $tahun
         ]);
     }
 
