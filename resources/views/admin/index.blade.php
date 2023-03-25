@@ -31,22 +31,33 @@
         </form>
     </div>
 
-    <div id="test"></div>
-    <div id="chartOmzet"></div>
-    <div class="mt-5" id="chartTahun"></div>
+    {{-- <div id="test"></div> --}}
+    <div class="d-sm-flex align-items-center justify-content-center mb-4">
+        <div class="mr-3" id="chartOmzet1"></div>
+        <div class="mr-3" id="chartOmzet2"></div>
+    </div>
+    <div class="d-sm-flex align-items-center justify-content-center mb-4">
+        <div class="mr-3" id="chartOmzet3"></div>
+        <div class="mr-3" id="chartOmzet4"></div>
+        {{-- <div id="chartOmzet"></div> --}}
+    </div>
 
+    @php
+        // dd($datas1, $datas2, $datas3, $datas4);
+        // dd($nama1[0]);
+    @endphp
 
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            Highcharts.chart('chartOmzet', {
+            Highcharts.chart('chartOmzet1', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Omzet Perbulan tahun <?= $tahun_pilih ?>'
+                    text: 'Omzet Kantin Tante Royal Perbulan tahun <?= $tahun_pilih ?>'
                 },
                 accessibility: {
                     announceNewData: {
@@ -82,21 +93,18 @@
                 series: [{
                     name: "Omzet",
                     colorByPoint: true,
-                    data: {!! json_encode($datas) !!}
+                    data: {!! json_encode($datas1) !!}
                 }],
             });
         });
 
-
-
-
         $(document).ready(function() {
-            Highcharts.chart('chartTahun', {
+            Highcharts.chart('chartOmzet2', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Data Omzet Pertahun'
+                    text: 'Omzet Kantin Tante DTC Perbulan tahun <?= $tahun_pilih ?>'
                 },
                 accessibility: {
                     announceNewData: {
@@ -104,7 +112,9 @@
                     }
                 },
                 xAxis: {
-                    categories: {!! json_encode($c) !!},
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                        'Nov', 'Dec'
+                    ]
                 },
                 yAxis: {
                     title: {
@@ -130,9 +140,149 @@
                 series: [{
                     name: "Omzet",
                     colorByPoint: true,
-                    data: {!! json_encode($d) !!},
+                    data: {!! json_encode($datas2) !!}
                 }],
             });
         });
+
+        $(document).ready(function() {
+            Highcharts.chart('chartOmzet3', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Omzet Kantin Tante Pasar Atom Perbulan tahun <?= $tahun_pilih ?>'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                        'Nov', 'Dec'
+                    ]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Omzet'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.0f}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.date} <br>{point.name}</span>: <b>{point.y:.0f}</b><br/>'
+                },
+                series: [{
+                    name: "Omzet",
+                    colorByPoint: true,
+                    data: {!! json_encode($datas3) !!}
+                }],
+            });
+        });
+
+        $(document).ready(function() {
+            Highcharts.chart('chartOmzet4', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Omzet Kantin Tante Embong Wungu Perbulan tahun <?= $tahun_pilih ?>'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                        'Nov', 'Dec'
+                    ]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Omzet'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.0f}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.date} <br>{point.name}</span>: <b>{point.y:.0f}</b><br/>'
+                },
+                series: [{
+                    name: "Omzet",
+                    colorByPoint: true,
+                    data: {!! json_encode($datas4) !!}
+                }],
+            });
+        });
+
+
+        // $(document).ready(function() {
+        //     Highcharts.chart('chartTahun', {
+        //         chart: {
+        //             type: 'column'
+        //         },
+        //         title: {
+        //             text: 'Data Omzet Pertahun'
+        //         },
+        //         accessibility: {
+        //             announceNewData: {
+        //                 enabled: true
+        //             }
+        //         },
+        //         xAxis: {
+        //             categories: {!! json_encode($c) !!},
+        //         },
+        //         yAxis: {
+        //             title: {
+        //                 text: 'Omzet'
+        //             }
+        //         },
+        //         legend: {
+        //             enabled: false
+        //         },
+        //         plotOptions: {
+        //             series: {
+        //                 borderWidth: 0,
+        //                 dataLabels: {
+        //                     enabled: true,
+        //                     format: '{point.y:.0f}'
+        //                 }
+        //             }
+        //         },
+        //         tooltip: {
+        //             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        //             pointFormat: '<span style="color:{point.color}">{point.date} <br>{point.name}</span>: <b>{point.y:.0f}</b><br/>'
+        //         },
+        //         series: [{
+        //             name: "Omzet",
+        //             colorByPoint: true,
+        //             data: {!! json_encode($d) !!},
+        //         }],
+        //     });
+        // });
     </script>
 @endpush
