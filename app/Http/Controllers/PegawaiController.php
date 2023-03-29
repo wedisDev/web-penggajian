@@ -168,7 +168,7 @@ class PegawaiController extends Controller
             'masuk' => $masuk
         ])->setpaper('a4', 'landscape');
 
-        // return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
+        return $pdf->download('slip-gaji' . '-' . $pegawai[0]->nama_pegawai . '.pdf');
     }
 
     /**
