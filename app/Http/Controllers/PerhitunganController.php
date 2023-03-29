@@ -134,7 +134,7 @@ class PerhitunganController extends Controller
         $bonus = 0;
         foreach ($pegawai as $item) {
             if ($item->omzet >= $item->bonus) {
-                $bonus = $item->omzet - ($item->omzet * 0.99);
+                $bonus = $item->omzet - ($item->omzet * 0.995);
                 // dd($bonus);
             }
             if (!$item->id) {
