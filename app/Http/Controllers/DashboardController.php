@@ -483,90 +483,302 @@ class DashboardController extends Controller
 
     public function chartByYear(Request $request)
     {
+        // $jabatan = Jabatan::count();
+        $golongan = Golongan::count();
+        $pegawai = Pegawai::count();
+
         $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
-        $data = DB::select("SELECT
-                            bulan,
-                            (CASE
-                                WHEN COUNT(*) > 1 THEN sum(omzet)
-                                ELSE omzet
-                            END) AS omzet
-                            FROM perhitungans
-                            WHERE tahun = '$request->tahun'
-                            GROUP BY bulan
-                            ORDER BY bulan DESC");
+        $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
 
-        $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun
-                    FROM `perhitungans`
-                    GROUP BY tahun
-                    ORDER BY bulan DESC");
+        // if (empty($tahun)) {
+        //     $tahun_baru = 'Tidak ada data';
+        // }
 
-        $a = [null, null, null, null, null, null, null, null, null, null, null, null];
+        // foreach ($tahun as $item) {
+        //     if ($item->tahun) {
+        //         $tahun_baru = $item->tahun;
+        //     }
+        // }
 
-        for ($i = 0; $i < count($a); $i++) {
-            if ($a[$i] === null) {
-                $a[$i] = 0;
+        // if ($tahun_baru == false) {
+        //     $data1 = DB::select("SELECT cabangs.nama_cabang, perhitungans.bulan,
+        //                     (CASE
+        //                         WHEN COUNT(*) > 1 THEN sum(perhitungans.omzet)
+        //                         ELSE perhitungans.omzet
+        //                     END) AS omzet
+        //                     FROM perhitungans
+        //                     JOIN pegawais ON perhitungans.id_pegawai = pegawais.id
+        //                     JOIN cabangs ON cabangs.id = pegawais.id_cabang
+        //                     WHERE cabangs.id = 2
+        //                     GROUP BY perhitungans.bulan
+        //                     ORDER BY perhitungans.bulan DESC");
+        // } else {
+        //     // $data = DB::select("SELECT cabangs.nama_cabang, perhitungans.bulan,
+        //     //             (CASE
+        //     //                 WHEN COUNT(*) > 1 THEN sum(perhitungans.omzet)
+        //     //                 ELSE perhitungans.omzet
+        //     //             END) AS omzet
+        //     //             FROM perhitungans
+        //     //             JOIN pegawais ON perhitungans.id_pegawai = pegawais.id
+        //     //             JOIN cabangs ON cabangs.id = pegawais.id_cabang
+        //     //             WHERE cabangs.id = 2 OR perhitungans.tahun = '$tahun_baru'
+        //     //             GROUP BY perhitungans.bulan
+        //     //             ORDER BY perhitungans.bulan DESC");
+        // }
+
+        $tahun_baru = $request->tahun;
+        // dd($request->all());
+        $data1 = DB::table('perhitungans')
+            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+            ->where('cabangs.id', 1)
+            ->where('perhitungans.tahun', '=', $tahun_baru)
+            ->groupBy('perhitungans.bulan')
+            ->orderBy('perhitungans.bulan', 'DESC')
+            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+            ->get();
+
+        $data2 = DB::table('perhitungans')
+            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+            ->where('cabangs.id', 2)
+            ->where('perhitungans.tahun', '=', $tahun_baru)
+            ->groupBy('perhitungans.bulan')
+            ->orderBy('perhitungans.bulan', 'DESC')
+            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+            ->get();
+        $data3 = DB::table('perhitungans')
+            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+            ->where('cabangs.id', 3)
+            ->where('perhitungans.tahun', '=', $tahun_baru)
+            ->groupBy('perhitungans.bulan')
+            ->orderBy('perhitungans.bulan', 'DESC')
+            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+            ->get();
+        $data4 = DB::table('perhitungans')
+            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+            ->where('cabangs.id', 4)
+            ->where('perhitungans.tahun', '=', $tahun_baru)
+            ->groupBy('perhitungans.bulan')
+            ->orderBy('perhitungans.bulan', 'DESC')
+            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+            ->get();
+        // dd($data1);
+        // $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
+        $data_tahun =
+            DB::table('perhitungans')
+            ->selectRaw('SUM(omzet) as omzet, tahun')
+            ->groupBy('tahun')
+            ->orderByDesc('omzet')
+            ->get();
+
+        $datas1 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        $datas2 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        $datas3 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        $datas4 = [null, null, null, null, null, null, null, null, null, null, null, null];
+
+        for ($i = 0; $i < count($datas1); $i++) {
+            if ($datas1[$i] === null) {
+                $datas1[$i] = 0;
+            }
+        }
+        for ($i = 0; $i < count($datas2); $i++) {
+            if ($datas2[$i] === null) {
+                $datas2[$i] = 0;
+            }
+        }
+        for ($i = 0; $i < count($datas3); $i++) {
+            if ($datas3[$i] === null) {
+                $datas3[$i] = 0;
+            }
+        }
+        for ($i = 0; $i < count($datas4); $i++) {
+            if ($datas4[$i] === null) {
+                $datas4[$i] = 0;
             }
         }
 
-        foreach ($data as $item) {
+        // dd($data);
+
+
+
+
+        foreach ($data1 as $item) {
 
             if ($item->bulan == 1) {
-                $a[0] = (int) $item->bulan;
+                $datas1[0] = (int) $item->bulan;
             } else if ($item->bulan == 2) {
-                $a[1] = (int) $item->omzet;
+                $datas1[1] = (int) $item->omzet;
             } else if ($item->bulan == 3) {
-                $a[2] = (int) $item->omzet;
+                $datas1[2] = (int) $item->omzet;
             } else if ($item->bulan == 4) {
-                $a[3] = (int) $item->omzet;
+                $datas1[3] = (int) $item->omzet;
             } else if ($item->bulan == 5) {
-                $a[4] = (int) $item->omzet;
+                $datas1[4] = (int) $item->omzet;
             } else if ($item->bulan == 6) {
-                $a[5] = (int) $item->omzet;
+                $datas1[5] = (int) $item->omzet;
             } else if ($item->bulan == 7) {
-                $a[6] = (int) $item->omzet;
+                $datas1[6] = (int) $item->omzet;
             } else if ($item->bulan == 8) {
-                $a[7] = (int) $item->omzet;
+                $datas1[7] = (int) $item->omzet;
             } else if ($item->bulan == 9) {
-                $a[8] = (int) $item->omzet;
+                $datas1[8] = (int) $item->omzet;
             } else if ($item->bulan == 10) {
-                $a[9] = (int) $item->omzet;
+                $datas1[9] = (int) $item->omzet;
             } else if ($item->bulan == 11) {
-                $a[10] = (int) $item->omzet;
+                $datas1[10] = (int) $item->omzet;
             } else if ($item->bulan == 12) {
-                $a[11] = (int) $item->omzet;
+                $datas1[11] = (int) $item->omzet;
+            }
+        }
+        foreach ($data2 as $item) {
+
+            if ($item->bulan == 1) {
+                $datas2[0] = (int) $item->bulan;
+            } else if ($item->bulan == 2) {
+                $datas2[1] = (int) $item->omzet;
+            } else if ($item->bulan == 3) {
+                $datas2[2] = (int) $item->omzet;
+            } else if ($item->bulan == 4) {
+                $datas2[3] = (int) $item->omzet;
+            } else if ($item->bulan == 5) {
+                $datas2[4] = (int) $item->omzet;
+            } else if ($item->bulan == 6) {
+                $datas2[5] = (int) $item->omzet;
+            } else if ($item->bulan == 7) {
+                $datas2[6] = (int) $item->omzet;
+            } else if ($item->bulan == 8) {
+                $datas2[7] = (int) $item->omzet;
+            } else if ($item->bulan == 9) {
+                $datas2[8] = (int) $item->omzet;
+            } else if ($item->bulan == 10) {
+                $datas2[9] = (int) $item->omzet;
+            } else if ($item->bulan == 11) {
+                $datas2[10] = (int) $item->omzet;
+            } else if ($item->bulan == 12) {
+                $datas2[11] = (int) $item->omzet;
+            }
+        }
+        foreach ($data3 as $item) {
+
+            if ($item->bulan == 1) {
+                $datas3[0] = (int) $item->bulan;
+            } else if ($item->bulan == 2) {
+                $datas3[1] = (int) $item->omzet;
+            } else if ($item->bulan == 3) {
+                $datas3[2] = (int) $item->omzet;
+            } else if ($item->bulan == 4) {
+                $datas3[3] = (int) $item->omzet;
+            } else if ($item->bulan == 5) {
+                $datas3[4] = (int) $item->omzet;
+            } else if ($item->bulan == 6) {
+                $datas3[5] = (int) $item->omzet;
+            } else if ($item->bulan == 7) {
+                $datas3[6] = (int) $item->omzet;
+            } else if ($item->bulan == 8) {
+                $datas3[7] = (int) $item->omzet;
+            } else if ($item->bulan == 9) {
+                $datas3[8] = (int) $item->omzet;
+            } else if ($item->bulan == 10) {
+                $datas3[9] = (int) $item->omzet;
+            } else if ($item->bulan == 11) {
+                $datas3[10] = (int) $item->omzet;
+            } else if ($item->bulan == 12) {
+                $datas3[11] = (int) $item->omzet;
+            }
+        }
+        foreach ($data4 as $item) {
+
+            if ($item->bulan == 1) {
+                $datas4[0] = (int) $item->bulan;
+            } else if ($item->bulan == 2) {
+                $datas4[1] = (int) $item->omzet;
+            } else if ($item->bulan == 3) {
+                $datas4[2] = (int) $item->omzet;
+            } else if ($item->bulan == 4) {
+                $datas4[3] = (int) $item->omzet;
+            } else if ($item->bulan == 5) {
+                $datas4[4] = (int) $item->omzet;
+            } else if ($item->bulan == 6) {
+                $datas4[5] = (int) $item->omzet;
+            } else if ($item->bulan == 7) {
+                $datas4[6] = (int) $item->omzet;
+            } else if ($item->bulan == 8) {
+                $datas4[7] = (int) $item->omzet;
+            } else if ($item->bulan == 9) {
+                $datas4[8] = (int) $item->omzet;
+            } else if ($item->bulan == 10) {
+                $datas4[9] = (int) $item->omzet;
+            } else if ($item->bulan == 11) {
+                $datas4[10] = (int) $item->omzet;
+            } else if ($item->bulan == 12) {
+                $datas4[11] = (int) $item->omzet;
             }
         }
 
 
-        $b = [];
-        foreach ($data as $item) {
-            $x['bulan'] = $item->bulan;
 
-            array_push($b, $item->bulan);
-        }
 
-        $c = [];
-        foreach ($data_tahun as $item) {
-            $x['tahun'] = $item->tahun;
+        // $b = [];
+        // foreach ($data as $item) {
+        //     $x['bulan'] = $item->bulan;
 
-            array_push($c, $item->tahun);
-        }
+        //     array_push($b, $item->bulan);
+        // }
 
-        $d = [];
-        foreach ($data_tahun as $item) {
-            $x['omzet'] = (int) $item->omzet;
-            $v = $x['omzet'];
-            array_push($d, $v);
-        }
+        // $c = [];
+        // foreach ($data_tahun as $item) {
+        //     $x['tahun'] = $item->tahun;
 
-        return view('owner.index', [
-            'datas' => $a,
-            'b' => $b,
-            'data' => $data,
-            'tahun_pilih' => $request->tahun,
+        //     array_push($c, $item->tahun);
+        // }
+
+        // $d = [];
+        // foreach ($data_tahun as $item) {
+        //     $x['omzet'] = (int) $item->omzet;
+        //     $v = $x['omzet'];
+        //     array_push($d, $v);
+        // }
+
+        $cc = [];
+        $b1 = collect($data1)->pluck('bulan')->toArray();
+        $b2 = collect($data2)->pluck('bulan')->toArray();
+        $b3 = collect($data3)->pluck('bulan')->toArray();
+        $b4 = collect($data4)->pluck('bulan')->toArray();
+        $nama1 = collect($data1)->pluck('nama_cabang')->toArray();
+        $nama2 = collect($data2)->pluck('nama_cabang')->toArray();
+        $nama3 = collect($data3)->pluck('nama_cabang')->toArray();
+        $nama4 = collect($data4)->pluck('nama_cabang')->toArray();
+        array_push($cc, $b1, $b2, $b3, $b4);
+        $c = collect($data_tahun)->pluck('tahun')->toArray();
+        $d = collect($data_tahun)->pluck('omzet')->map(fn ($item) => (int) $item)->toArray();
+
+        // dd($nama1, $nama2, $nama3, $nama4);
+
+
+
+        return view('admin.index', [
+            'tahun_pilih' => $tahun_baru,
+            'golongan' => $golongan,
+            'pegawai' => $pegawai,
             'tahun' => $tahun,
+            'bulan' => $bulan,
+            'b1' => $b1,
+            'b2' => $b2,
+            'b3' => $b3,
+            'b4' => $b4,
+            'nama1' => $nama1,
+            'nama2' => $nama2,
+            'nama3' => $nama3,
+            'nama4' => $nama4,
             'c' => $c,
             'd' => $d,
+            'datas1' => $datas1,
+            'datas2' => $datas2,
+            'datas3' => $datas3,
+            'datas4' => $datas4
         ]);
     }
 
