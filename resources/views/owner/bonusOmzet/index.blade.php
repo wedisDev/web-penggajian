@@ -71,7 +71,8 @@
                         <tr>
                             <th>No</th>
                             <th>Cabang</th>
-                            <th>Target Omzet</th>
+                            <th>Bulan</th>
+                            <th>Omzet</th>
                             {{-- @if (Auth::user()->role == 'owner') --}}
                             <th>Actions</th>
                             {{-- @endif --}}

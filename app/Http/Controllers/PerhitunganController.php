@@ -260,7 +260,7 @@ class PerhitunganController extends Controller
 
             $gaji = $pegawai[0]->gapok
                 + $tunjangan
-                + (int) $data->bonus_tahunan
+                // + (int) $data->bonus_tahunan
                 + (int) $request->bonus_omzet
                 // + ($tunjangan_lembur * $request->lembur)
                 + $tunjangan_lembur
