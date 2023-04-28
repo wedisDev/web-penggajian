@@ -27,7 +27,7 @@
         Master
     </div>
 
-    @if (Auth::user()->role == 'admin')
+    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'owner')
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
