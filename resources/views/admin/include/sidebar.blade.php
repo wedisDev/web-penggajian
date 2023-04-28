@@ -47,7 +47,7 @@
                     <a class="collapse-item" href="{{ url('/pegawai') }}"><i class="fas fa-users fa-chart-area"></i>
                         Pegawai</a>
                     <a class="collapse-item" href="{{ url('/bonus-omzet') }}"><i
-                            class="fas fa-money-bill-wave fa-chart-area"></i> Bonus Omzet</a>
+                            class="fas fa-money-bill-wave fa-chart-area"></i> Target Omzet</a>
                 </div>
             </div>
         </li>
