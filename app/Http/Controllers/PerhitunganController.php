@@ -6,6 +6,7 @@ use App\Models\BonusOmzet;
 use App\Models\Cabang;
 use App\Models\Pegawai;
 use App\Models\Perhitungan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -69,6 +70,11 @@ class PerhitunganController extends Controller
      */
     public function create($id, $cabang)
     {
+        $date = Carbon::now();
+
+        // $date = Carbon::createFromFormat('d/m/Y',  '19/03/2019');
+        $month = $date->month;
+        $year = $date->year;
         $pegawai = Pegawai::select(
             'pegawais.id',
             'pegawais.nama_pegawai',
@@ -88,16 +94,19 @@ class PerhitunganController extends Controller
             'jb.tunjangan_anak',
             'jb.bonus_tahunan',
             'cb.nama_cabang',
-            'cb.omzet',
+            'o.omzet',
             'bo.bonus',
             'gl.nama_golongan'
         )
             ->join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('omzet as o', 'o.id_cabang', '=', 'cb.id')
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('pegawais.id_cabang', $cabang)
             ->where('pegawais.id', $id)
+            ->whereMonth('o.date',  $month)
+            ->whereYear('o.date', $year)
             ->get();
         $pegawai2 = Pegawai::select(
             'pegawais.id',
@@ -118,16 +127,19 @@ class PerhitunganController extends Controller
             'jb.tunjangan_anak',
             'jb.bonus_tahunan',
             'cb.nama_cabang',
-            'cb.omzet',
+            'o.omzet',
             'bo.bonus',
             'gl.nama_golongan'
         )
             ->join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('omzet as o', 'o.id_cabang', '=', 'cb.id')
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'pegawais.id_cabang')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
             ->where('pegawais.id_cabang', $cabang)
             ->where('pegawais.id', $id)
+            ->whereMonth('o.date',  $month)
+            ->whereYear('o.date', $year)
             ->get();
         // dd($pegawai2[0]);
 

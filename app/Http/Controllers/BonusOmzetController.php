@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BonusOmzet;
 use App\Models\Cabang;
 use App\Models\Jabatan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -21,9 +22,16 @@ class BonusOmzetController extends Controller
     {
         // $bonus = BonusOmzet::join('cabangs as cb', 'cb.id', '=', 'bonus_omzets.id_cabang')
         //     ->get();
-        $bonus = DB::select("SELECT bonus_omzets.id as 'id', bonus_omzets.id_cabang as 'id_cabang', bonus_omzets.bonus, cabangs.nama_cabang as 'nama_cabang', cabangs.alamat
-            FROM bonus_omzets
-            JOIN cabangs ON cabangs.id = bonus_omzets.id_cabang");
+        $date = Carbon::now();
+        $month = $date->month;
+        // $bonus = DB::select("SELECT bonus_omzets.id as 'id', bonus_omzets.id_cabang as 'id_cabang', bonus_omzets.bonus, cabangs.nama_cabang as 'nama_cabang', cabangs.alamat
+        //     FROM bonus_omzets
+        //     JOIN cabangs ON cabangs.id = bonus_omzets.id_cabang");
+        $bonus = DB::table('bonus_omzets')
+            ->select('bonus_omzets.id as id', 'bonus_omzets.id_cabang as id_cabang', 'bonus_omzets.bonus', 'cabangs.nama_cabang as nama_cabang', 'cabangs.alamat')
+            ->join('cabangs', 'cabangs.id', '=', 'bonus_omzets.id_cabang')
+            // ->whereMonth('bonus_omzets.created_at', $month)
+            ->get();
         // dd($bonus);
         // $jabatan = Jabatan::all();
         $cabang = Cabang::all();

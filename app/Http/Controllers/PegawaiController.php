@@ -214,7 +214,7 @@ class PegawaiController extends Controller
             $pegawai = new Pegawai();
             $idCabang = $request->get('id_cabang');
 
-            $cekId = Pegawai::latest()->first()->id;
+            // $cekId = Pegawai::latest()->first()->id;
             // dd($cekId);
             $buatID =
                 IdGenerator::generate(['table' => 'pegawais', 'length' => 7, 'prefix' => date('y') . $idCabang]);

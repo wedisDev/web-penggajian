@@ -61,8 +61,12 @@
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Data Target Omzet</h6>
+            <div class="flex-end">
+                <input type="date" name="date" id="" class="mr-2">
+                <button class="btn btn-primary" type="submit">Filter</button>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -71,7 +75,7 @@
                         <tr>
                             <th>No</th>
                             <th>Cabang</th>
-                            <th>Bulan</th>
+                            {{-- <th>Bulan</th> --}}
                             <th>Omzet</th>
                             {{-- @if (Auth::user()->role == 'owner') --}}
                             <th>Actions</th>
