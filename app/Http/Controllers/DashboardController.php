@@ -388,6 +388,8 @@ class DashboardController extends Controller
             $jabatan = Jabatan::count();
             $golongan = Golongan::count();
             $pegawai = Pegawai::count();
+            $tahun_baru = 'Tidak ada data';
+
 
             $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
             $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
@@ -398,6 +400,8 @@ class DashboardController extends Controller
                     $tahun_baru = $item->tahun;
                 }
             }
+
+            // dd($tahun);
 
             $data = Perhitungan::orderBy('omzet', 'desc')
                 ->where(

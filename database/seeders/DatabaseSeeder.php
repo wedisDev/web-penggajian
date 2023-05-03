@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CabangSeeder::class);
         $this->call(BonusSeeder::class);
         $this->call(Omzet::class);
+        $this->call(Pegawai::class);
     }
 }

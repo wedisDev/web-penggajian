@@ -31,8 +31,8 @@ class OmzetController extends Controller
         $omzet = DB::table('cabangs as c')
             ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
             ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
-            ->whereMonth('o.date', '=', $month)
-            ->whereYear('o.date', '=', $year)
+            // ->whereMonth('o.date', '=', $month)
+            // ->whereYear('o.date', '=', $year)
             // ->groupBy(DB::raw('YEAR(date)'))
             ->get();
 
@@ -61,7 +61,7 @@ class OmzetController extends Controller
             $omzet = DB::table('cabangs as c')
                 ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
                 ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
-                ->whereMonth('o.date',  $month)
+                // ->whereMonth('o.date',  $month)
                 ->get();
         }
         // $omzet = Cabang::whereMonth($)
@@ -74,6 +74,27 @@ class OmzetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function buat_omzet($id, $bulan)
+    {
+        // dd($bulan);
+        $omzet = DB::table('cabangs as c')
+            ->select('o.omzet')
+            ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
+            ->whereMonth('o.date', $bulan)
+            ->where('c.id', $id)
+            ->get();
+
+        if (empty($omzet[0])) {
+            return response([
+                'data' => 'Data Not Found'
+            ], 200);
+        }
+        return response([
+            'data' => $omzet[0]
+        ], 200);
+    }
+
 
     public function filter(Request $request)
     {
@@ -106,7 +127,7 @@ class OmzetController extends Controller
                 ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
                 ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
                 ->whereMonth('o.date', '=', $month)
-                ->whereYear('o.date', '=', $year)
+                // ->whereYear('o.date', '=', $year)
                 // ->groupBy(DB::raw('YEAR(date)'))
                 ->get();
 

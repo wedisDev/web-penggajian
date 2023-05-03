@@ -93,6 +93,7 @@ class PerhitunganController extends Controller
             'jb.tunjangan_menikah',
             'jb.tunjangan_anak',
             'jb.bonus_tahunan',
+            'cb.id as id_cabang',
             'cb.nama_cabang',
             'o.omzet',
             'bo.bonus',
@@ -106,7 +107,7 @@ class PerhitunganController extends Controller
             ->where('pegawais.id_cabang', $cabang)
             ->where('pegawais.id', $id)
             ->whereMonth('o.date',  $month)
-            ->whereYear('o.date', $year)
+            // ->whereYear('o.date', $year)
             ->get();
         $pegawai2 = Pegawai::select(
             'pegawais.id',
@@ -126,6 +127,7 @@ class PerhitunganController extends Controller
             'jb.tunjangan_menikah',
             'jb.tunjangan_anak',
             'jb.bonus_tahunan',
+            'cb.id as id_cabang',
             'cb.nama_cabang',
             'o.omzet',
             'bo.bonus',
@@ -139,7 +141,7 @@ class PerhitunganController extends Controller
             ->where('pegawais.id_cabang', $cabang)
             ->where('pegawais.id', $id)
             ->whereMonth('o.date',  $month)
-            ->whereYear('o.date', $year)
+            // ->whereYear('o.date', $year)
             ->get();
         // dd($pegawai2[0]);
 
@@ -177,49 +179,64 @@ class PerhitunganController extends Controller
         return response()->json($pegawai);
     }
 
-    public function hitungOmzet(Request $request, $id)
+    public function hitungOmzet(Request $request, $id, $bulan)
     {
-
         $data =  Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('omzet as o', 'o.id_cabang', '=', 'cb.id')
             ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'cb.id')
             ->where('bo.id_cabang', $id)
+            ->whereMonth('o.date', '=', $bulan)
             ->first();
+        // dd($data);
+        // dd($request->all());
 
-        $omzet = $request->omzet;
-        $tunjangan_makan = 10000 * (27 - $request->alpha);
-        $tunjangan_lembur = 15000 * (27 - $request->alpha);
-        $tunjangan = $data->tunjangan_makmur
-            + $data->tunjangan_menikah
-            + $data->tunjangan_anak
-            + $tunjangan_makan
-            + $data->tunjangan_transportasi;
-        $gaji = $data->gapok
-            + $tunjangan
-            + $data->bonus_tahunan
-            + $request->bonus_omzet
-            + $tunjangan_lembur
-            - $request->pelanggaran;
+
 
         // $readonly1 = true;
         // $readonly2 = false;
-
-        if ($omzet <= $data->bonus) {
-            $thr = 1 * $data->gapok;
-            $hasil = 0;
+        if (empty($data)) {
+            // dd(empty($data));
             return response()->json([
-                'bonus' => $hasil,
-                'hitung' => $gaji,
+                'bonus' => 0,
+                // 'hitung' => 0,
+                'cek' => $request->all()
                 // 'readonly' => $readonly1
             ]);
         } else {
-            $thr = 1 * $data->gapok;
+            $omzet = $request->omzet;
+            $tunjangan_makan = 10000 * (27 - $request->alpha);
+            $tunjangan_lembur = 15000 * (27 - $request->alpha);
+            $tunjangan = $data->tunjangan_makmur
+                + $data->tunjangan_menikah
+                + $data->tunjangan_anak
+                + $tunjangan_makan
+                + $data->tunjangan_transportasi;
+            // $gaji = $data->gapok
+            //     + $tunjangan
+            //     + $data->bonus_tahunan
+            //     // + $request->bonus_omzet
+            //     + $tunjangan_lembur
+            //     - $request->pelanggaran;
+            if ($omzet < $data->bonus) {
+                $thr = 1 * $data->gapok;
+                $hasil = 0;
+                return response()->json([
+                    'bonus' => $hasil,
+                    // 'hitung' => $gaji,
+                    'cek' => $request->all()
+                    // 'readonly' => $readonly1
+                ]);
+            } else {
+                $thr = 1 * $data->gapok;
 
-            return response()->json([
-                'bonus' => $data,
-                'hitung' => $gaji,
-                // 'readonly' => $readonly2
-            ]);
+                return response()->json([
+                    'bonus' => $data,
+                    // 'hitung' => $gaji,
+                    'cek' => $request->all()
+                    // 'readonly' => $readonly2
+                ]);
+            }
         }
     }
 
@@ -231,6 +248,7 @@ class PerhitunganController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $id = $request->pegawai_id;
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
