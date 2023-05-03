@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cabang;
 use App\Models\Omzet;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +23,7 @@ class OmzetController extends Controller
     {
         $date = Carbon::now();
         // $date = Carbon::createFromFormat('d/m/Y',  '19/04/2000');
+        // dd($date);
         $month = $date->month;
         $year = $date->year;
         // $month = 1;
@@ -34,17 +36,6 @@ class OmzetController extends Controller
             // ->groupBy(DB::raw('YEAR(date)'))
             ->get();
 
-
-        $omzet_old =
-            DB::table('omzet as o')
-            ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id_cabang')
-            ->join('cabangs as c', 'o.id_cabang', '=', 'c.id')
-            // ->whereMonth('o.date', '!=', $month)
-            // ->whereYear('o.date', '!=', $year)
-            ->groupBy('o.id')
-            ->orderBy('o.id', 'desc')
-            ->paginate(10);
-        // dd($omzet_old);
         if (empty($omzet[0])) {
             DB::table('omzet')->insert(
                 [
@@ -75,7 +66,7 @@ class OmzetController extends Controller
         }
         // $omzet = Cabang::whereMonth($)
         // dd($omzet);
-        return view('owner.omzet.index', compact('omzet', 'omzet_old'));
+        return view('owner.omzet.index', compact('omzet'));
     }
 
     /**
@@ -83,6 +74,37 @@ class OmzetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function filter(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $date_now = Carbon::today();
+            // dd($request->date);
+            $date_filter = Carbon::parse($request->date('date'))->format('d/m/Y');
+            $date = Carbon::createFromFormat('d/m/Y',  $date_filter);
+            // dd($date_filter, $request->date);
+            // dd($date);
+            $month = $date->month;
+            $year = $date->year;
+            if ($request->date > $date_now) {
+                Alert::error('error filter', 'Tanggal melebihi hari ini');
+                return back();
+            }
+
+            $omzet = DB::table('cabangs as c')
+                ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
+                ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
+                ->whereMonth('o.date', '=', $month)
+                ->whereYear('o.date', '=', $year)
+                // ->groupBy(DB::raw('YEAR(date)'))
+                ->get();
+
+            return view('owner.omzet.filter', compact('omzet'));
+        } catch (Exception $error) {
+            dd($error->getMessage());
+        }
+    }
     public function create()
     {
         //

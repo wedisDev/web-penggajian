@@ -69,6 +69,7 @@ Route::group(
         Route::resource('/bonus-omzet', BonusOmzetController::class);
         Route::get('/bonus-omzet/delete/{id}', [BonusOmzetController::class, 'destroy']);
         Route::resource('/omzet', OmzetController::class);
+        Route::post('omzet/date', [OmzetController::class, 'filter'])->name('filter.omzet');
 
         //Route Transaksi
         Route::resource('/transaksi', PerhitunganController::class);
