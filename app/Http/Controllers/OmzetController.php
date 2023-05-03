@@ -79,6 +79,16 @@ class OmzetController extends Controller
     {
         // dd($request->all());
         try {
+
+            $validator = Validator::make($request->all(), [
+                'date' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                Alert::error('error input', $validator->messages()->all());
+                return back();
+            }
+
             $date_now = Carbon::today();
             // dd($request->date);
             $date_filter = Carbon::parse($request->date('date'))->format('d/m/Y');
