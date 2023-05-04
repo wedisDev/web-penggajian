@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use function GuzzleHttp\Promise\all;
+
 class OmzetController extends Controller
 {
     /**
@@ -36,34 +38,34 @@ class OmzetController extends Controller
             // ->groupBy(DB::raw('YEAR(date)'))
             ->get();
 
-        if (empty($omzet[0])) {
-            DB::table('omzet')->insert(
-                [
-                    [
-                        'id_cabang' => 1,
-                        'date' => $date
-                    ],
-                    [
-                        'id_cabang' => 2,
-                        'date' => $date
-                    ],
-                    [
-                        'id_cabang' => 3,
-                        'date' => $date
-                    ],
-                    [
-                        'id_cabang' => 4,
-                        'date' => $date
-                    ],
+        // if (empty($omzet[0])) {
+        //     DB::table('omzet')->insert(
+        //         [
+        //             [
+        //                 'id_cabang' => 1,
+        //                 'date' => $date
+        //             ],
+        //             [
+        //                 'id_cabang' => 2,
+        //                 'date' => $date
+        //             ],
+        //             [
+        //                 'id_cabang' => 3,
+        //                 'date' => $date
+        //             ],
+        //             [
+        //                 'id_cabang' => 4,
+        //                 'date' => $date
+        //             ],
 
-                ]
-            );
-            $omzet = DB::table('cabangs as c')
-                ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
-                ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
-                // ->whereMonth('o.date',  $month)
-                ->get();
-        }
+        //         ]
+        //     );
+        //     $omzet = DB::table('cabangs as c')
+        //         ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
+        //         ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
+        //         // ->whereMonth('o.date',  $month)
+        //         ->get();
+        // }
         // $omzet = Cabang::whereMonth($)
         // dd($omzet);
         return view('owner.omzet.index', compact('omzet'));
@@ -149,7 +151,30 @@ class OmzetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        try {
+            $validator = Validator::make($request->all(), [
+                // 'id_omzet' => 'required',
+                'id_cabang' => 'required',
+                'bulan' => 'required',
+                'omzet' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                Alert::error('Error', $validator->messages()->all());
+                return back()->withInput();
+            }
+
+            $omzet = new Omzet();
+            $omzet->id_cabang = $request->id_cabang;
+            $omzet->omzet = $request->omzet;
+            $omzet->date = Carbon::now()->addMonths($request->bulan);
+            $omzet->save();
+            Alert::success('Success', 'Omzet Successfully Created');
+            return back();
+        } catch (Exception $error) {
+            dd($error->getMessage());
+        }
     }
 
     /**

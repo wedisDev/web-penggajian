@@ -55,8 +55,10 @@
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Data Omzet</h6>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modalCreate">Tambah
+                Omzet</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -80,7 +82,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Edit Bonus Omzet</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Data Omzet</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -150,6 +152,58 @@
 
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    {{-- MODAL CREATE --}}
+    <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Omzet</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('omzet.store') }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            {{-- <input type="text" name="id_omzet" value="{{ $item->id_omzet }}" hidden> --}}
+                            <label for="">Cabang</label>
+                            <select name="id_cabang" class="form-control" id="">
+                                <option value="">Pilih Cabang</option>
+                                @foreach ($omzet as $item2)
+                                    <option value="{{ $item2->id }}">
+                                        {{ $item2->nama_cabang }}</option>
+                                @endforeach
+                            </select>
+                            <label for="" class="mt-3">Bulan</label>
+                            <select class="form-control" name="bulan" id="bulan" placeholder="Bulan">
+                                <option selected value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Omzet</label>
+                            <input type="number" class="form-control" name="omzet" value="{{ old('omzet') }}"
+                                placeholder="0">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary float-right mt-3">Edit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
