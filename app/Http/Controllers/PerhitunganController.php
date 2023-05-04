@@ -179,8 +179,16 @@ class PerhitunganController extends Controller
             // ->whereYear('o.date', '=', $year)
             // ->groupBy(DB::raw('YEAR(date)'))
             ->get();
+
+        $bonus_omzet = DB::table('bonus_omzets')->where('id_cabang', $id)->select('bonus')->get();
         // $item->omzet - ($item->omzet * 0.995)
         if (empty($omzet[0])) {
+            return response()->json([
+                'bonus_omzet' => 0
+            ]);
+        } elseif ($omzet[0]->omzet < $bonus_omzet[0]->bonus) {
+            // dd('OMZET: ', $omzet[0]->omzet, 'BONUS OMZET: ', $bonus_omzet[0]->bonus);
+            // dd('tidak');
             return response()->json([
                 'bonus_omzet' => 0
             ]);
@@ -189,7 +197,7 @@ class PerhitunganController extends Controller
             // dd($omzet, $bonus_omzet);
             return response()->json([
                 'bonus_omzet' => $bonus_omzet
-            ]);
+            ], 200);
         }
     }
 

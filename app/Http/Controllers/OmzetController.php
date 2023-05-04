@@ -91,10 +91,11 @@ class OmzetController extends Controller
             return response([
                 'data' => 'Data Not Found'
             ], 200);
+        } else {
+            return response([
+                'data' => $omzet[0]
+            ], 200);
         }
-        return response([
-            'data' => $omzet[0]
-        ], 200);
     }
 
 
