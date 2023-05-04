@@ -78,6 +78,7 @@ Route::group(
         Route::get('/transaksi/delete/{id}', [PerhitunganController::class, 'destroy']);
         Route::get('/data-transaksi', [PerhitunganController::class, 'dataTransaksi']);
         Route::get('/hitung-omzet/{id}/{bulan}', [PerhitunganController::class, 'hitungOmzet']);
+        Route::get('/hitung-bonus-omzet/{bulan}/{id}', [PerhitunganController::class, 'hitung_bonus_omzet']);
         Route::get('/pilih-cabang', [PerhitunganController::class, 'pilihCabang']);
         Route::get('/transaksi/delete/{id}', [PerhitunganController::class, 'destroy']);
         Route::get('/filter-cabang-transaksi/{id}', [PerhitunganController::class, 'filterCabangTransaksi']);

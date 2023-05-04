@@ -168,6 +168,31 @@ class PerhitunganController extends Controller
         return back();
     }
 
+    public function hitung_bonus_omzet($bulan, $id)
+    {
+        // dd($bulan);
+        $omzet = DB::table('cabangs as c')
+            ->select('o.omzet')
+            ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
+            ->whereMonth('o.date', '=', $bulan)
+            ->where('c.id', $id)
+            // ->whereYear('o.date', '=', $year)
+            // ->groupBy(DB::raw('YEAR(date)'))
+            ->get();
+        // $item->omzet - ($item->omzet * 0.995)
+        if (empty($omzet[0])) {
+            return response()->json([
+                'bonus_omzet' => 0
+            ]);
+        } else {
+            $bonus_omzet = $omzet[0]->omzet -  ($omzet[0]->omzet * 0.995);
+            // dd($omzet, $bonus_omzet);
+            return response()->json([
+                'bonus_omzet' => $bonus_omzet
+            ]);
+        }
+    }
+
     public function datatransaksi(Request $request)
     {
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
@@ -224,7 +249,7 @@ class PerhitunganController extends Controller
                 return response()->json([
                     'bonus' => $hasil,
                     // 'hitung' => $gaji,
-                    'cek' => $request->all()
+                    // 'cek' => $request->all()
                     // 'readonly' => $readonly1
                 ]);
             } else {
@@ -233,7 +258,7 @@ class PerhitunganController extends Controller
                 return response()->json([
                     'bonus' => $data,
                     // 'hitung' => $gaji,
-                    'cek' => $request->all()
+                    // 'cek' => $request->all()
                     // 'readonly' => $readonly2
                 ]);
             }
