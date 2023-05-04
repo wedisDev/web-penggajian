@@ -168,7 +168,7 @@ class OmzetController extends Controller
             $omzet = new Omzet();
             $omzet->id_cabang = $request->id_cabang;
             $omzet->omzet = $request->omzet;
-            $omzet->date = Carbon::now()->addMonths($request->bulan);
+            $omzet->date = Carbon::now()->setMonths($request->bulan);
             $omzet->save();
             Alert::success('Success', 'Omzet Successfully Created');
             return back();

@@ -43,13 +43,15 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Data Omzet</h1>
         <div class="d-flex justify-content-center">
-            <form action="{{ route('filter.omzet') }}" method="post">
+            {{-- <form action="{{ route('filter.omzet') }}" method="post">
                 @csrf
                 <input type="date" name="date" class="btn btn-outline-primary mr-2">
                 <button type="submit" class="btn btn-primary shadow-sm">
                     Filter Date
                 </button>
-            </form>
+            </form> --}}
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">Tambah
+                Omzet</button>
         </div>
     </div>
 
@@ -57,8 +59,8 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Data Omzet</h6>
-            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modalCreate">Tambah
-                Omzet</button>
+            {{-- <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modalCreate">Tambah
+                Omzet</button> --}}
         </div>
         <div class="card-body">
             <div class="table-responsive">
