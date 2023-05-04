@@ -201,7 +201,7 @@
                                 placeholder="0">
                         </div>
 
-                        <button type="submit" class="btn btn-primary float-right mt-3">Edit</button>
+                        <button type="submit" class="btn btn-primary float-right mt-3">Tambah</button>
                     </form>
                 </div>
             </div>
