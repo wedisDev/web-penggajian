@@ -93,7 +93,7 @@
                                                 <div class="form-group">
                                                     <label for="">Status</label>
                                                     <input type="text" name="status" class="form-control"
-                                                        value="{{ $item->status }}">
+                                                        value="{{ $item->nama_golongan }}">
                                                 </div>
 
                                                 <div class="form-group">
