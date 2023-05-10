@@ -318,7 +318,7 @@ class PerhitunganController extends Controller
                 + $tunjangan_anak
                 + $tunjangan_makan
                 + $pegawai[0]->tunjangan_transportasi;
-
+            // dd($tunjangan);
             // dd((int) $request->bonus_omzet);
 
             $gaji = $pegawai[0]->gapok

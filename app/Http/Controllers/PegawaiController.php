@@ -147,6 +147,14 @@ class PegawaiController extends Controller
             ->where('ph.tahun', $tahun)
             ->get();
 
+        foreach ($pegawai as $item) {
+            if ($item->jumlah_anak == 0) {
+                $item->tunjangan_anak = 0;
+            } else {
+                $item->tunjangan_anak = $item->tunjangan_anak * $item->jumlah_anak;
+            }
+        }
+
         $date_new = $date->toFormattedDateString();
         $tahun = $pegawai[0]->created_at->year();
         $masuk =  27 - $pegawai[0]->alpha;
@@ -292,7 +300,7 @@ class PegawaiController extends Controller
         $validator = Validator::make(request()->all(), [
             'nama_pegawai' => 'required',
             'status' => 'required',
-            'jumlah_anak' => 'required',
+            // 'jumlah_anak' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -310,8 +318,12 @@ class PegawaiController extends Controller
             $pegawai->id_jabatan = $request->get('id_jabatan');
             $pegawai->id_cabang = $request->get('id_cabang');
             $pegawai->status = $request->get('status');
+            if (empty($request->get('jumlah_anak'))) {
+                $pegawai->jumlah_anak = 0;
+            } else {
+                $pegawai->jumlah_anak = $request->get('jumlah_anak');
+            }
             $pegawai->tahun_masuk = $request->get('tahun_masuk');
-            $pegawai->jumlah_anak = $request->get('jumlah_anak');
 
             $pegawai->save();
 
