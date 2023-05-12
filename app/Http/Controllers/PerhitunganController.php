@@ -307,11 +307,13 @@ class PerhitunganController extends Controller
             return back()->withErrors($validator->errors());
         } else {
             Alert::success('Berhasil', 'Data Berhasil Disimpan');
-
-            $tunjangan_makan = (26 - $request->alpha) * 10000;
+            // dd($pegawai);
+            // $tunjangan_makan = (27 - $request->alpha) * 10000;
+            $tunjangan_makan = (27 - $request->alpha) * $pegawai[0]->tunjangan_makan;
             $tunjangan_anak = ($pegawai[0]->tunjangan_anak * $pegawai[0]->jumlah_anak);
-            // $tunjangan_lembur = (26 - $request->alpha) * 15000;
-            $tunjangan_lembur = $request->lembur * 15000;
+            // $tunjangan_lembur = (27 - $request->alpha) * 15000;
+            // $tunjangan_lembur = $request->lembur * 15000;
+            $tunjangan_lembur = $request->lembur * $pegawai[0]->tunjangan_lembur;
             $data = new Perhitungan();
             $tunjangan = $pegawai[0]->tunjangan_makmur
                 + $pegawai[0]->tunjangan_menikah

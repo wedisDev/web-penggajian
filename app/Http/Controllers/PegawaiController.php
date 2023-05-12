@@ -146,6 +146,7 @@ class PegawaiController extends Controller
             ->where('ph.bulan', $bulan)
             ->where('ph.tahun', $tahun)
             ->get();
+        // dd($pegawai);
 
         foreach ($pegawai as $item) {
             if ($item->jumlah_anak == 0) {
@@ -160,13 +161,13 @@ class PegawaiController extends Controller
         $masuk =  27 - $pegawai[0]->alpha;
         $tunjangan_makan  = $pegawai[0]->tunjangan_makan * $masuk;
 
-        // return view('owner.pegawai.slip-gaji', [
-        //     'pegawai' => $pegawai,
-        //     'tanggal' => $date_new,
-        //     'tahun' => $tahun,
-        //     'tunjangan_makan' => $tunjangan_makan,
-        //     'masuk' => $masuk
-        // ]);
+        return view('owner.pegawai.slip-gaji', [
+            'pegawai' => $pegawai,
+            'tanggal' => $date_new,
+            'tahun' => $tahun,
+            'tunjangan_makan' => $tunjangan_makan,
+            'masuk' => $masuk
+        ]);
 
         $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
             'pegawai' => $pegawai,
