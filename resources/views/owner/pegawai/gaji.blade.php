@@ -65,7 +65,7 @@
                                 <td>{{ $item->bulan }}</td>
                                 <td>{{ $item->tahun }}</td>
                                 <td>
-                                    <a href="{{ url('/slip-gaji/' . $item->bulan . '/' . $item->tahun . '/' . $item->id_pegawai) }}"
+                                    <a href="{{ url('/slip-gaji/' . $item->bulan . '/' . $item->tahun . '/' . $item->id) }}"
                                         class="btn btn-success">Slip
                                         Gaji</a>
                                 </td>

@@ -64,7 +64,17 @@ class PegawaiController extends Controller
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
+            ->select('ph.id', 'jb.nama_jabatan', 'ph.lembur', 'gl.nama_golongan', 'pegawais.jumlah_anak', 'ph.total', 'ph.bulan', 'ph.tahun')
             ->get();
+        // <td>{{ $item->nama_pegawai }}</td>
+        //                     <td>{{ $item->nama_jabatan }}</td>
+        //                     <td>{{ $item->pelanggaran }}</td>
+        //                     <td>{{ $item->lembur }}</td>
+        //                     <td>{{ $item->nama_golongan }}</td>
+        //                     <td>{{ $item->jumlah_anak }}</td>
+        //                     <td>{{ number_format($item->total) }}</td>
+        //                     <td>{{ $item->bulan }}</td>
+        //                     <td>{{ $item->tahun }}</td>
         // select * fron pegawai join jabatans ON jabatans.id = pegawais.id_jabatan
         // JOIN cabangs ON cabangs.id = pegawais.id_cabang
         // JOIN golongans ON golongans.nama_golongan = pegawais.status
@@ -142,7 +152,7 @@ class PegawaiController extends Controller
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
-            ->where('id_pegawai', $id)
+            ->where('ph.id', $id)
             ->where('ph.bulan', $bulan)
             ->where('ph.tahun', $tahun)
             ->get();

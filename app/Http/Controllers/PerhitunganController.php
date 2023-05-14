@@ -146,6 +146,7 @@ class PerhitunganController extends Controller
         // dd($pegawai2[0]);
 
         $bonus = 0;
+
         foreach ($pegawai as $item) {
             if ($item->omzet >= $item->bonus) {
                 $bonus = $item->omzet - ($item->omzet * 0.995);
@@ -154,15 +155,27 @@ class PerhitunganController extends Controller
             if (!$item->id) {
                 // $pegawai = 'Data Kosong';
                 // break;
+                $perhitungan = Perhitungan::where('id_pegawai', $pegawai2[0]->id)->where('bulan',  $month)->first();
+                if (!empty($perhitungan)) {
+                    return view('owner.transaksi.create', [
+                        'pegawai' => $pegawai2,
+                        'bonus' => $bonus
+                    ]);
+                } else {
+                    Alert::error('Perhitungan Pegawai sudah ada');
+                    return back();
+                }
+            }
+            $perhitungan = Perhitungan::where('id_pegawai', $pegawai[0]->id)->where('bulan',  $month)->first();
+            if (!empty($perhitungan)) {
                 return view('owner.transaksi.create', [
-                    'pegawai' => $pegawai2,
+                    'pegawai' => $pegawai,
                     'bonus' => $bonus
                 ]);
+            } else {
+                Alert::error('Perhitungan Pegawai sudah ada');
+                return back();
             }
-            return view('owner.transaksi.create', [
-                'pegawai' => $pegawai,
-                'bonus' => $bonus
-            ]);
         }
         Alert::error('Error', 'Bonus Omzet cabang didaftarkan');
         return back();
