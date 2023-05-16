@@ -136,7 +136,7 @@
                     <span style="font-size: 20px;">tunjangan makmur : Rp
                         {{ number_format($pegawai[0]->tunjangan_makmur) }}</span><br>
                     <span style="font-size: 20px;">Pelanggaran : Rp
-                        {{ number_format($pegawai[0]->alpha) }}</span><br>
+                        {{ number_format($pegawai[0]->pelanggaran) }}</span><br>
 
 
                 </div>
@@ -148,7 +148,7 @@
                     <span style="font-size: 20px;">Tunjangan Transportasi : Rp
                         {{ number_format($pegawai[0]->tunjangan_transportasi) }}</span><br>
                     <span style="font-size: 20px;">tunjangan lembur : Rp
-                        {{ number_format($pegawai[0]->tunjangan_lembur) }}</span><br>
+                        {{ number_format($pegawai[0]->tunjangan_lembur * $pegawai[0]->lembur) }}</span><br>
                     <span style="font-size: 20px;">tunjangan menikah : Rp
                         {{ number_format($pegawai[0]->tunjangan_menikah) }}</span><br>
                     <span style="font-size: 20px;">tunjangan anak : Rp
