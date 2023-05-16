@@ -105,7 +105,8 @@
         <div class="row">
             <div class="col-md-6">
                 <span style="font-size: 20px;">ID PEGAWAI :
-                    {{ $pegawai[0]->id_pegawai . $pegawai[0]->id_cabang . $pegawai[0]->tahun . $pegawai[0]->id_jabatan }}</span><br>
+                    {{-- {{ $pegawai[0]->id_pegawai . $pegawai[0]->id_cabang . $pegawai[0]->tahun . $pegawai[0]->id_jabatan }}</span><br> --}}
+                    {{ $pegawai[0]->id_pegawai }}</span><br>
                 <span style="font-size: 20px;">Nama : {{ $pegawai[0]->nama_pegawai }}</span><br>
                 <span style="font-size: 20px;">Jabatan : {{ $pegawai[0]->nama_jabatan }}</span><br>
                 <span style="font-size: 20px;">Status : {{ $pegawai[0]->nama_golongan }}</span>
