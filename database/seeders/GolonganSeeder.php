@@ -36,13 +36,6 @@ class GolonganSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'nama_golongan' => 'Cerai',
-                'tunjangan_menikah' => '0',
-                'tunjangan_anak' => '75000',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
         ]);
     }
 }
