@@ -32,7 +32,7 @@ class GolonganSeeder extends Seeder
             [
                 'nama_golongan' => 'Single',
                 'tunjangan_menikah' => '0',
-                'tunjangan_anak' => '50000',
+                'tunjangan_anak' => '0',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

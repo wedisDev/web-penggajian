@@ -64,7 +64,18 @@ class PegawaiController extends Controller
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
-            ->select('ph.id', 'jb.nama_jabatan', 'ph.lembur', 'gl.nama_golongan', 'pegawais.jumlah_anak', 'ph.total', 'ph.bulan', 'ph.tahun')
+            ->select(
+                'ph.id',
+                'jb.nama_jabatan',
+                'ph.lembur',
+                'gl.nama_golongan',
+                'pegawais.jumlah_anak',
+                'ph.total',
+                'ph.bulan',
+                'ph.tahun',
+                'pegawais.nama_pegawai',
+                'ph.pelanggaran'
+            )
             ->get();
         // <td>{{ $item->nama_pegawai }}</td>
         //                     <td>{{ $item->nama_jabatan }}</td>
@@ -246,15 +257,14 @@ class PegawaiController extends Controller
             // $cekId = Pegawai::latest()->first()->id;
             // dd($cekId);
             $buatID = array();
-            
+
             $cekPegawai = Pegawai::all();
-            
+
             // dd($cekPegawai);
-            if(empty($cekPegawai[0])){
+            if (empty($cekPegawai[0])) {
                 $ID_ARRAY = IdGenerator::generate(['table' => 'pegawais', 'length' => 7, 'prefix' => date('y') . $idCabang]);
                 array_push($buatID, $ID_ARRAY);
-
-            }else{
+            } else {
                 $cekId = Pegawai::latest()->first()->id;
 
                 $ID_ARRAY = $cekId + 1;
