@@ -245,8 +245,23 @@ class PegawaiController extends Controller
 
             // $cekId = Pegawai::latest()->first()->id;
             // dd($cekId);
-            $buatID =
-                IdGenerator::generate(['table' => 'pegawais', 'length' => 7, 'prefix' => date('y') . $idCabang]);
+            $buatID = array();
+            
+            $cekPegawai = Pegawai::all();
+            
+            // dd($cekPegawai);
+            if(empty($cekPegawai[0])){
+                $ID_ARRAY = IdGenerator::generate(['table' => 'pegawais', 'length' => 7, 'prefix' => date('y') . $idCabang]);
+                array_push($buatID, $ID_ARRAY);
+
+            }else{
+                $cekId = Pegawai::latest()->first()->id;
+
+                $ID_ARRAY = $cekId + 1;
+                array_push($buatID, $ID_ARRAY);
+            }
+
+            // dd($buatID);
 
             $email = Str::lower(str_replace(' ', '', $request->get('nama_pegawai'))) . '@gmail.com';
             $cekEmail = User::where('email', $email)->get();
@@ -256,7 +271,7 @@ class PegawaiController extends Controller
                 return back()->withInput();
             }
 
-            $pegawai->id = $buatID;
+            $pegawai->id = (int) $buatID[0];
             $pegawai->nama_pegawai = $request->get('nama_pegawai');
             $pegawai->jenis_kelamin = $request->get('jenis_kelamin');
             $pegawai->alamat = $request->get('alamat');
@@ -267,11 +282,11 @@ class PegawaiController extends Controller
             $pegawai->jumlah_anak = $request->get('jumlah_anak');
 
             User::create([
-                'id_pegawai' => $buatID,
+                'id_pegawai' => $buatID[0],
                 'name' => $request->get('nama_pegawai'),
                 'role' => 'pegawai',
                 'email' => $email,
-                'password' => bcrypt($buatID),
+                'password' => bcrypt($buatID[0]),
             ]);
 
             $pegawai->save();
