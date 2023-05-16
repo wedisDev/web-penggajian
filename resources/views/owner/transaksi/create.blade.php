@@ -129,8 +129,7 @@
                             {{-- <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
                                 value="{{ $pegawai[0]->bonus_tahunan }}" placeholder="Bonus Omzet" readonly> --}}
                             <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
-                                {{-- value="{{ $bonus }}" placeholder="Bonus Omzet" --}} {{-- value="{{ $bonus }}" --}} placeholder="Bonus Omzet"
-                                {{ $bonus != 0 ? 'readonly' : '' }}>
+                                {{-- value="{{ $bonus }}" placeholder="Bonus Omzet" --}} {{-- value="{{ $bonus }}" --}} placeholder="Bonus Omzet" readonly>
                         </div>
                     </div>
                 </div>

@@ -156,7 +156,7 @@ class PerhitunganController extends Controller
                 // $pegawai = 'Data Kosong';
                 // break;
                 $perhitungan = Perhitungan::where('id_pegawai', $pegawai2[0]->id)->where('bulan',  $month)->first();
-                if (!empty($perhitungan)) {
+                if (empty($perhitungan)) {
                     return view('owner.transaksi.create', [
                         'pegawai' => $pegawai2,
                         'bonus' => $bonus
@@ -167,7 +167,7 @@ class PerhitunganController extends Controller
                 }
             }
             $perhitungan = Perhitungan::where('id_pegawai', $pegawai[0]->id)->where('bulan',  $month)->first();
-            if (!empty($perhitungan)) {
+            if (empty($perhitungan)) {
                 return view('owner.transaksi.create', [
                     'pegawai' => $pegawai,
                     'bonus' => $bonus
