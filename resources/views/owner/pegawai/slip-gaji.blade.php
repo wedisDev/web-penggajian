@@ -129,18 +129,22 @@
             <div class="row">
                 <div class="col-6">
                     <span style="font-size: 20px;">Gaji Pokok : Rp {{ number_format($pegawai[0]->gapok) }}</span><br>
-                    <span style="font-size: 20px;">Lembur : {{ $pegawai[0]->lembur }}</span><br>
+                    <span style="font-size: 20px;">Lembur :
+                        {{ $pegawai[0]->lembur . ' x ' . $pegawai[0]->tunjangan_lembur }}</span><br>
                     <span style="font-size: 20px;">Alpha : {{ $pegawai[0]->alpha }}</span><br>
                     <span style="font-size: 20px;">Bonus Omzet : {{ $pegawai[0]->bonus_omzet }}</span><br>
                     <span style="font-size: 20px;">tunjangan makmur : Rp
                         {{ number_format($pegawai[0]->tunjangan_makmur) }}</span><br>
+                    <span style="font-size: 20px;">Pelanggaran :
+                        {{ $pegawai[0]->alpha }}</span><br>
+
+
+                </div>
+                <div class="col-6">
                     <span style="font-size: 20px;">Tunjangan Makan {{ $masuk }} x
                         {{ $pegawai[0]->tunjangan_makan }}
                         : Rp
                         {{ number_format($tunjangan_makan) }}</span><br>
-
-                </div>
-                <div class="col-6">
                     <span style="font-size: 20px;">Tunjangan Transportasi : Rp
                         {{ number_format($pegawai[0]->tunjangan_transportasi) }}</span><br>
                     <span style="font-size: 20px;">tunjangan lembur : Rp

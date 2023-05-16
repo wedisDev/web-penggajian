@@ -68,7 +68,7 @@ class JabatanController extends Controller
             $jabatan->tunjangan_transportasi = $request->get('tunjangan_transportasi');
             $jabatan->tunjangan_makan = $makan;
             $jabatan->tunjangan_lembur = $lembur;
-            $jabatan->bonus_tahunan = $request->get('bonus_tahunan');
+            // $jabatan->bonus_tahunan = $request->get('bonus_tahunan');
 
             $jabatan->save();
 
@@ -133,7 +133,7 @@ class JabatanController extends Controller
             $jabatan->tunjangan_transportasi = $request->get('tunjangan_transportasi');
             $jabatan->tunjangan_makan = $request->get('tunjangan_makan');
             $jabatan->tunjangan_lembur = $request->get('tunjangan_lembur');
-            $jabatan->bonus_tahunan = $request->get('bonus_tahunan');
+            // $jabatan->bonus_tahunan = $request->get('bonus_tahunan');
 
             $jabatan->save();
 

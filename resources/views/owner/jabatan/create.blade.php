@@ -61,10 +61,10 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="">Bonus Tahunan</label>
                     <input type="number" class="form-control" name="bonus_tahunan" placeholder="Rp 100.000...">
-                </div>
+                </div> --}}
 
                 <button type="submit" class="btn btn-primary mt-3 float-right">Tambah</button>
             </form>
