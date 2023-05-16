@@ -171,13 +171,13 @@ class PegawaiController extends Controller
         $masuk =  27 - $pegawai[0]->alpha;
         $tunjangan_makan  = $pegawai[0]->tunjangan_makan * $masuk;
 
-        // return view('owner.pegawai.slip-gaji', [
-        //     'pegawai' => $pegawai,
-        //     'tanggal' => $date_new,
-        //     'tahun' => $tahun,
-        //     'tunjangan_makan' => $tunjangan_makan,
-        //     'masuk' => $masuk
-        // ]);
+        return view('owner.pegawai.slip-gaji', [
+            'pegawai' => $pegawai,
+            'tanggal' => $date_new,
+            'tahun' => $tahun,
+            'tunjangan_makan' => $tunjangan_makan,
+            'masuk' => $masuk
+        ]);
 
         $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
             'pegawai' => $pegawai,

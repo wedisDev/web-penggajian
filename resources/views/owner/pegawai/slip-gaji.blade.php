@@ -135,8 +135,8 @@
                     <span style="font-size: 20px;">Bonus Omzet : {{ $pegawai[0]->bonus_omzet }}</span><br>
                     <span style="font-size: 20px;">tunjangan makmur : Rp
                         {{ number_format($pegawai[0]->tunjangan_makmur) }}</span><br>
-                    <span style="font-size: 20px;">Pelanggaran :
-                        {{ $pegawai[0]->alpha }}</span><br>
+                    <span style="font-size: 20px;">Pelanggaran : Rp
+                        {{ number_format($pegawai[0]->alpha) }}</span><br>
 
 
                 </div>
