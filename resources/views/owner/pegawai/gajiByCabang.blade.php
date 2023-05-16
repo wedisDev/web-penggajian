@@ -44,7 +44,7 @@
                                 @php
                                     $thr = 1 * $item->gapok;
                                     $tunjangan = $item->tunjangan_makan + $item->tunjangan_makmur + $item->tunjangan_transport + $item->lembur * $item->tunjangan_lembur + $item->tunjangan_menikah + $item->jumlah_anak * $item->tunjangan_anak;
-                                    
+
                                     $gaji = $item->gapok + $tunjangan + $item->bonus_omzet + $thr - $item->pelanggaran;
                                 @endphp
                                 <tr>

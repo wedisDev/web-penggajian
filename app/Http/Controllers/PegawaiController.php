@@ -98,6 +98,16 @@ class PegawaiController extends Controller
         ]);
     }
 
+    public function deleteGaji($id)
+    {
+        // dd($id);
+        $pegawai = Perhitungan::findOrFail($id);
+        $pegawai->delete();
+        Alert::success('Delete Success');
+
+        return redirect()->back();
+    }
+
     public function filterGajiPertahun($tahun)
     {
         $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')

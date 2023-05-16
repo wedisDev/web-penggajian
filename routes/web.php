@@ -56,6 +56,7 @@ Route::group(
         Route::get('/pegwai/rincian-gaji', [PegawaiController::class, 'rincian']);
         Route::get('/gaji-pegawai',  [PegawaiController::class, 'gaji']);
         Route::get('/gaji-pegawai/{tahun}', [PegawaiController::class, 'filterGajiPertahun']);
+        Route::get('/gaji-pegawai/delete/{id}', [PegawaiController::class, 'deleteGaji'])->name('deleteGaji');
         Route::get('/filter-gaji-cabang/{id}', [PegawaiController::class, 'filterGajiCabang']);
         Route::get('/slip-gaji/{bulan}/{tahun}/{id}',  [PegawaiController::class, 'slipGaji']);
         Route::get('/pelanggaran', [PegawaiController::class, 'pelanggaran']);

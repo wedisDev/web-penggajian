@@ -46,6 +46,7 @@
                             <th>Bulan</th>
                             <th>Tahun</th>
                             <th>Slip Gaji</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,7 +70,33 @@
                                         class="btn btn-success">Slip
                                         Gaji</a>
                                 </td>
+                                <td>
+                                    <button data-toggle="modal" data-target="#modalHapus{{ $item->id_pegawai }}"
+                                        class="btn btn-danger">Hapus</button>
+                                </td>
                             </tr>
+                            <div class="modal fade" id="modalHapus{{ $item->id_pegawai }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Yakin ingin
+                                                menghapus?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="d-flex justify-content-center">
+                                                <button type="button" class="btn btn-secondary mr-2"
+                                                    data-dismiss="modal">Close</button>
+                                                <a href="{{ route('deleteGaji', $item->id) }}"
+                                                    class="btn btn-danger">Hapus</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
 
                     </tbody>
