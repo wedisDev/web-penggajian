@@ -146,8 +146,8 @@
                         {{ $pegawai[0]->tunjangan_makan }}
                         : Rp
                         {{ number_format($tunjangan_makan) }}</span><br>
-                    <span style="font-size: 20px;">Tunjangan Transportasi : Rp
-                        {{ number_format($pegawai[0]->tunjangan_transportasi) }}</span><br>
+                    <span style="font-size: 20px;">Tunjangan Transportasi :
+                        {{ $masuk . ' x Rp' . number_format($pegawai[0]->tunjangan_transportasi) . ' = Rp' . number_format($pegawai[0]->tunjangan_transportasi * $masuk) }}</span><br>
                     <span style="font-size: 20px;">tunjangan lembur : Rp
                         {{ number_format($pegawai[0]->tunjangan_lembur * $pegawai[0]->lembur) }}</span><br>
                     <span style="font-size: 20px;">tunjangan menikah : Rp

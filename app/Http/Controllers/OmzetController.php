@@ -31,7 +31,7 @@ class OmzetController extends Controller
         // $month = 1;
         // dd($date);
         $omzet = DB::table('cabangs as c')
-            ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
+            ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), DB::raw('YEAR(o.date) as year'), 'o.omzet', 'c.id as id', 'o.id as id_omzet', 'o.id as id_omzet')
             ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
             // ->whereMonth('o.date', '=', $month)
             // ->whereYear('o.date', '=', $year)
@@ -165,11 +165,15 @@ class OmzetController extends Controller
                 Alert::error('Error', $validator->messages()->all());
                 return back()->withInput();
             }
+            $date_filter = Carbon::parse($request->date('bulan'))->format('d/m/Y');
+            $date = Carbon::createFromFormat('d/m/Y',  $date_filter);
+            // dd($date);
 
             $omzet = new Omzet();
             $omzet->id_cabang = $request->id_cabang;
             $omzet->omzet = $request->omzet;
-            $omzet->date = Carbon::now()->setMonths($request->bulan);
+            // $omzet->date = Carbon::now()->setMonths($request->bulan);
+            $omzet->date = $date;
             $omzet->save();
             Alert::success('Success', 'Omzet Successfully Created');
             return back();
@@ -246,5 +250,10 @@ class OmzetController extends Controller
     public function destroy($id)
     {
         //
+        $omzet = Omzet::findOrFail($id);
+        // dd($id, $omzet);
+        $omzet->delete();
+        // Alert::success('Success', 'Omzet berhasil dihapus');
+        return back();
     }
 }

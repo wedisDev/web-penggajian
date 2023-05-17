@@ -70,6 +70,7 @@
                             <th>No</th>
                             <th>Cabang</th>
                             <th>Bulan</th>
+                            <th>Tahun</th>
                             <th>Omzet</th>
                             {{-- @if (Auth::user()->role == 'owner') --}}
                             <th>Actions</th>
@@ -138,6 +139,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->date }}</td>
+                                <td>{{ $item->year }}</td>
                                 <td>{{ $item->omzet }}</td>
                                 {{-- @if (Auth::user()->role == 'owner') --}}
                                 <td>
@@ -145,8 +147,8 @@
                                         data-target="#modalEdit{{ $item->id }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    {{-- <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
-                                            class="fas fa-trash-alt"></i></a> --}}
+                                    <a href="#" class="btn btn-sm btn-danger delete"
+                                        data-id="{{ $item->id_omzet }}"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 {{-- @endif --}}
                             </tr>
@@ -182,7 +184,7 @@
                                 @endforeach
                             </select>
                             <label for="" class="mt-3">Bulan</label>
-                            <select class="form-control" name="bulan" id="bulan" placeholder="Bulan">
+                            {{-- <select class="form-control" name="bulan" id="bulan" placeholder="Bulan">
                                 <option selected value="1">Januari</option>
                                 <option value="2">Februari</option>
                                 <option value="3">Maret</option>
@@ -195,7 +197,8 @@
                                 <option value="10">Oktober</option>
                                 <option value="11">November</option>
                                 <option value="12">Desember</option>
-                            </select>
+                            </select> --}}
+                            <input type="month" class="form-control" name="bulan" id="">
                         </div>
                         <div class="form-group">
                             <label for="">Omzet</label>
@@ -222,25 +225,25 @@
     </script>
 
     <script>
-        // $('.delete').click(function() {
-        //     var bonusId = $(this).attr('data-id');
-        //     swal({
-        //             title: "Apakah kamu yakin ?",
-        //             text: "Apa kamu yakin ingin menghapus data ini",
-        //             icon: "warning",
-        //             buttons: true,
-        //             dangerMode: true,
-        //         })
-        //         .then((willDelete) => {
-        //             if (willDelete) {
-        //                 window.location = "/omzet/delete/" + bonusId + ""
-        //                 swal("Data berhasil dihapus", {
-        //                     icon: "success",
-        //                 });
-        //             } else {
-        //                 swal("Data tidak terhapus");
-        //             }
-        //         });
-        // });
+        $('.delete').click(function() {
+            var bonusId = $(this).attr('data-id');
+            swal({
+                    title: "Apakah kamu yakin ?",
+                    text: "Apa kamu yakin ingin menghapus data ini",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location = "/omzet/delete/" + bonusId + ""
+                        swal("Data berhasil dihapus", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Data tidak terhapus");
+                    }
+                });
+        });
     </script>
 @endpush
