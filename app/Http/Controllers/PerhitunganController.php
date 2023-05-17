@@ -332,7 +332,7 @@ class PerhitunganController extends Controller
                 + $pegawai[0]->tunjangan_menikah
                 + $tunjangan_anak
                 + $tunjangan_makan
-                + $pegawai[0]->tunjangan_transportasi;
+                + (27 - $request->alpha) * $pegawai[0]->tunjangan_transportasi;
             // dd($tunjangan);
             // dd((int) $request->bonus_omzet);
 

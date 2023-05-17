@@ -109,7 +109,7 @@
                     {{ $pegawai[0]->id_pegawai }}</span><br>
                 <span style="font-size: 20px;">Nama : {{ $pegawai[0]->nama_pegawai }}</span><br>
                 <span style="font-size: 20px;">Jabatan : {{ $pegawai[0]->nama_jabatan }}</span><br>
-                <span style="font-size: 20px;">Status : {{ $pegawai[0]->nama_golongan }}</span>
+                <span style="font-size: 20px;">Status : {{ $pegawai[0]->nama_golongan }}</span><br>
                 <span style="font-size: 20px;">Jumlah Anak : {{ $pegawai[0]->jumlah_anak }}</span>
                 <br>
                 <span style="font-size: 20px;">Tanggal : {{ $tanggal }}</span>
