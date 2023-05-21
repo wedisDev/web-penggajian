@@ -397,6 +397,15 @@ class PegawaiController extends Controller
             ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
             ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
             ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
+            ->select(
+                'ph.id',
+                'jb.nama_jabatan',
+                'ph.total',
+                'ph.bulan',
+                'ph.tahun',
+                'pegawais.nama_pegawai',
+                'ph.pelanggaran'
+            )
             ->where('pegawais.id', Auth::user()->id_pegawai)
             ->get();
 
