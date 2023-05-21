@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cabang;
 use App\Models\Golongan;
 use App\Models\Jabatan;
+use App\Models\Omzet;
 use App\Models\Pegawai;
 use App\Models\Perhitungan;
 use App\Models\User;
@@ -86,17 +87,31 @@ class DashboardController extends Controller
             }
 
             if ($tahun_baru == false) {
-                $data1 = DB::select("SELECT cabangs.nama_cabang, perhitungans.bulan,
-                            (CASE
-                                WHEN COUNT(*) > 1 THEN sum(perhitungans.omzet)
-                                ELSE perhitungans.omzet
-                            END) AS omzet
-                            FROM perhitungans
-                            JOIN pegawais ON perhitungans.id_pegawai = pegawais.id
-                            JOIN cabangs ON cabangs.id = pegawais.id_cabang
-                            WHERE cabangs.id = 2
-                            GROUP BY perhitungans.bulan
-                            ORDER BY perhitungans.bulan DESC");
+                // $data1 = DB::select("SELECT cabangs.nama_cabang, perhitungans.bulan,
+                //             (CASE
+                //                 WHEN COUNT(*) > 1 THEN sum(perhitungans.omzet)
+                //                 ELSE perhitungans.omzet
+                //             END) AS omzet
+                //             FROM perhitungans
+                //             JOIN pegawais ON perhitungans.id_pegawai = pegawais.id
+                //             JOIN cabangs ON cabangs.id = pegawais.id_cabang
+                //             WHERE cabangs.id = 1
+                //             GROUP BY perhitungans.bulan
+                //             ORDER BY perhitungans.bulan DESC");
+                $data1 = Omzet::orderBy('omzet', 'desc')
+                    ->select(
+                        DB::raw('SUM(omzet) as omzet'),
+                        // 'omzet',
+                        DB::raw('MONTH(date) as bulan')
+                    )
+                    ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+                    ->where('c.id', 1)
+                    ->whereYear(
+                        'date',
+                        $tahun_baru
+                    )
+                    ->groupBy('bulan')
+                    ->get();
             } else {
                 // $data = DB::select("SELECT cabangs.nama_cabang, perhitungans.bulan,
                 //             (CASE
@@ -109,42 +124,103 @@ class DashboardController extends Controller
                 //             WHERE cabangs.id = 2 OR perhitungans.tahun = '$tahun_baru'
                 //             GROUP BY perhitungans.bulan
                 //             ORDER BY perhitungans.bulan DESC");
-                $data1 = DB::table('perhitungans')
-                    ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-                    ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-                    ->where('cabangs.id', 1)
-                    ->where('perhitungans.tahun', '=', $tahun_baru)
-                    ->groupBy('perhitungans.bulan')
-                    ->orderBy('perhitungans.bulan', 'DESC')
-                    ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+                // $data1 = DB::table('perhitungans')
+                //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+                //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+                //     ->where('cabangs.id', 1)
+                //     ->where('perhitungans.tahun', '=', $tahun_baru)
+                //     ->groupBy('perhitungans.bulan')
+                //     ->orderBy('perhitungans.bulan', 'DESC')
+                //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+                //     ->get();
+
+
+                // $data2 = DB::table('perhitungans')
+                //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+                //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+                //     ->where('cabangs.id', 2)
+                //     ->where('perhitungans.tahun', '=', $tahun_baru)
+                //     ->groupBy('perhitungans.bulan')
+                //     ->orderBy('perhitungans.bulan', 'DESC')
+                //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+                //     ->get();
+
+                // $data3 = DB::table('perhitungans')
+                //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+                //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+                //     ->where('cabangs.id', 3)
+                //     ->where('perhitungans.tahun', '=', $tahun_baru)
+                //     ->groupBy('perhitungans.bulan')
+                //     ->orderBy('perhitungans.bulan', 'DESC')
+                //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+                //     ->get();
+                // $data4 = DB::table('perhitungans')
+                //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+                //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+                //     ->where('cabangs.id', 4)
+                //     ->where('perhitungans.tahun', '=', $tahun_baru)
+                //     ->groupBy('perhitungans.bulan')
+                //     ->orderBy('perhitungans.bulan', 'DESC')
+                //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+                //     ->get();
+                $data1 = Omzet::orderBy('omzet', 'desc')
+                    ->select(
+                        DB::raw('SUM(omzet) as omzet'),
+                        // 'omzet',
+                        DB::raw('MONTH(date) as bulan')
+                    )
+                    ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+                    ->where('c.id', 1)
+                    ->whereYear(
+                        'date',
+                        $tahun_baru
+                    )
+                    ->groupBy('bulan')
                     ->get();
 
-                $data2 = DB::table('perhitungans')
-                    ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-                    ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-                    ->where('cabangs.id', 2)
-                    ->where('perhitungans.tahun', '=', $tahun_baru)
-                    ->groupBy('perhitungans.bulan')
-                    ->orderBy('perhitungans.bulan', 'DESC')
-                    ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+                $data2 = Omzet::orderBy('omzet', 'desc')
+                    ->select(
+                        DB::raw('SUM(omzet) as omzet'),
+                        // 'omzet',
+                        DB::raw('MONTH(date) as bulan')
+                    )
+                    ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+                    ->where('c.id', 2)
+                    ->whereYear(
+                        'date',
+                        $tahun_baru
+                    )
+                    ->groupBy('bulan')
                     ->get();
-                $data3 = DB::table('perhitungans')
-                    ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-                    ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-                    ->where('cabangs.id', 3)
-                    ->where('perhitungans.tahun', '=', $tahun_baru)
-                    ->groupBy('perhitungans.bulan')
-                    ->orderBy('perhitungans.bulan', 'DESC')
-                    ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+
+                $data3 = Omzet::orderBy('omzet', 'desc')
+                    ->select(
+                        DB::raw('SUM(omzet) as omzet'),
+                        // 'omzet',
+                        DB::raw('MONTH(date) as bulan')
+                    )
+                    ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+                    ->where('c.id', 3)
+                    ->whereYear(
+                        'date',
+                        $tahun_baru
+                    )
+                    ->groupBy('bulan')
                     ->get();
-                $data4 = DB::table('perhitungans')
-                    ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-                    ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-                    ->where('cabangs.id', 4)
-                    ->where('perhitungans.tahun', '=', $tahun_baru)
-                    ->groupBy('perhitungans.bulan')
-                    ->orderBy('perhitungans.bulan', 'DESC')
-                    ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+
+                $data4 = Omzet::orderBy('omzet', 'desc')
+                    ->select(
+                        DB::raw('SUM(omzet) as omzet'),
+                        // 'omzet',
+                        DB::raw('MONTH(date) as bulan')
+                    )
+                    ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+                    ->where('c.id', 4)
+                    ->whereYear(
+                        'date',
+                        $tahun_baru
+                    )
+                    ->groupBy('bulan')
                     ->get();
             }
             // dd($data1);
@@ -403,12 +479,37 @@ class DashboardController extends Controller
 
             // dd($tahun);
 
-            $data = Perhitungan::orderBy('omzet', 'desc')
-                ->where(
-                    'tahun',
+            // $data112 = Perhitungan::orderBy('omzet', 'desc')
+            //     ->where(
+            //         'tahun',
+            //         $tahun_baru
+            //     )
+            //     ->get();
+            $data = Omzet::orderBy('omzet', 'desc')
+                ->select(
+                    DB::raw('SUM(omzet) as omzet'),
+                    // 'omzet',
+                    DB::raw('MONTH(date) as bulan')
+                )
+                ->whereYear(
+                    'date',
                     $tahun_baru
                 )
+                ->groupBy('bulan')
                 ->get();
+            // $data = Omzet::whereYear(
+            //     'date',
+            //     $tahun_baru
+            // )->select(
+            //     DB::raw('SUM(omzet) as omzet'),
+            //     // 'omzet',
+            //     DB::raw('MONTH(date) as bulan')
+            // )
+            //     ->groupBy('bulan')
+            //     ->get();
+            // dd($data);
+
+            // dd($data[0]->whereMonth('date', 5)->get());
 
             $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
             $datas = [null, null, null, null, null, null, null, null, null, null, null, null];
@@ -423,7 +524,7 @@ class DashboardController extends Controller
             foreach ($data as $item) {
 
                 if ($item->bulan == 1) {
-                    $datas[0] = (int) $item->bulan;
+                    $datas[0] = (int) $item->omzet;
                 } else if ($item->bulan == 2) {
                     $datas[1] = (int) $item->omzet;
                 } else if ($item->bulan == 3) {
@@ -431,6 +532,8 @@ class DashboardController extends Controller
                 } else if ($item->bulan == 4) {
                     $datas[3] = (int) $item->omzet;
                 } else if ($item->bulan == 5) {
+                    // dd($data[0]->whereMonth('date', 5)->get());
+                    // dd($item->whereMonth('date', 5));
                     $datas[4] = (int) $item->omzet;
                 } else if ($item->bulan == 6) {
                     $datas[5] = (int) $item->omzet;
@@ -448,6 +551,7 @@ class DashboardController extends Controller
                     $datas[11] = (int) $item->omzet;
                 }
             }
+            // dd($datas);
 
             $b = [];
             foreach ($data as $item) {
@@ -532,43 +636,104 @@ class DashboardController extends Controller
 
         $tahun_baru = $request->tahun;
         // dd($request->all());
-        $data1 = DB::table('perhitungans')
-            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-            ->where('cabangs.id', 1)
-            ->where('perhitungans.tahun', '=', $tahun_baru)
-            ->groupBy('perhitungans.bulan')
-            ->orderBy('perhitungans.bulan', 'DESC')
-            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+        // $data1 = DB::table('perhitungans')
+        //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+        //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+        //     ->where('cabangs.id', 1)
+        //     ->where('perhitungans.tahun', '=', $tahun_baru)
+        //     ->groupBy('perhitungans.bulan')
+        //     ->orderBy('perhitungans.bulan', 'DESC')
+        //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+        //     ->get();
+
+        $data1 = Omzet::orderBy('omzet', 'desc')
+            ->select(
+                DB::raw('SUM(omzet) as omzet'),
+                // 'omzet',
+                DB::raw('MONTH(date) as bulan')
+            )
+            ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+            ->where('c.id', 1)
+            ->whereYear(
+                'date',
+                $tahun_baru
+            )
+            ->groupBy('bulan')
             ->get();
 
-        $data2 = DB::table('perhitungans')
-            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-            ->where('cabangs.id', 2)
-            ->where('perhitungans.tahun', '=', $tahun_baru)
-            ->groupBy('perhitungans.bulan')
-            ->orderBy('perhitungans.bulan', 'DESC')
-            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+        $data2 = Omzet::orderBy('omzet', 'desc')
+            ->select(
+                DB::raw('SUM(omzet) as omzet'),
+                // 'omzet',
+                DB::raw('MONTH(date) as bulan')
+            )
+            ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+            ->where('c.id', 2)
+            ->whereYear(
+                'date',
+                $tahun_baru
+            )
+            ->groupBy('bulan')
             ->get();
-        $data3 = DB::table('perhitungans')
-            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-            ->where('cabangs.id', 3)
-            ->where('perhitungans.tahun', '=', $tahun_baru)
-            ->groupBy('perhitungans.bulan')
-            ->orderBy('perhitungans.bulan', 'DESC')
-            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+
+        $data3 = Omzet::orderBy('omzet', 'desc')
+            ->select(
+                DB::raw('SUM(omzet) as omzet'),
+                // 'omzet',
+                DB::raw('MONTH(date) as bulan')
+            )
+            ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+            ->where('c.id', 3)
+            ->whereYear(
+                'date',
+                $tahun_baru
+            )
+            ->groupBy('bulan')
             ->get();
-        $data4 = DB::table('perhitungans')
-            ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
-            ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
-            ->where('cabangs.id', 4)
-            ->where('perhitungans.tahun', '=', $tahun_baru)
-            ->groupBy('perhitungans.bulan')
-            ->orderBy('perhitungans.bulan', 'DESC')
-            ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+
+        $data4 = Omzet::orderBy('omzet', 'desc')
+            ->select(
+                DB::raw('SUM(omzet) as omzet'),
+                // 'omzet',
+                DB::raw('MONTH(date) as bulan')
+            )
+            ->join('cabangs as c', 'c.id', '=', 'omzet.id_cabang')
+            ->where('c.id', 4)
+            ->whereYear(
+                'date',
+                $tahun_baru
+            )
+            ->groupBy('bulan')
             ->get();
+
+        // $data2 = DB::table('perhitungans')
+        //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+        //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+        //     ->where('cabangs.id', 2)
+        //     ->where('perhitungans.tahun', '=', $tahun_baru)
+        //     ->groupBy('perhitungans.bulan')
+        //     ->orderBy('perhitungans.bulan', 'DESC')
+        //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+        //     ->get();
+
+        // $data3 = DB::table('perhitungans')
+        //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+        //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+        //     ->where('cabangs.id', 3)
+        //     ->where('perhitungans.tahun', '=', $tahun_baru)
+        //     ->groupBy('perhitungans.bulan')
+        //     ->orderBy('perhitungans.bulan', 'DESC')
+        //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+        //     ->get();
+        // $data4 = DB::table('perhitungans')
+        //     ->join('pegawais', 'perhitungans.id_pegawai', '=', 'pegawais.id')
+        //     ->join('cabangs', 'cabangs.id', '=', 'pegawais.id_cabang')
+        //     ->where('cabangs.id', 4)
+        //     ->where('perhitungans.tahun', '=', $tahun_baru)
+        //     ->groupBy('perhitungans.bulan')
+        //     ->orderBy('perhitungans.bulan', 'DESC')
+        //     ->select('cabangs.nama_cabang', 'perhitungans.bulan', DB::raw('CASE WHEN COUNT(*) > 1 THEN SUM(perhitungans.omzet) ELSE perhitungans.omzet END AS omzet'))
+        //     ->get();
         // dd($data1);
         // $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
         $data_tahun =
