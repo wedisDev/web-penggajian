@@ -419,10 +419,35 @@ class PerhitunganController extends Controller
             'bulan' => 'required',
             'lembur' => 'required',
             'pelanggaran' => 'required',
-            'omzet' => 'required',
-            'bonus_omzet' => 'required',
-            'total' => 'required',
+            // 'omzet' => 'required',
+            // 'bonus_omzet' => 'required',
+            // 'total' => 'required',
         ]);
+
+        $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
+            ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
+            ->join('bonus_omzets as bo', 'bo.id_cabang', '=', 'pegawais.id_cabang')
+            ->join('golongans as gl', 'gl.nama_golongan', '=', 'pegawais.status')
+            ->join('perhitungans as ph', 'ph.id_pegawai', '=', 'pegawais.id')
+            ->where('pegawais.id', $id)
+            ->select(
+                'pegawais.jumlah_anak',
+                'jb.gapok',
+                'jb.tunjangan_makmur',
+                'jb.tunjangan_makan',
+                'jb.tunjangan_transportasi',
+                'jb.tunjangan_lembur',
+                'jb.tunjangan_menikah',
+                'jb.tunjangan_anak',
+                'jb.bonus_tahunan',
+                'cb.id as id_cabang',
+                'cb.nama_cabang',
+                'ph.id as id_perhitungan',
+                'bo.bonus',
+                'gl.nama_golongan'
+
+            )
+            ->get();
 
         if ($validator->fails()) {
             dd($validator->errors());
@@ -430,7 +455,27 @@ class PerhitunganController extends Controller
         } else {
             Alert::success('Berhasil', 'Data Berhasil Diubah');
 
-            $data = Perhitungan::findOrFail($id);
+            $tunjangan_makan = (27 - $request->alpha) * $pegawai[0]->tunjangan_makan;
+            $tunjangan_anak = ($pegawai[0]->tunjangan_anak * $pegawai[0]->jumlah_anak);
+            // $tunjangan_lembur = (27 - $request->alpha) * 15000;
+            // $tunjangan_lembur = $request->lembur * 15000;
+            $tunjangan_lembur = $request->lembur * $pegawai[0]->tunjangan_lembur;
+            $tunjangan = $pegawai[0]->tunjangan_makmur
+                + $pegawai[0]->tunjangan_menikah
+                + $tunjangan_anak
+                + $tunjangan_makan
+                + (27 - $request->alpha) * $pegawai[0]->tunjangan_transportasi;
+            $gaji = $pegawai[0]->gapok
+                + $tunjangan
+                // + (int) $data->bonus_tahunan
+                + (int) $request->bonus_omzet
+                // + ($tunjangan_lembur * $request->lembur)
+                + $tunjangan_lembur
+                - $request->pelanggaran;
+            // dd($pegawai);
+
+            $data = Perhitungan::findOrFail($pegawai[0]->id_perhitungan);
+
 
             $data->id_pegawai = $request->pegawai_id;
             $data->bulan = $request->bulan;
@@ -438,10 +483,15 @@ class PerhitunganController extends Controller
             $data->pelanggaran = $request->pelanggaran;
             $data->omzet = $request->omzet;
             $data->tahun = $request->tahun;
+            $data->alpha = $request->alpha;
             $data->bonus_omzet = $request->bonus_omzet;
-            $data->total = $request->total;
+            $data->total = $gaji;
             // dd($data);
             $data->save();
+            // dd($data->save());
+            // dd($data, $pegawai[0]->id_perhitungan);
+            // dd($request->all(), $pegawai);
+            // return back();
 
             return redirect()->route('transaksi.index');
         }
