@@ -9,6 +9,7 @@ use App\Models\Omzet;
 use App\Models\Pegawai;
 use App\Models\Perhitungan;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -465,10 +466,16 @@ class DashboardController extends Controller
             $golongan = Golongan::count();
             $pegawai = Pegawai::count();
             $tahun_baru = 'Tidak ada data';
+            // $tahun_baru = Carbon::now();
+            // $tahun = $tahun_baru->year;
+            // $bulan = $tahun_baru->month;
 
+            $tahun = Omzet::select(DB::raw('YEAR(DATE) as tahun'))->groupBy('tahun')->get();
+            $bulan = Omzet::select(DB::raw('MONTH(DATE) as bulan'))->groupBy('bulan')->get();
+            // dd($tahun);
 
-            $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
-            $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
+            // $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
+            // $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
             foreach ($tahun as $item) {
                 if ($item->tahun == false) {
                     $tahun_baru = 'Tidak ada data';
@@ -489,7 +496,8 @@ class DashboardController extends Controller
                 ->select(
                     DB::raw('SUM(omzet) as omzet'),
                     // 'omzet',
-                    DB::raw('MONTH(date) as bulan')
+                    DB::raw('MONTH(date) as bulan'),
+                    // 'date'
                 )
                 ->whereYear(
                     'date',
@@ -497,6 +505,7 @@ class DashboardController extends Controller
                 )
                 ->groupBy('bulan')
                 ->get();
+            // dd($data, $tahun_baru);
             // $data = Omzet::whereYear(
             //     'date',
             //     $tahun_baru
@@ -511,7 +520,7 @@ class DashboardController extends Controller
 
             // dd($data[0]->whereMonth('date', 5)->get());
 
-            $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', tahun FROM `perhitungans` GROUP BY tahun ORDER BY omzet DESC");
+            $data_tahun = DB::select("SELECT SUM(omzet) as 'omzet', YEAR(date) as tahun FROM `omzet` GROUP BY tahun ORDER BY tahun ASC");
             $datas = [null, null, null, null, null, null, null, null, null, null, null, null];
 
 
@@ -595,9 +604,19 @@ class DashboardController extends Controller
         $golongan = Golongan::count();
         $pegawai = Pegawai::count();
 
-        $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
-        $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
+        $tahun = Omzet::select(DB::raw('YEAR(DATE) as tahun'))->groupBy('tahun')->get();
+        $bulan = Omzet::select(DB::raw('MONTH(DATE) as bulan'))->groupBy('bulan')->get();
+        // dd($tahun);
 
+        // $tahun = Perhitungan::select('tahun')->groupBy('tahun')->get();
+        // $bulan = Perhitungan::select('bulan')->groupBy('bulan')->get();
+        foreach ($tahun as $item) {
+            if ($item->tahun == false) {
+                $tahun_baru = 'Tidak ada data';
+            } else {
+                $tahun_baru = $item->tahun;
+            }
+        }
         // if (empty($tahun)) {
         //     $tahun_baru = 'Tidak ada data';
         // }
