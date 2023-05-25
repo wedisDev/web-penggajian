@@ -112,7 +112,7 @@
                 <span style="font-size: 20px;">Status : {{ $pegawai[0]->nama_golongan }}</span><br>
                 <span style="font-size: 20px;">Jumlah Anak : {{ $pegawai[0]->jumlah_anak }}</span>
                 <br>
-                <span style="font-size: 20px;">Tanggal : {{ $tanggal }}</span>
+                <span style="font-size: 20px;">Tanggal Cetak : {{ $tanggal }}</span>
             </div>
         </div>
 

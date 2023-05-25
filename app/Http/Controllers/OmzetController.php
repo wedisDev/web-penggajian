@@ -37,6 +37,9 @@ class OmzetController extends Controller
             // ->whereYear('o.date', '=', $year)
             // ->groupBy(DB::raw('YEAR(date)'))
             ->get();
+        $create_omzet = Cabang::groupBy('nama_cabang')
+            ->select('nama_cabang', 'id')
+            ->get();
 
         // if (empty($omzet[0])) {
         //     DB::table('omzet')->insert(
@@ -68,7 +71,7 @@ class OmzetController extends Controller
         // }
         // $omzet = Cabang::whereMonth($)
         // dd($omzet);
-        return view('owner.omzet.index', compact('omzet'));
+        return view('owner.omzet.index', compact('omzet', 'create_omzet'));
     }
 
     /**

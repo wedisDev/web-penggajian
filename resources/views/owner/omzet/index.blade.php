@@ -178,7 +178,7 @@
                             <label for="">Cabang</label>
                             <select name="id_cabang" class="form-control" id="">
                                 <option value="">Pilih Cabang</option>
-                                @foreach ($omzet as $item2)
+                                @foreach ($create_omzet as $item2)
                                     <option value="{{ $item2->id }}">
                                         {{ $item2->nama_cabang }}</option>
                                 @endforeach
