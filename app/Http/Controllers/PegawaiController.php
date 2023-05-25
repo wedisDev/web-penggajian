@@ -27,9 +27,6 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        // $pegawai = Pegawai::join('jabatans as jb', 'jb.id', '=', 'pegawais.id_jabatan')
-        //     ->join('cabangs as cb', 'cb.id', '=', 'pegawais.id_cabang')
-        //     ->get();
         $pegawai = DB::select("SELECT
             pegawais.id as 'id',
             pegawais.nama_pegawai as 'nama_pegawai',
@@ -44,7 +41,6 @@ class PegawaiController extends Controller
                 FROM Pegawais
                 JOIN jabatans ON jabatans.id = pegawais.id_jabatan
                 JOIN cabangs ON cabangs.id = pegawais.id_cabang");
-        // dd($pegawai);
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
@@ -77,28 +73,12 @@ class PegawaiController extends Controller
                 'ph.pelanggaran'
             )
             ->get();
-        // <td>{{ $item->nama_pegawai }}</td>
-        //                     <td>{{ $item->nama_jabatan }}</td>
-        //                     <td>{{ $item->pelanggaran }}</td>
-        //                     <td>{{ $item->lembur }}</td>
-        //                     <td>{{ $item->nama_golongan }}</td>
-        //                     <td>{{ $item->jumlah_anak }}</td>
-        //                     <td>{{ number_format($item->total) }}</td>
-        //                     <td>{{ $item->bulan }}</td>
-        //                     <td>{{ $item->tahun }}</td>
-        // select * fron pegawai join jabatans ON jabatans.id = pegawais.id_jabatan
-        // JOIN cabangs ON cabangs.id = pegawais.id_cabang
-        // JOIN golongans ON golongans.nama_golongan = pegawais.status
-        // JOIN perhitungans ON perhitungans.id_pegawai = pegawais.id
-
-        // dd($pegawai);
 
         $jabatan = Jabatan::all();
         $golongan = Golongan::all();
         $cabang = Cabang::all();
 
         $tahun = Perhitungan::select('tahun')->distinct()->get();
-        // dd($tahun);
 
         return view('owner.pegawai.gaji', [
             'pegawai' => $pegawai,
@@ -111,7 +91,6 @@ class PegawaiController extends Controller
 
     public function deleteGaji($id)
     {
-        // dd($id);
         $pegawai = Perhitungan::findOrFail($id);
         $pegawai->delete();
         Alert::success('Delete Success');
@@ -134,7 +113,6 @@ class PegawaiController extends Controller
         $cabang = Cabang::all();
 
         $tahun = Perhitungan::select('tahun')->distinct()->get();
-        // dd($tahun);
 
         return view('owner.pegawai.gaji', [
             'pegawai' => $pegawai,
@@ -177,7 +155,6 @@ class PegawaiController extends Controller
             ->where('ph.bulan', $bulan)
             ->where('ph.tahun', $tahun)
             ->get();
-        // dd($pegawai);
 
         foreach ($pegawai as $item) {
             if ($item->jumlah_anak == 0) {
@@ -192,13 +169,6 @@ class PegawaiController extends Controller
         $masuk =  27 - $pegawai[0]->alpha;
         $tunjangan_makan  = $pegawai[0]->tunjangan_makan * $masuk;
 
-        // return view('owner.pegawai.slip-gaji', [
-        //     'pegawai' => $pegawai,
-        //     'tanggal' => $date_new,
-        //     'tahun' => $tahun,
-        //     'tunjangan_makan' => $tunjangan_makan,
-        //     'masuk' => $masuk
-        // ]);
 
         $pdf = PDF::loadView('owner.pegawai.slip-gaji', [
             'pegawai' => $pegawai,
@@ -242,7 +212,6 @@ class PegawaiController extends Controller
             'status' => 'required',
             'jumlah_anak' => 'required',
         ]);
-        // dd($request->all());
 
         if ($validator->fails()) {
             dd($validator->errors());
@@ -254,13 +223,10 @@ class PegawaiController extends Controller
             $pegawai = new Pegawai();
             $idCabang = $request->get('id_cabang');
 
-            // $cekId = Pegawai::latest()->first()->id;
-            // dd($cekId);
             $buatID = array();
 
             $cekPegawai = Pegawai::all();
 
-            // dd($cekPegawai);
             if (empty($cekPegawai[0])) {
                 $ID_ARRAY = IdGenerator::generate(['table' => 'pegawais', 'length' => 7, 'prefix' => date('y') . $idCabang]);
                 array_push($buatID, $ID_ARRAY);
@@ -271,11 +237,9 @@ class PegawaiController extends Controller
                 array_push($buatID, $ID_ARRAY);
             }
 
-            // dd($buatID);
 
             $email = Str::lower(str_replace(' ', '', $request->get('nama_pegawai'))) . '@gmail.com';
             $cekEmail = User::where('email', $email)->get();
-            // dd($cekEmail, $email);
             if ($cekEmail == $email) {
                 Alert::error('Email sudah ada', 'Harap masukan email yang lain');
                 return back()->withInput();
@@ -346,7 +310,6 @@ class PegawaiController extends Controller
         $validator = Validator::make(request()->all(), [
             'nama_pegawai' => 'required',
             'status' => 'required',
-            // 'jumlah_anak' => 'required',
         ]);
 
         if ($validator->fails()) {

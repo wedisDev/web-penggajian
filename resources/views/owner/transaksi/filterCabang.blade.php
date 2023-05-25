@@ -19,7 +19,6 @@
                 </select>
             </div>
             <div class="col-md-6 mt-1" align="right">
-                {{-- <a href="{{ url('/tambah-transaksi', $cabang->id, $item->id_cabang) }}" --}}
                 <button type="button" data-toggle="modal" data-target="#modalPilihPegawai"
                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <i class="fas fa-plus fa-sm text-white-50"></i>
@@ -130,7 +129,6 @@
                                 <select name="" class="form-control text-dark" onchange="location = this.value;">
                                     <option value="">Pilih Pegawai</option>
                                     @foreach ($pilih_pegawai as $item)
-                                        {{-- <option value="{{ url('/tambah-transaksi', $item->id, '/', $item->id_cabang) }}"> --}}
                                         <option value="/tambah-transaksi/{{ $item->pegawai_id }}/{{ $item->cabang_id }}">
                                             {{ $item->nama_pegawai }}
                                         </option>

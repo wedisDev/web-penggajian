@@ -1,52 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Slip Gaji {{ $pegawai[0]->nama_pegawai }}</title>
-</head>
-
-<body>
-    <div class="card" style="border: 3px #000 solid;">
-        <div class="header" style="margin: 30px;">
-            <h1>PT. Karya Anugerah</h1>
-            <p>Jl. Raya Cikarang No.1, Cikarang Barat, Cikarang, Bekasi, Jawa Barat, Indonesia</p>
-            <p>Telp. 021-898989898</p>
-        </div>
-
-        <div class="line" style="border: 2px #A2B5BB solid; margin-left: 30px; margin-right: 30px;"></div>
-        <h2 align="center">Data Diri</h2>
-
-        <br>
-        <div class="data-diri" style="margin-left: 30px;">
-            <span style="font-size: 20px;">ID</span> <span style="font-size: 20px;">:</span> <span
-                style="font-size: 20px;">{{ $pegawai[0]->id_pegawai }}</span><br>
-            <span style="font-size: 20px;">Nama</span> <span style="font-size: 20px;">:</span> <span
-                style="font-size: 20px;">{{ $pegawai[0]->nama_pegawai }}</span><br>
-            <span style="font-size: 20px;">Jabatan</span> <span style="font-size: 20px;">:</span> <span
-                style="font-size: 20px;">{{ $pegawai[0]->nama_jabatan }}</span><br>
-            <span style="font-size: 20px;">Status</span> <span style="font-size: 20px;">:</span> <span
-                style="font-size: 20px;">{{ $pegawai[0]->nama_golongan }}</span>
-        </div>
-        <br>
-        <div class="line" style="border: 2px #000 solid; padding: -10px;">
-            <h2 style=" margin-left: 30px;">Penerimaan</h2>
-        </div>
-        <div class="penerimaan" style="margin-left: 30px;">
-            <br>
-            <span style="font-size: 20px;">ID</span> <span style="font-size: 20px;">:</span> <span
-                style="font-size: 20px;">{{ $pegawai[0]->id_pegawai }}</span><br>
-        </div>
-
-    </div>
-
-</body>
-
-</html> --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,9 +12,6 @@
 
 
     <style>
-        /* body {
-            font-family: arial;
-        } */
         .print {
             margin-top: 10px;
         }
@@ -78,15 +26,7 @@
             body {
                 font-size: 12px;
             }
-
-            /* h1 {
-                font-size: 24px;
-            } */
         }
-
-        /* table {
-            border-collapse: collapse;
-        } */
     </style>
 </head>
 
@@ -94,7 +34,6 @@
     <div class="container-fluid">
         <h1 align="center">Kantin Tante</h1>
         <p align="center">{{ $pegawai[0]->nama_cabang . ' ' . $pegawai[0]->alamat }}</p>
-        {{-- <p align="center">Jl. Raya Cikarang No.1, Cikarang Barat, Cikarang, Bekasi, Jawa Barat, Indonesia</p> --}}
         <p align="center">Telp. 021-89898989815</p>
 
         <div class="line" style="border: 2px #A2B5BB solid;"></div>
@@ -105,7 +44,6 @@
         <div class="row">
             <div class="col-md-6">
                 <span style="font-size: 20px;">ID PEGAWAI :
-                    {{-- {{ $pegawai[0]->id_pegawai . $pegawai[0]->id_cabang . $pegawai[0]->tahun . $pegawai[0]->id_jabatan }}</span><br> --}}
                     {{ $pegawai[0]->id_pegawai }}</span><br>
                 <span style="font-size: 20px;">Nama : {{ $pegawai[0]->nama_pegawai }}</span><br>
                 <span style="font-size: 20px;">Jabatan : {{ $pegawai[0]->nama_jabatan }}</span><br>

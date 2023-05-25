@@ -11,7 +11,6 @@
             </div>
             <div class="card-body">
                 <form action="{{ url('/ubah-password-store', $data->id) }}" method="post">
-                    {{-- {{ method_field('PUT') }} --}}
                     @csrf
                     <div class="form-group">
                         <label for="">Password Baru</label>

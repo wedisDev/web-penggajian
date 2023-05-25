@@ -51,9 +51,6 @@
                     </thead>
                     <tbody>
                         @foreach ($pegawai as $item)
-                            @php
-                                // dd($item);
-                            @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>

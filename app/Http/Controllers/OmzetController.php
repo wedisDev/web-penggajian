@@ -24,53 +24,16 @@ class OmzetController extends Controller
     public function index()
     {
         $date = Carbon::now();
-        // $date = Carbon::createFromFormat('d/m/Y',  '19/04/2000');
-        // dd($date);
         $month = $date->month;
         $year = $date->year;
-        // $month = 1;
-        // dd($date);
         $omzet = DB::table('cabangs as c')
             ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), DB::raw('YEAR(o.date) as year'), 'o.omzet', 'c.id as id', 'o.id as id_omzet', 'o.id as id_omzet')
             ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
-            // ->whereMonth('o.date', '=', $month)
-            // ->whereYear('o.date', '=', $year)
-            // ->groupBy(DB::raw('YEAR(date)'))
             ->get();
         $create_omzet = Cabang::groupBy('nama_cabang')
             ->select('nama_cabang', 'id')
             ->get();
 
-        // if (empty($omzet[0])) {
-        //     DB::table('omzet')->insert(
-        //         [
-        //             [
-        //                 'id_cabang' => 1,
-        //                 'date' => $date
-        //             ],
-        //             [
-        //                 'id_cabang' => 2,
-        //                 'date' => $date
-        //             ],
-        //             [
-        //                 'id_cabang' => 3,
-        //                 'date' => $date
-        //             ],
-        //             [
-        //                 'id_cabang' => 4,
-        //                 'date' => $date
-        //             ],
-
-        //         ]
-        //     );
-        //     $omzet = DB::table('cabangs as c')
-        //         ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
-        //         ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
-        //         // ->whereMonth('o.date',  $month)
-        //         ->get();
-        // }
-        // $omzet = Cabang::whereMonth($)
-        // dd($omzet);
         return view('owner.omzet.index', compact('omzet', 'create_omzet'));
     }
 
@@ -82,7 +45,6 @@ class OmzetController extends Controller
 
     public function buat_omzet($id, $bulan)
     {
-        // dd($bulan);
         $omzet = DB::table('cabangs as c')
             ->select('o.omzet')
             ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
@@ -104,7 +66,6 @@ class OmzetController extends Controller
 
     public function filter(Request $request)
     {
-        // dd($request->all());
         try {
 
             $validator = Validator::make($request->all(), [
@@ -117,11 +78,8 @@ class OmzetController extends Controller
             }
 
             $date_now = Carbon::today();
-            // dd($request->date);
             $date_filter = Carbon::parse($request->date('date'))->format('d/m/Y');
             $date = Carbon::createFromFormat('d/m/Y',  $date_filter);
-            // dd($date_filter, $request->date);
-            // dd($date);
             $month = $date->month;
             $year = $date->year;
             if ($request->date > $date_now) {
@@ -133,8 +91,6 @@ class OmzetController extends Controller
                 ->select('c.nama_cabang', DB::raw('MONTH(o.date) as date'), 'o.omzet', 'c.id as id', 'o.id as id_omzet')
                 ->join('omzet as o', 'o.id_cabang', '=', 'c.id')
                 ->whereMonth('o.date', '=', $month)
-                // ->whereYear('o.date', '=', $year)
-                // ->groupBy(DB::raw('YEAR(date)'))
                 ->get();
 
             return view('owner.omzet.filter', compact('omzet'));
@@ -155,10 +111,8 @@ class OmzetController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         try {
             $validator = Validator::make($request->all(), [
-                // 'id_omzet' => 'required',
                 'id_cabang' => 'required',
                 'bulan' => 'required',
                 'omzet' => 'required',
@@ -170,12 +124,10 @@ class OmzetController extends Controller
             }
             $date_filter = Carbon::parse($request->date('bulan'))->format('d/m/Y');
             $date = Carbon::createFromFormat('d/m/Y',  $date_filter);
-            // dd($date);
 
             $omzet = new Omzet();
             $omzet->id_cabang = $request->id_cabang;
             $omzet->omzet = $request->omzet;
-            // $omzet->date = Carbon::now()->setMonths($request->bulan);
             $omzet->date = $date;
             $omzet->save();
             Alert::success('Success', 'Omzet Successfully Created');
@@ -216,9 +168,7 @@ class OmzetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $validator = Validator::make(request()->all(), [
-            // 'id_jabatan' => 'required',
             'id' => 'required',
             'omzet' => 'required',
             'id_omzet' => 'required'
@@ -230,15 +180,10 @@ class OmzetController extends Controller
         } else {
 
             $bonus = Omzet::findOrFail($request->id_omzet);
-            // dd($bonus);
-
-            // $bonus->id_jabatan = $request->get('id_jabatan');
-            // $bonus->id = $request->get('id');
             $bonus->updated_at = Carbon::now();
             $bonus->omzet = $request->get('omzet');
             $bonus->save();
             Alert::success('Success', 'Omzet berhasil diubah');
-            // dd($bonus->save());
 
             return redirect()->back();
         }
@@ -254,9 +199,8 @@ class OmzetController extends Controller
     {
         //
         $omzet = Omzet::findOrFail($id);
-        // dd($id, $omzet);
         $omzet->delete();
-        // Alert::success('Success', 'Omzet berhasil dihapus');
+        Alert::success('Success', 'Omzet berhasil dihapus');
         return back();
     }
 }

@@ -46,7 +46,6 @@
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>{{ $item->jumlah_anak }}</td>
-                                {{-- @if (Auth::user()->role == 'owner') --}}
                                 <td>
                                     <a href="{{ route('pegawai.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
@@ -54,7 +53,6 @@
                                     <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
                                             class="fas fa-trash-alt"></i></a>
                                 </td>
-                                {{-- @endif --}}
                             </tr>
                         @endforeach
 

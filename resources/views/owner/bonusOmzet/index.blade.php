@@ -75,11 +75,8 @@
                         <tr>
                             <th>No</th>
                             <th>Cabang</th>
-                            {{-- <th>Bulan</th> --}}
                             <th>Omzet</th>
-                            {{-- @if (Auth::user()->role == 'owner') --}}
                             <th>Actions</th>
-                            {{-- @endif --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -111,19 +108,6 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-
-                                                {{-- <div class="form-group">
-                                                    <label for="">Jabatan</label>
-                                                    <select name="id_jabatan" class="form-control" id="">
-                                                        <option value="">Pilih Jabatan</option>
-                                                        @foreach ($jabatan as $item2)
-                                                            <option value="{{ $item2->id }}"
-                                                                {{ $item2->id == $item->id_jabatan ? 'selected' : '' }}>
-                                                                {{ $item2->nama_jabatan }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div> --}}
-
                                                 <div class="form-group">
                                                     <label for="">Bonus Omzet</label>
                                                     <input type="number" class="form-control" name="bonus"
@@ -142,7 +126,6 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama_cabang }}</td>
                                 <td>{{ $item->bonus }}</td>
-                                {{-- @if (Auth::user()->role == 'owner') --}}
                                 <td>
                                     <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
                                         data-target="#modalEdit{{ $item->id }}">
@@ -151,7 +134,6 @@
                                     <a href="#" class="btn btn-sm btn-danger delete" data-id="{{ $item->id }}"><i
                                             class="fas fa-trash-alt"></i></a>
                                 </td>
-                                {{-- @endif --}}
                             </tr>
                         @endforeach
 

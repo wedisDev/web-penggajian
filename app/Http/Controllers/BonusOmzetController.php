@@ -20,25 +20,13 @@ class BonusOmzetController extends Controller
      */
     public function index()
     {
-        // $bonus = BonusOmzet::join('cabangs as cb', 'cb.id', '=', 'bonus_omzets.id_cabang')
-        //     ->get();
-        $date = Carbon::now();
-        $month = $date->month;
-        // $bonus = DB::select("SELECT bonus_omzets.id as 'id', bonus_omzets.id_cabang as 'id_cabang', bonus_omzets.bonus, cabangs.nama_cabang as 'nama_cabang', cabangs.alamat
-        //     FROM bonus_omzets
-        //     JOIN cabangs ON cabangs.id = bonus_omzets.id_cabang");
         $bonus = DB::table('bonus_omzets')
             ->select('bonus_omzets.id as id', 'bonus_omzets.id_cabang as id_cabang', 'bonus_omzets.bonus', 'cabangs.nama_cabang as nama_cabang', 'cabangs.alamat')
             ->join('cabangs', 'cabangs.id', '=', 'bonus_omzets.id_cabang')
-            // ->whereMonth('bonus_omzets.created_at', $month)
             ->get();
-        // dd($bonus);
-        // $jabatan = Jabatan::all();
         $cabang = Cabang::all();
-        // dd($bonus);
         return view('owner.bonusOmzet.index', [
             'bonus' => $bonus,
-            // 'jabatan' => $jabatan,
             'cabang' => $cabang
         ]);
     }
@@ -116,9 +104,7 @@ class BonusOmzetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $validator = Validator::make(request()->all(), [
-            // 'id_jabatan' => 'required',
             'id_cabang' => 'required',
             'bonus' => 'required',
         ]);
@@ -130,9 +116,6 @@ class BonusOmzetController extends Controller
 
 
             $bonus = BonusOmzet::findOrFail($id);
-
-            // dd($bonus);
-            // $bonus->id_jabatan = $request->get('id_jabatan');
             $bonus->id_cabang = $request->get('id_cabang');
             $bonus->bonus = $request->get('bonus');
             $bonus->save();

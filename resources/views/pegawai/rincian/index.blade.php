@@ -33,10 +33,6 @@
                                 <td>{{ $item->nama_pegawai }}</td>
                                 <td>{{ $item->nama_jabatan }}</td>
                                 <td>{{ number_format($item->total) }}</td>
-                                {{-- <td>
-                                    <a href="{{ url('/slip-gaji', $item->id_pegawai) }}" class="btn btn-success">Slip
-                                        Gaji</a>
-                                </td> --}}
                                 <td>
                                     <a href="{{ url('/slip-gaji/' . $item->bulan . '/' . $item->tahun . '/' . $item->id) }}"
                                         class="btn btn-success">Slip

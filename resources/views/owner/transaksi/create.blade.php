@@ -3,10 +3,6 @@
 @section('title', 'Dashboard Tambah Transaksi')
 
 @section('content')
-    {{-- @php
-        dd($pegawai);
-    @endphp --}}
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Tambah Transaksi</h1>
@@ -63,7 +59,6 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Bulan</label>
-                            {{-- <input type="text" class="form-control" name="bulan" id="bulan" placeholder="Bulan"> --}}
                             <select class="form-control" name="bulan" id="bulan" placeholder="Bulan">
                                 <option selected value="1">Januari</option>
                                 <option value="2">Februari</option>
@@ -115,7 +110,6 @@
                             <label for="">Omzet</label>
                             <input type="text" id="id_cabang" value="{{ $pegawai[0]->id_cabang }}" hidden>
                             <input type="text" name="id_pegawai" value="{{ $pegawai[0]->id }}" hidden>
-                            {{-- <input type="text" class="form-control" name="omzet" value="{{ $pegawai[0]->omzet }}" --}}
                             <input type="text" class="form-control" name="omzet" id="jumlah_omzet" readonly
                                 placeholder="Omzet">
                         </div>
@@ -126,10 +120,8 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Bonus Omzet</label>
-                            {{-- <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
-                                value="{{ $pegawai[0]->bonus_tahunan }}" placeholder="Bonus Omzet" readonly> --}}
                             <input type="text" class="form-control" name="bonus_omzet" id="bonus_omzet"
-                                {{-- value="{{ $bonus }}" placeholder="Bonus Omzet" --}} {{-- value="{{ $bonus }}" --}} placeholder="Bonus Omzet" readonly>
+                                placeholder="Bonus Omzet" readonly>
                         </div>
                     </div>
                 </div>
@@ -145,17 +137,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     <script>
         var month = 1;
-        // $('jumlah_omzet').on('change', function(e) {
-        //     console.log('iniiii')
-        // })
         $('#bulan').on('change', function(e) {
             var month = e.target.value;
             var id_cabang = document.getElementById("id_cabang").value;
-            // console.log(id_cabang, month);
             $.ajax({
                 url: `/buat-omzet/${id_cabang}/${month}`,
                 method: 'GET',
-                // data:
                 success: function(data) {
                     console.log(data.data.omzet);
                     if (data.data.omzet === undefined) {
@@ -167,52 +154,19 @@
                     $.ajax({
                         url: `/hitung-bonus-omzet/${month}/` + {{ $pegawai[0]->id_cabang }},
                         method: 'GET',
-                        // data: {
-                        //     omzet: data.data.omzet
-                        // },
                         success: function(data) {
                             console.log('Bonus Omzet: ' + data.bonus_omzet);
                             if (data.bonus_omzet == 0) {
-                                // console.log(e.target.value)
                                 $('#bonus_omzet').val(data.bonus_omzet);
-                                // $('#bonus_omzet').prop('readonly', true);
-                                // $('#total').val(data.hitung);
                             } else {
-                                // console.log(e.target.value)
-                                // $('#bonus_omzet').prop('readonly', false);
                                 $('#bonus_omzet').val(data.bonus_omzet);
-                                // $('#total').val(data.hitung);
                             }
                         }
                     })
                 }
             })
 
-            // var jumlah_omzet = document.getElementById("jumlah_omzet").value;
-            // console.log(`Bonus Omzet: ${jumlah_omzet}`)
-            // $.ajax({
-            //     url: '/hitung-omzet/' + {{ $pegawai[0]->id_cabang }} + month,
-            //     method: 'GET',
-            //     data: {
-            //         omzet: jumlah_omzet
-            //     },
-            //     success: function(data) {
-            //         console.log(data);
-            //         if (data.bonus == 0) {
-            //             console.log(e.target.value)
-            //             $('#bonus_omzet').val(0);
-            //             $('#bonus_omzet').prop('readonly', true);
-            //             $('#total').val(data.hitung);
-            //         } else {
-            //             console.log(e.target.value)
-            //             $('#bonus_omzet').prop('readonly', false);
-            //             $('#bonus_omzet').val(data.bonus.bonus);
-            //             $('#total').val(data.hitung);
-            //         }
-            //     }
-            // })
         });
-        // jumlah_omzet
 
         $('#id_pegawai').on('change', function(e) {
             var pegawai_id = e.target.value;
@@ -223,7 +177,6 @@
                     pegawai_id: pegawai_id
                 },
                 success: function(data) {
-                    // console.log(data);
                     $('#data_nama').val(data.nama_pegawai);
                     $('#data_jabatan').val(data.nama_jabatan);
                     $('#data_status').val(data.nama_golongan);
@@ -231,31 +184,5 @@
                 }
             })
         });
-
-        // $('#jumlah_omzet').on('change', function(e) {
-        //     var omzet = e.target.value;
-        //     console.log(`Bonus Omzet: ${omzet}`)
-        //     $.ajax({
-        //         url: '/hitung-omzet/' + {{ $pegawai[0]->id_cabang }},
-        //         method: 'GET',
-        //         data: {
-        //             omzet: omzet
-        //         },
-        //         success: function(data) {
-        //             console.log(data);
-        //             if (data.bonus == 0) {
-        //                 console.log(e.target.value)
-        //                 $('#bonus_omzet').val(0);
-        //                 $('#bonus_omzet').prop('readonly', true);
-        //                 $('#total').val(data.hitung);
-        //             } else {
-        //                 console.log(e.target.value)
-        //                 $('#bonus_omzet').prop('readonly', false);
-        //                 $('#bonus_omzet').val(data.bonus.bonus);
-        //                 $('#total').val(data.hitung);
-        //             }
-        //         }
-        //     })
-        // });
     </script>
 @endpush

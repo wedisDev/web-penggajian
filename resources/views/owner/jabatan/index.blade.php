@@ -30,7 +30,6 @@
                             <th>Tunjangan Makan</th>
                             <th>Tunjangan Transportasi</th>
                             <th>Tunjangan Lembur</th>
-                            {{-- <th>Bonus Tahunan</th> --}}
                             @if (Auth::user()->role == 'owner')
                                 <th>Actions</th>
                             @endif
@@ -47,7 +46,6 @@
                                     <td>{{ $item->tunjangan_makan }}</td>
                                     <td>{{ $item->tunjangan_transportasi }}</td>
                                     <td>{{ $item->tunjangan_lembur }}</td>
-                                    {{-- <td>{{ $item->bonus_tahunan }}</td> --}}
                                     @if (Auth::user()->role == 'owner')
                                         <td>
                                             <a href="{{ route('jabatan.edit', $item->id) }}" class="btn btn-sm btn-warning">
