@@ -17,7 +17,6 @@ class CreateCabangsTable extends Migration
             $table->id();
             $table->string('nama_cabang');
             $table->string('alamat');
-            // $table->integer('omzet')->nullable();
             $table->timestamps();
         });
     }

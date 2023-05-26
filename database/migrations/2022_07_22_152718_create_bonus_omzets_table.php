@@ -18,7 +18,6 @@ class CreateBonusOmzetsTable extends Migration
             $table->unsignedBigInteger('id_cabang');
             $table->unsignedBigInteger('id_jabatan')->nullable();
             $table->integer('bonus');
-            // $table->string('date');
             $table->timestamps();
         });
     }
